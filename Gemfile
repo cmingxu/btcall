@@ -15,8 +15,6 @@ gem 'spring',        group: :development
 
 gem 'unicorn'
 
-gem 'capistrano-rails', group: :development
-
 
 
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -28,7 +26,6 @@ gem "haml-rails"
 gem 'capistrano-rails', group: :development
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
-gem 'unicorn'
 gem 'rails_kindeditor'
 
 gem 'settingslogic', '~> 2.0.9'
