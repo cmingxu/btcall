@@ -5,9 +5,7 @@ class WelcomeController < ApplicationController
 
 
   ABOUT_PAGES.keys.each do |p|
-
     define_method p do
-      
       render "page"
     end
 
