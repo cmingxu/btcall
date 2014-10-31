@@ -51,4 +51,4 @@ production:
   <<: *default
   database: btcall_production
   username: btcall
-  password: <%= ENV['BTCALL_DATABASE_PASSWORD'] %>
+  password: <%= ENV['btcall_DATABASE_PASSWORD'] %>
