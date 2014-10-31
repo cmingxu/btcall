@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'btcall.com'
-set :repo_url, 'git@github.com:cmingxu/btcall.com.git'
+set :repo_url, 'git@github.com:cmingxu/btcall.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -35,7 +35,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :keep_releases, 5 
 
 set :rvm_type, :user
-set :rvm_ruby_version, '2.1.4p265'
+set :rvm_ruby_version, '2.1.4'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 
 namespace :deploy do
