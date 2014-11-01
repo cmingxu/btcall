@@ -2,6 +2,7 @@ defaults: &defaults
   title: "btcall"
   description: "bitcoin"
   site_name: "btcall"
+  spider_interval: 5 * 60
   cool:
     saweet: nested settings
   neat_setting: 24
@@ -9,6 +10,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  spider_interval: 10
   neat_setting: 800
 
 test:

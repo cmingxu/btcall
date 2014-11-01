@@ -29,3 +29,4 @@ gem 'capistrano-rvm'
 gem 'rails_kindeditor'
 
 gem 'settingslogic', '~> 2.0.9'
+gem 'httparty', '~>0.13.1'
