@@ -11,10 +11,15 @@
     = csrf_meta_tags
 
   %body
-    = render :partial => "widgets/header"
+    = render :partial => "widgets/dashboard_header"
     .container-fluid
-      = yield
-      .scroll_top_div
+      .dashboard-main.row-fluid
+        .col-md-2
+          = render :partial => "widgets/dashboard_sidebar"
+        .col-md-10
+          = yield
+
+        .clearfix
     = render :partial => "widgets/footer"
 
     = javascript_include_tag "application"

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031151812) do
+ActiveRecord::Schema.define(version: 20141101152551) do
+
+  create_table "tickers", force: true do |t|
+    t.string   "soure"
+    t.integer  "high"
+    t.integer  "low"
+    t.integer  "buy"
+    t.integer  "sell"
+    t.integer  "last"
+    t.integer  "vol"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "login"
