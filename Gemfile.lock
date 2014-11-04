@@ -60,7 +60,11 @@ GEM
     coffee-script-source (1.8.0)
     colorize (0.7.3)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.2.2)
+    faye-websocket (0.7.5)
+      eventmachine (>= 0.12.0)
+      websocket-driver (>= 0.3.5)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -155,6 +159,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    websocket-driver (0.3.5)
 
 PLATFORMS
   ruby
@@ -166,6 +171,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   coffee-rails (~> 4.0.0)
+  faye-websocket (~> 0.7.5)
   haml-rails
   httparty (~> 0.13.1)
   jbuilder (~> 2.0)

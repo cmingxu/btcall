@@ -30,3 +30,5 @@ gem 'rails_kindeditor'
 
 gem 'settingslogic', '~> 2.0.9'
 gem 'httparty', '~>0.13.1'
+gem 'faye-websocket', '~>0.7.5'
+
