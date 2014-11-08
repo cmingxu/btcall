@@ -1,5 +1,10 @@
 module Bitfinex
   def self.run
-    Btcall.spider_logger.debug "Bitfinex"
+    require 'httparty'
+    while true
+      json = HTTParty.get "https://api.bitfinex.com/v1/pubticker/btcusd"
+      puts JSON.parse(json.body)
+      sleep 1
+    end
   end
 end

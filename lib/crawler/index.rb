@@ -13,15 +13,16 @@ require 'okcoin'
 require 'btce'
 require 'bitstamp'
 require 'bitfinex'
+require 'huobi'
 
 
 module Crawler
   class << self
     def run
       #Btcall.spider_logger.debug "abcde"
-      pid = Process.fork { Okcoin.run }
-      pid2 = Process.fork { V796.run }
-      Process.waitall
+      #pid = Process.fork { Okcoin.run }
+      #pid2 = Process.fork { V796.run }
+      #Process.waitall
       #vendors = [V796, Okcoin, Btce, Bitfinex, Bitstamp]
       #while true
       #vendors.map(&:run)

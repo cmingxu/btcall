@@ -1,8 +1,10 @@
 module V796
   def self.run
+    require 'httparty'
     while true
-      p "796" * 10
-      sleep 10
+      json = HTTParty.get "http://api.796.com/v3/futures/ticker.html?type=weekly"
+      puts JSON.parse(json)["ticker"]
+      sleep 1
     end
   end
 end
