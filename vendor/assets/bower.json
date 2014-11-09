@@ -3,6 +3,7 @@
   "dependencies": {
     "bootstrap": "latest",
     "d3": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "angular": "latest"
   }
 }

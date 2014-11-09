@@ -1,0 +1,22 @@
+!!!
+%html{ :lang => "en" }
+  %head
+    %title= Settings.title
+    %meta{ :charset => 'utf-8' }
+    %meta{ "http-equiv" => "X-UA-Compatible", :content => 'IE=edge' }
+    %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
+
+    = stylesheet_link_tag "market", :media => :all
+    = csrf_meta_tags
+
+  %body{"ng-app" => "market"}
+    .container-fluid
+      .row-fluid{"ng-controller" => "vendorListController"}
+        {{name}}
+        .clearfix
+
+    = javascript_include_tag "market"
+    = render :partial => "widgets/statistics" if Rails.env.production?
+
+
+
