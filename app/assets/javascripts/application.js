@@ -11,7 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require underscore
 //= require jquery_ujs
 //= require kindeditor
+//= require d3
 //= require_tree .
 //= require bootstrap-sprockets
