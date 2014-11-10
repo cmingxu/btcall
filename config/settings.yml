@@ -3,10 +3,7 @@ defaults: &defaults
   description: "bitcoin"
   site_name: "btcall"
   spider_interval: 5 * 60
-  cool:
-    saweet: nested settings
-  neat_setting: 24
-  awesome_setting: <%= "Did you know 5 + 5 = #{5 + 5}?" %>
+  spider_usd_rmb_interval: 5 * 60
 
 development:
   <<: *defaults

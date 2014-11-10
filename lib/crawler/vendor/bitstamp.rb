@@ -1,10 +1,8 @@
 module Bitstamp
-  def self.run
-    require 'httparty'
+  def self.run(options)
     while true
       json = HTTParty.get "https://www.bitstamp.net/api/ticker/"
       puts JSON.parse(json.body)
-      sleep 1
     end
   end
 end
