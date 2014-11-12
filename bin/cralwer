@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+
+puts ARGV[0]
+if ARGV[0] == "stop"
+  system(`ps aux | grep "cralwer_" | awk '{print $2}' | xargs kill`)
+else
+  require 'rubygems'
+  ruby = Gem.ruby
+  ruby_file_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "lib", "crawler", "index.rb"))
+
+  system("#{ruby} #{ruby_file_path}")
+end

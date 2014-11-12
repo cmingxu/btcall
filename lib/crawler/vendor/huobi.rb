@@ -1,5 +1,5 @@
 module Huobi
-  extend Http
+  extend Websocket
   def self.run(options)
     craw(options) do |body|
       puts body
