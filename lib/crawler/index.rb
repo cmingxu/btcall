@@ -26,9 +26,9 @@ module Crawler
         V796: "http://api.796.com/v3/futures/ticker.html?type=weekly",
         Okcoin: "wss://real.okcoin.cn:10440/websocket/okcoinapi",
         Btce: "https://btc-e.com/api/3/ticker/btc_usd",
-        Bitstamp: "hq.huobi.com:80",
+        Huobi: "hq.huobi.com:80",
         Bitfinex: "https://api.bitfinex.com/v1/pubticker/btcusd",
-        Huobi: "https://www.bitstamp.net/api/ticker/"
+        Bitstamp: "https://www.bitstamp.net/api/ticker/"
       }
       options = {
         interval: 5,

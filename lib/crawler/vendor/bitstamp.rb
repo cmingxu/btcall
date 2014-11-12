@@ -1,5 +1,5 @@
 module Bitstamp
-  extend Websocket
+  extend Http
   def self.run(options)
     craw(options) do |content|
       puts content
