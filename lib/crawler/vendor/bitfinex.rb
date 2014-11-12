@@ -1,6 +1,8 @@
 module Bitfinex
+  extend Http
   def self.run(options)
-    json = HTTParty.get "https://api.bitfinex.com/v1/pubticker/btcusd"
-    puts JSON.parse(json.body)
+    craw(options) do |content|
+      puts content
+    end
   end
 end

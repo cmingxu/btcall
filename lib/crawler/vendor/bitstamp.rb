@@ -1,8 +1,8 @@
 module Bitstamp
+  extend Websocket
   def self.run(options)
-    while true
-      json = HTTParty.get "https://www.bitstamp.net/api/ticker/"
-      puts JSON.parse(json.body)
+    craw(options) do |content|
+      puts content
     end
   end
 end

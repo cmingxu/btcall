@@ -1,8 +1,8 @@
 module V796
-  def self.run
-    while true
-      json = HTTParty.get "http://api.796.com/v3/futures/ticker.html?type=weekly"
-      puts JSON.parse(json)["ticker"]
+  extend Http
+  def self.run(options)
+    craw(options) do |content|
+      puts content
     end
   end
 end

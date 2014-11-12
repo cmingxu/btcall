@@ -1,8 +1,8 @@
 module Btce
-  def self.run
-    while true
-      json = HTTParty.get "https://btc-e.com/api/3/ticker/btc_usd"
-      puts JSON.parse(json)["btc_usd"]
+  extend Http
+  def self.run(options)
+    craw(options) do |content|
+      puts content
     end
   end
 end
