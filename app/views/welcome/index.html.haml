@@ -1,2 +1,35 @@
-.row-fluid
-  = image_tag "333.jpg"
+.col-md-9.chart_panel
+  .row-fluid.operation_bar
+    .navbar
+      %ul.nav.navbar-nav
+        %li
+          到期
+          %select
+        %li
+          金额
+          %input
+
+  .row-fluid
+    .col-md-6.chart
+      = image_tag "chart.png"
+    .col-md-3.trend
+      %button.btn.btn-primary.btn-lg.center-block
+        看涨
+      %button.btn.btn-primary.btn-lg.center-block
+        2400.22
+      %button.btn.btn-primary.btn-lg.center-block
+        看跌
+
+    .col-md-3.info
+      .list-group
+        .list-group-item
+          潜在收益45.00
+        .list-group-item
+          潜在收益45.00
+        .list-group-item
+          潜在收益45.00
+
+.col-md-3.operation_panl
+
+
+.clearfix

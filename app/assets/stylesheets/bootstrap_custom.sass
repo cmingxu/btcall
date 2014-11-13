@@ -6,7 +6,7 @@ $highlight-color: #2f9833
 
 $text-color: #575757
 $highlight-text-color: #1a1a1a
-$link-color: #56a3eb
+$link-color: black
 $link-hover-color: darken($link-color, 30%) !default
 
 .navbar
@@ -28,8 +28,34 @@ footer
   background-color: $second-color
 
 //market settings
-$market-main-dark-color: #3a3a3a
-$market-lighten-dark-color: #535353
-$market-green-highlight-color: #2a755e
-$market-border-color-bottom: #2a2a2a
-$market-border-color-color: #454545
+$market-bg-light-color: #3a3a3a
+$market-bg-dark-color: #535353
+$market-text-light-color: #535353
+$market-text-dark-color: #535353
+$market-link-light-color: white
+$market-link-dark-color: #535353
+
+
+.market
+  .navbar-brand
+    padding: 5px 15px
+    height: 30px
+
+  .navbar-nav  li  a
+    padding: 5px 15px
+    height: 30px
+
+  .chart_panel
+    .btn
+      width: 100px
+      margin-top: 15px
+
+  .footer
+    background-color: $market-bg-dark-color
+    .list-group
+      width: 25%
+    .list-group-item
+      border: none
+      background-color: $market-bg-dark-color
+      color: $market-link-light-color
+      

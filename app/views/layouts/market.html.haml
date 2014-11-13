@@ -9,12 +9,14 @@
     = stylesheet_link_tag "market", :media => :all
     = csrf_meta_tags
 
-  %body{"ng-app" => "market"}
+  %body{"ng-app" => "market", "class" => "market"}
     .container-fluid
-      .row-fluid{"ng-controller" => "vendorListController"}
-        {{name}}
-        .clearfix
-
+      .row-fluid
+        = render :partial => "widgets/market_header"
+      .row-fluid.market_dashboard{"ng-controller" => "vendorListController"}
+        = yield
+      .row-fluid.footer
+        = render :partial => "widgets/market_footer"
     = javascript_include_tag "market"
     = render :partial => "widgets/statistics" if Rails.env.production?
 
