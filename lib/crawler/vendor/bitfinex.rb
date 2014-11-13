@@ -2,7 +2,8 @@ module Bitfinex
   extend Http
   def self.run(options)
     craw(options) do |content|
-      options[:redis].rpush options[:redis_key], handle(content, options)
+      options[:redis].lpush options[:redis_key], handle(content, options)
+      options[:redis].ltrim options[:redis_key], 0, options[:max_list_len]
     end
   end
 

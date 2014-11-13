@@ -39,7 +39,8 @@ module Crawler
         interval: 5,
         timeout: 5,
         rmb2usd_rate_key: "rmb2usd",
-        rmbusd_rate_interval: 5 * 60
+        rmbusd_rate_interval: 5 * 60,
+        max_list_len: 3 * 24 * 3600
       }
 
       vendors.each do |vendor, entry|

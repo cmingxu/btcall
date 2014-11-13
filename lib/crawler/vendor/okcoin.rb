@@ -6,7 +6,8 @@ module Okcoin
     craw(options) do |content|
       # make sure not persist date too frequently
       if Time.now - @last_data_received_at > options[:interval]
-        options[:redis].rpush options[:redis_key], handle(content, options)
+        options[:redis].lpush options[:redis_key], handle(content, options)
+        options[:redis].ltrim options[:redis_key], 0, options[:max_list_len]
         @last_data_received_at = Time.now
       end
     end
