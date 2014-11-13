@@ -16,7 +16,7 @@ module V796
     entry.buy  =  (hash["buy"].to_f  * rate).round(3)
     entry.sell =  (hash["sell"].to_f * rate).round(3)
     entry.last =  (hash["last"].to_f * rate).round(3)
-    entry.vol  =  (hash["vol"].to_f  * rate).round(3)
+    entry.vol  =  hash["vol"].to_f
     entry.timestamp = Time.now.to_i
 
     JSON.dump(entry.to_h)

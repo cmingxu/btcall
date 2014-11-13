@@ -6,7 +6,6 @@ module Websocket
       ws = Faye::WebSocket::Client.new(options[:entry_point])
 
       ws.on :open do |event|
-        puts options[:initial_handshake]
         ws.send options[:initial_handshake] if options[:initial_handshake]
         logger.debug "#{vendor} open & start to receive messages"
       end

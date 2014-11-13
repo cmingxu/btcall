@@ -28,12 +28,12 @@ module Crawler
     def run
       vendors = {
         RmbUsd: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22CNYUSD%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
-        V796: "http://api.796.com/v3/futures/ticker.html?type=weekly"
-        #Okcoin: "wss://real.okcoin.cn:10440/websocket/okcoinapi",
-        #Btce: "https://btc-e.com/api/3/ticker/btc_usd",
-        #Huobi: "hq.huobi.com:80",
-        #Bitfinex: "https://api.bitfinex.com/v1/pubticker/btcusd",
-        #Bitstamp: "https://www.bitstamp.net/api/ticker/"
+        V796: "http://api.796.com/v3/futures/ticker.html?type=weekly",
+        Okcoin: "wss://real.okcoin.cn:10440/websocket/okcoinapi",
+        Btce: "https://btc-e.com/api/3/ticker/btc_usd",
+        #Huobi: "hq.huobi.com:80"
+        Bitfinex: "https://api.bitfinex.com/v1/pubticker/btcusd",
+        Bitstamp: "https://www.bitstamp.net/api/ticker/"
       }
       options = {
         interval: 5,
