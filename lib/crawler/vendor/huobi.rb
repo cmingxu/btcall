@@ -1,18 +1,13 @@
 module Huobi
-  extend Websocket
-  @last_data_received_at = Time.now
+  extend Http
   def self.run(options)
     craw(options) do |content|
-      # make sure not persist date too frequently
-      if Time.now - @last_data_received_at > options[:interval]
-        options[:redis].rpush options[:redis_key], handle(content, options)
-        @last_data_received_at = Time.now
-      end
+      options[:redis].rpush options[:redis_key], handle(content, options)
     end
   end
 
   def self.handle(content, options)
-    hash = JSON.parse(content).first["data"]
+    hash = JSON.parse(content)["ticker"]
     entry = OpenStruct.new
     entry.high =  hash["high"]
     entry.low  =  hash["low"]
@@ -20,7 +15,7 @@ module Huobi
     entry.sell =  hash["sell"]
     entry.last =  hash["last"]
     entry.vol  =  hash["vol"]
-    entry.timestamp = hash["timestamp"].to_i / 1000
+    entry.timestamp = Time.now.to_i
 
     JSON.dump(entry.to_h)
   end
