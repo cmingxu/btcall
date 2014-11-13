@@ -66,4 +66,3 @@ module Crawler
   end
 end
 
-Crawler.run
