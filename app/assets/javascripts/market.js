@@ -14,8 +14,15 @@
 //= require underscore
 //= require d3
 //= require angular
+//= require socket.io
 //= require bootstrap-sprockets
 //= require_self
 //= require_tree ./markets
 
 var market = angular.module("market", []);
+
+var socket = io.connect("localhost:3001");
+socket.on('message', function(msg){
+  console.log(msg);
+});
+

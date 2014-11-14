@@ -4,6 +4,7 @@
     "bootstrap": "latest",
     "d3": "latest",
     "underscore": "latest",
-    "angular": "latest"
+    "angular": "latest",
+    "socket.io": "latest"
   }
 }
