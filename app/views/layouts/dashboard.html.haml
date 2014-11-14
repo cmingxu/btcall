@@ -10,7 +10,7 @@
     = stylesheet_link_tag "application", :media => :all
     = csrf_meta_tags
 
-  %body
+  %body.dashboard
     = render :partial => "widgets/dashboard_header"
     .container-fluid
       .dashboard-main.row-fluid
