@@ -1,2 +1,20 @@
-%h1 Session#register
-%p Find me in app/views/session/register.html.haml
+.container.user_actions
+  .row
+    .col-md-4.col-sm-6.col-md-offset-4
+      .panel.panel-default
+        .panel-heading Sign In to Continue
+        .panel-body
+          = form_tag "" do
+            %fieldset
+              .row
+                .col-sm-12.col-md-10.col-md-offset-1
+                  .from-group
+                    = text_field_tag "user[login]", "", :class => "form-control input-lg", :placeholder => "your-email@host.com"
+
+                  .from-group
+                    = submit_tag "Sign Up", :class => "btn btn-lg btn-primary btn-block"
+
+          .panel-footer
+            Don't have an account!
+            = link_to "Sign In", "/login"
+

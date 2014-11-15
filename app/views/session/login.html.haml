@@ -1,2 +1,32 @@
-%h1 Session#login
-%p Find me in app/views/session/login.html.haml
+.container.user_actions
+  .row
+    .col-md-4.col-sm-6.col-md-offset-4
+      .panel.panel-default
+        .panel-heading Sign In to Continue
+        .panel-body
+          = form_tag "" do
+            %fieldset
+              .row
+                .center-block
+                  = image_tag "https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120", :class => "profile-img"
+              .row
+                .col-sm-12.col-md-10.col-md-offset-1
+                  .from-group
+                    .input-group
+                      %span.input-group-addon
+                        %i.glyphicon.glyphicon-user
+                      = text_field_tag "user[login]", "", :class => "form-control", :placeholder => "Username"
+
+                  .from-group
+                    .input-group
+                      %span.input-group-addon
+                        %i.glyphicon.glyphicon-lock
+                      = password_field_tag "user[password]", "", :class => "form-control", :placeholder => "Password"
+
+                  .from-group
+                    = submit_tag "Sign In", :class => "btn btn-lg btn-primary btn-block"
+
+          .panel-footer
+            Don't have an account!
+            = link_to "Sign Up Here", "/"
+
