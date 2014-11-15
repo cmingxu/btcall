@@ -1,4 +1,4 @@
-.col-md-9.chart_panel
+.col-md-9.col-sm-12.chart_panel
   .row-fluid.operation_bar
     .navbar
       %ul.nav.navbar-nav
@@ -11,7 +11,7 @@
 
   .row-fluid
     .col-md-6.chart{"ng-controller" => "btcchart"}
-      = image_tag "chart.png"
+      #btcchart
     .col-md-3.trend
       %button.btn.btn-primary.btn-lg.center-block
         看涨

@@ -14,6 +14,7 @@
 //= require jquery
 //= require underscore
 //= require d3
+//= require dimple
 //= require angular
 //= require socket.io
 //= require angular-socket-io
