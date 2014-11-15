@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require config
 //= require jquery
 //= require underscore
 //= require d3
@@ -21,7 +22,7 @@
 
 var market = angular.module("market", []);
 
-var socket = io.connect("localhost:3001");
+var socket = io.connect(config.websocket_url);
 socket.on('message', function(msg){
   console.log(msg);
 });
