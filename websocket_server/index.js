@@ -3,6 +3,8 @@ var log4js = require('log4js');
 var redis = require("redis");
 
 var redis_list_key = "data_list_v796";
+var default_return_len = 10;
+var default_heartbeat_inteval = 5 * 1000;
 
 //connect to redis / default access point used
 var redis = redis.createClient();
@@ -19,11 +21,13 @@ var ws_clients = [];
 
 io.on('connection', function (socket) {
   task = setInterval(function () {
-    redis.lrange(redis_list_key, 0, 10, function(err, data){
-      console.log(data);
+    redis.lrange(redis_list_key, 0, default_return_len, function(err, data){
+      logger.debug(data);
       socket.emit('message', data);
     });
-  }, 5000);
+
+  }, default_heartbeat_inteval);
+
   socket.on('disconnect', function () {
     clearInterval(task);
   });
