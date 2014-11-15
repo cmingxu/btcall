@@ -3,7 +3,7 @@ var log4js = require('log4js');
 var redis = require("redis");
 
 var redis_list_key = "data_list_v796";
-var default_return_len = 10;
+var default_return_len = 0;
 var default_heartbeat_inteval = 5 * 1000;
 
 //connect to redis / default access point used

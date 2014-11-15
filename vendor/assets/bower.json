@@ -5,6 +5,6 @@
     "d3": "latest",
     "underscore": "latest",
     "angular": "latest",
-    "socket.io": "latest"
+    "angular-socket-io": "latest"
   }
 }

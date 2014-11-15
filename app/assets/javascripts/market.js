@@ -16,14 +16,20 @@
 //= require d3
 //= require angular
 //= require socket.io
+//= require angular-socket-io
 //= require bootstrap-sprockets
 //= require_self
 //= require_tree ./markets
 
-var market = angular.module("market", []);
+var market = angular.module("market", ["btford.socket-io"]).
+  factory('btcSocket', function (socketFactory) {
+  var myIoSocket = io.connect(config.websocket_url);
 
-var socket = io.connect(config.websocket_url);
-socket.on('message', function(msg){
-  console.log(msg);
+  mySocket = socketFactory({
+    ioSocket: myIoSocket
+  });
+
+  return mySocket;
 });
+
 
