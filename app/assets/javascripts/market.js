@@ -24,7 +24,7 @@
 
 var market = angular.module("market", ["btford.socket-io"]);
 
-market.factory('btcSocket', function (socketFactory) {
+market.factory('btcSocket', ["socketFactory", function (socketFactory) {
   var myIoSocket = io.connect(config.websocket_url);
 
   mySocket = socketFactory({
@@ -32,5 +32,5 @@ market.factory('btcSocket', function (socketFactory) {
   });
 
   return mySocket;
-});
+}]);
 

@@ -1,4 +1,8 @@
-var io = require("socket.io")(3001);
+if(process.env.NODE_ENV == "dev"){
+  var io = require("socket.io")(3001);
+}else{
+  var io = require("socket.io")(80);
+}
 var log4js = require('log4js');
 var redis = require("redis");
 var _ = require('lodash-node/underscore');
@@ -21,10 +25,10 @@ var ws_clients = [];
 
 function format_data(raw_data_from_redis) {
   return raw_data_from_redis.map(function (d) {
-      buy = parseFloat(JSON.parse(d)["buy"]);
-      sell = parseFloat(JSON.parse(d)["sell"]);
-      timestamp = JSON.parse(d)["timestamp"];
-      return {"value": ((buy + sell)/2).toFixed(3), "timestamp": timestamp}
+    buy = parseFloat(JSON.parse(d)["buy"]);
+    sell = parseFloat(JSON.parse(d)["sell"]);
+    timestamp = JSON.parse(d)["timestamp"];
+    return {"value": ((buy + sell)/2).toFixed(3), "timestamp": timestamp}
   });
 }
 
