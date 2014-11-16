@@ -22,8 +22,9 @@
 //= require_self
 //= require_tree ./markets
 
-var market = angular.module("market", ["btford.socket-io"]).
-  factory('btcSocket', function (socketFactory) {
+var market = angular.module("market", ["btford.socket-io"]);
+
+market.factory('btcSocket', function (socketFactory) {
   var myIoSocket = io.connect(config.websocket_url);
 
   mySocket = socketFactory({
