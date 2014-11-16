@@ -5,7 +5,6 @@
     "d3": "latest",
     "underscore": "latest",
     "angular": "latest",
-    "angular-socket-io": "latest",
-    "dimple": "latest"
+    "angular-socket-io": "latest"
   }
 }
