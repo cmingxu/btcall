@@ -1,5 +1,7 @@
 .content_wraper
   .operation_panel
-  .chart_panel
-    #btcchart
-.clearfix
+  .chart_panel{"ng-controller" => "btcchartController"}
+    %btc_chart_directive{"val" => "data"}
+
+
+  .clearfix

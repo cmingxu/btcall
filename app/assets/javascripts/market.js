@@ -33,4 +33,3 @@ var market = angular.module("market", ["btford.socket-io"]).
   return mySocket;
 });
 
-
