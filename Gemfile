@@ -24,6 +24,7 @@ gem "haml-rails"
 
 
 gem 'capistrano-rails', group: :development
+gem 'awesome_print', group: :development
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
@@ -32,6 +33,11 @@ gem 'settingslogic', '~> 2.0.9'
 gem 'httparty', '~>0.13.1'
 gem 'redis', '~>3.1.0'
 gem 'faye-websocket', '~>0.7.5'
+gem 'quiet_assets', :group => :development
+gem 'annotate', '~> 2.6.5'
+
+
+
 
 gem "bower-rails", "~> 0.9.1"
 

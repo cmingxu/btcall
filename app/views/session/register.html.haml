@@ -1,4 +1,8 @@
 .container.user_actions
+  - if flash[:notice]
+    .row
+      .alert.alert-warning{:role => "alert"}= flash[:notice]
+
   .row
     .col-md-4.col-sm-6.col-md-offset-4
       .panel.panel-default
@@ -9,7 +13,7 @@
               .row
                 .col-sm-12.col-md-10.col-md-offset-1
                   .from-group
-                    = text_field_tag "user[login]", "", :class => "form-control input-lg", :placeholder => "your-email@host.com"
+                    = text_field_tag "user[email]", "", :class => "form-control input-lg", :placeholder => "your-email@host.com"
 
                   .from-group
                     = submit_tag "Sign Up", :class => "btn btn-lg btn-primary btn-block"

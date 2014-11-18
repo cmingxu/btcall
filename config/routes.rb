@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post "login" => "session#login"
   delete "logout" => "session#logout"
   get "register" => "session#register"
+  post "register" => "session#register"
 
   %w(about team company jobs).each do |page|
     get page => "welcome##{page}"

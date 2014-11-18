@@ -23,4 +23,8 @@ class ApplicationController < ActionController::Base
   def no_login_required
     redirect_to dashboard_path, :notice => "您已经登陆， 不需要重新登陆" if  user_login_in?
   end
+
+  def store_request_path
+    session[:redirect_to] = params[:redirect_to] || request.referer
+  end
 end
