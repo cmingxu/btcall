@@ -49,11 +49,38 @@ $market-link-dark-color: #535353
     width: 100%
     float: left
   .operation_panel
-    width: 240px
+    width: 320px
     float: right
-    background-color: darken($body-bg, 10%)
+    height: 500px
+    .operation_panel_inner
+      margin: 20px 20px
+      .input_field
+        text-align: right
+        border: none
+        width: 120px
+        height: 30px
+        float: right
+        font-weight: bold
+        font-family: italic
+        border-bottom: 1px solid gray
+      .strong
+        font-size: 30px
+        float: right
+        font-weight: bold
+        font-weight: italic
+      .progress-bar
+        margin-top: 5px
+        margin-bottom: 5px
+        height: 10px
+        width: 100%
+        .yes-progress
+          width: 40%
+        .no-progress
+          width: 60%
+
+
   .chart_panel
-    margin-right: 240px
+    margin-right: 320px
     #btcchart
       width: 100%
     .btn

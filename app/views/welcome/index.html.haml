@@ -1,5 +1,37 @@
 .content_wraper
   .operation_panel
+    .operation_panel_inner
+      .list-group
+        .list-group-item
+          投资金额
+          %input.input_field.input-lg.input-inline{:placeholder => "100"}
+          .clearfix
+        .list-group-item
+          收益率
+          %span.percent.strong 190%
+          .clearfix
+        .list-group-item
+          潜在收益
+          %span.net-income.strong 90
+          .clearfix
+
+        .list-group-item
+          交易者选择
+          .progress-bar
+            %span.label.label-success.yes-progress.pull-left &nbsp;
+            %span.label.label-danger.no-progress.pull-right &nbsp;
+          .progress-notion
+            %span.yes-notion 40%
+            %span.no-notion.pull-right 60%
+        .list-group-item
+          %button.btn.btn-lg.btn-success.disabled
+            %i.glyphicon.glyphicon-arrow-up
+            看涨
+          %button.btn.btn-lg.btn-danger.pull-right
+            %i.glyphicon.glyphicon-arrow-down
+            看跌
+
+
   .chart_panel{"ng-controller" => "btcchartController"}
     %btc_chart_directive{"val" => "data"}
 
