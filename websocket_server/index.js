@@ -1,8 +1,4 @@
-if(process.env.NODE_ENV == "dev"){
-  var io = require("socket.io")(3001);
-}else{
-  var io = require("socket.io")(80);
-}
+var io = require("socket.io")(3001);
 var log4js = require('log4js');
 var redis = require("redis");
 var _ = require('lodash-node/underscore');
