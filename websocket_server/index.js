@@ -31,13 +31,15 @@ function format_data(raw_data_from_redis) {
 io.on('connection', function (socket) {
   redis.lrange(redis_list_key, 0, default_return_len, function(err, data){
     logger.debug(format_data(data));
-    socket.emit('message:batch', format_data(data));
+    msg = {"type": "message:batch", "data": format_data(data)};
+    socket.send(JSON.stringify(msg));
   });
 
   task = setInterval(function () {
     redis.lrange(redis_list_key, 0, 0, function(err, data){
       logger.debug(format_data(data)[0]);
-      socket.emit('message:single', format_data(data)[0]);
+      msg = {"type": "message:single", "data": format_data(data)[0]};
+      socket.send(JSON.stringify(msg));
     });
 
   }, default_heartbeat_inteval);

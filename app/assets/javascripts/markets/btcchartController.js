@@ -11,14 +11,23 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
       })
     });
 
-    btcSocket.on('message:batch', function (msg) {
-      $scope.data = msg;
+    btcSocket.on("message", function (msg) {
+      msg = JSON.parse(msg);
+      console.log(msg);
+      console.log(msg.type);
+      switch (msg.type) {
+        case 'message:batch':
+          $scope.data = msg.data;
+          break;
+        case 'message:single':
+          $scope.data.unshift(msg.data);
+          break;
+        default:
+      }
+      console.log($scope.data.length);
+
     });
 
-    btcSocket.on('message:single', function (msg) {
-      $scope.data.unshift(msg);
-      console.log($scope.data.length);
-    });
 
     $scope.draw_btc_chart = function () {
       $scope.chart_dom = $("#btcchart");
