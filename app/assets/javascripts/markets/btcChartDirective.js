@@ -9,7 +9,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
     },
     link: function (scope, element, attrs) {
       // constants
-      var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      var margin = {top: 20, right: 20, bottom: 50, left: 50},
       width = $window.innerWidth - 320,
       height = 500,
       color = d3.interpolateRgb("#f77", "#77f");
@@ -37,7 +37,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       var svg = d3.select(element[0])
       .append("svg")
       .attr("width", width)
-      .attr("height", height).append("g")
+      .attr("height", height + margin.bottom).append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       scope.$watch('val', function (newVal, oldVal) {
@@ -55,7 +55,8 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         });
 
         x.domain(d3.extent(newVal, function(d) { return d.timestamp; }));
-        y.domain([0, d3.max(newVal, function(d) { return d.value; })]);
+        //y.domain([2400, d3.max(newVal, function(d) { return d.value; }) + 20]);
+        y.domain([d3.min(newVal, function (d) { return d.value - 20; }) - 20, d3.max(newVal, function(d) { return d.value; }) + 20]);
 
         svg.append("path")
         .datum(newVal)
@@ -64,7 +65,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
         svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + height+ ")")
         .call(xAxis);
 
         svg.append("g")
@@ -75,7 +76,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("价格 ($)");
+        .text("价格 (￥)");
 
       }, true);
 

@@ -1,18 +1,18 @@
 .content_wraper
   .operation_panel
     .operation_panel_inner
-      .list-group
+      .list-group{"ng-controller" => "btcOrderController"}
         .list-group-item
           投资金额
-          %input.input_field.input-lg.input-inline{:placeholder => "100"}
+          %input.input_field.input-lg.input-inline{:placeholder => "100", "ng-model" => "investment", "ng-change" => "investmentChange()"}
           .clearfix
         .list-group-item
           收益率
-          %span.percent.strong 190%
+          %span.percent.strong {{(1+roi_rate) * 100}}%
           .clearfix
         .list-group-item
           潜在收益
-          %span.net-income.strong 90
+          %span.net-income.strong {{roi}}
           .clearfix
 
         .list-group-item
@@ -34,6 +34,44 @@
 
   .chart_panel{"ng-controller" => "btcchartController"}
     %btc_chart_directive{"val" => "data"}
+    .order_list.row.text-center
+      .btn-group
+        %button.btn.btn-primary 完成订单
+        %button.btn.btn-primary 已购订单
+
+      %table.table.table-stripped
+        %thead
+          %th 时间
+          %th 结算价
+          %th 购时价
+          %th 涨跌
+          %th 价格
+          %th 赔率
+        %tbody
+          %tr
+            %td 11/10 11:00
+            %td 2340.88
+            %td 2134.78
+            %td 涨
+            %td 200
+            %td 90%
+          %tr
+            %td 11/10 10:00
+            %td 2340.88
+            %td 2134.78
+            %td 涨
+            %td 200
+            %td 90%
+          %tr
+            %td 11/10 10:00
+            %td 2340.88
+            %td 2134.78
+            %td 涨
+            %td 200
+            %td 90%
+
 
 
   .clearfix
+
+
