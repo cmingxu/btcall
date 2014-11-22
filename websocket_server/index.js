@@ -3,7 +3,7 @@ var log4js = require('log4js');
 var redis = require("redis");
 var _ = require('lodash-node/underscore');
 
-var redis_list_key = "data_list_v796";
+var redis_list_key = "data_list_okcoin";
 var default_return_len = 100;
 var default_heartbeat_inteval = 5 * 1000;
 

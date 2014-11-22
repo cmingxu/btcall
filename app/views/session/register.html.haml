@@ -3,22 +3,30 @@
     .row
       .alert.alert-warning{:role => "alert"}= flash[:notice]
 
-  .row
-    .col-md-4.col-sm-6.col-md-offset-4
+  .row.register_form
+    .col-md-8
       .panel.panel-default
-        .panel-heading Sign In to Continue
+        .panel-heading
+          注册为
+          = Settings.site_name
+          会员
+
         .panel-body
           = form_tag "" do
             %fieldset
               .row
                 .col-sm-12.col-md-10.col-md-offset-1
-                  .from-group
-                    = text_field_tag "user[email]", "", :class => "form-control input-lg", :placeholder => "your-email@host.com"
+                  .form-group
+                    = text_field_tag "user[email]", "", :class => "form-control input-lg", :placeholder => "your-email@host.com", :id => "email_field"
 
-                  .from-group
-                    = submit_tag "Sign Up", :class => "btn btn-lg btn-primary btn-block"
+                  .form-group
+                    = submit_tag "成为会员", :class => "btn btn-lg btn-success btn-block disabled", :id => "submit_button"
 
           .panel-footer
-            Don't have an account!
-            = link_to "Sign In", "/login"
-
+            已经是
+            = Settings.site_name
+            会员？
+            = link_to "直接登陆", "/login"
+    .col-md-4
+      .well
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
