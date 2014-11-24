@@ -29,15 +29,15 @@ module Crawler
       vendors = {
         RmbUsd: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22CNYUSD%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys",
         V796: "http://api.796.com/v3/futures/ticker.html?type=weekly",
-        Okcoin: "wss://real.okcoin.cn:10440/websocket/okcoinapi",
+        Okcoin: "https://www.okcoin.cn/api/v1/ticker.do?symbol=btc_cny",
         Btce: "https://btc-e.com/api/3/ticker/btc_usd",
         Huobi: "http://market.huobi.com/staticmarket/ticker_btc_json.js",
         Bitfinex: "https://api.bitfinex.com/v1/pubticker/btcusd",
         Bitstamp: "https://www.bitstamp.net/api/ticker/"
       }
       options = {
-        interval: 5,
-        timeout: 5,
+        interval: 15,
+        timeout: 30,
         rmb2usd_rate_key: "rmb2usd",
         rmbusd_rate_interval: 5 * 60,
         max_list_len: 3 * 24 * 3600

@@ -34,6 +34,7 @@
 
   .chart_panel{"ng-controller" => "btcchartController"}
     %btc_chart_directive{"val" => "data"}
+    %span{:ng_repeat => "vendor in _.keys(vendors)"}
     .order_list.row.text-center
       .btn-group
         %button.btn.btn-primary 完成订单

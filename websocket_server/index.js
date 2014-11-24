@@ -3,7 +3,7 @@ var log4js = require('log4js');
 var redis = require("redis");
 var _ = require('lodash-node/underscore');
 
-var redis_list_key = "data_list_okcoin";
+var redis_list_key = ["v796", "okcoin", "bitstamp", "bitfinex", "huobi", "btce"];
 var default_return_len = 100;
 var default_heartbeat_inteval = 5 * 1000;
 
@@ -29,16 +29,34 @@ function format_data(raw_data_from_redis) {
 }
 
 io.on('connection', function (socket) {
-  redis.lrange(redis_list_key, 0, default_return_len, function(err, data){
-    logger.debug(format_data(data));
-    msg = {"type": "message:batch", "data": format_data(data)};
+  //initial returned value
+  multi = redis.multi();
+  for (var i = 0; i < redis_list_key.length; i ++) {
+    multi.lrange("data_list_" + redis_list_key[i], 0, default_return_len);
+  }
+  multi.exec(function(err, data){
+    formatted_data = {};
+    for (var i = 0; i < redis_list_key.length; i ++) {
+      formatted_data[redis_list_key[i]] = format_data(data[i]);
+    }
+    console.log(formatted_data);
+    msg = {"type": "message:batch", "data": formatted_data};
     socket.send(JSON.stringify(msg));
   });
 
+  //inteval returned data
   task = setInterval(function () {
-    redis.lrange(redis_list_key, 0, 0, function(err, data){
-      logger.debug(format_data(data)[0]);
-      msg = {"type": "message:single", "data": format_data(data)[0]};
+    multi = redis.multi();
+    for (var i = 0; i < redis_list_key.length; i ++) {
+      multi.lrange("data_list_" + redis_list_key[i], 0, 0);
+    }
+    multi.exec(function(err, data){
+      formatted_data = {};
+      for (var i = 0; i < redis_list_key.length; i ++) {
+        formatted_data[redis_list_key[i]] = format_data(data[i]);
+      }
+      console.log(formatted_data);
+      msg = {"type": "message:single", "data": formatted_data};
       socket.send(JSON.stringify(msg));
     });
 
