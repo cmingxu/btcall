@@ -11,7 +11,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       // constants
       var margin = {top: 20, right: 20, bottom: 50, left: 50},
       width = $window.innerWidth - 320,
-      height = 500,
+      height = 350,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()
       .range([0, width]);
