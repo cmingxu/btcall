@@ -16,6 +16,8 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       var x = d3.time.scale()
       .range([0, width]);
 
+      x.ticks(d3.time.minute, 15);
+
       var y = d3.scale.linear()
       .range([height, 0]);
 
@@ -50,11 +52,11 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         }
 
         newVal.forEach(function(d) {
-          d.date = parseDate(new Date(d.timestamp * 1000));
+          d.date = new Date(d.timestamp * 1000);
           d.value = +d.value;
         });
 
-        x.domain(d3.extent(newVal, function(d) { return d.timestamp; }));
+        x.domain(d3.extent(newVal, function(d) { return d.date; }));
         //y.domain([2400, d3.max(newVal, function(d) { return d.value; }) + 20]);
         y.domain([d3.min(newVal, function (d) { return d.value; }) - 2, d3.max(newVal, function(d) { return d.value; }) + 2]);
 

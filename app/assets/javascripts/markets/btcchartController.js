@@ -26,7 +26,9 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
       for (var i = 0; i < data_sample_len; i ++) {
         data_around_same_time = _.map(_.keys($scope.vendors), function (vendor) {
           return raw_data[vendor][i];
-        })
+        });
+
+        console.log(data_around_same_time);
 
         calculated_sample = {
           "value": _.reduce(data_around_same_time, function (memo, num) { return memo + parseFloat(num.value) }, 0) / _.keys($scope.vendors).length,
@@ -40,8 +42,6 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
 
     btcSocket.on("message", function (msg) {
       msg = JSON.parse(msg);
-      console.log(msg);
-      console.log(msg.type);
       switch (msg.type) {
         case 'message:batch':
           $scope.data = data_sample(msg.data);

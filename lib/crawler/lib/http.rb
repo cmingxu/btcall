@@ -8,7 +8,6 @@ module Http
         yield res.body if block_given?
       rescue Exception => e
         options[:logger].error "#{e}"
-        exit(1)
       end
       interval = (options[:interval] - (Time.now - begin_time)) 
       options[:logger].debug interval
