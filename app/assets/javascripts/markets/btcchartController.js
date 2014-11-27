@@ -21,24 +21,13 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
     });
 
     function data_sample(raw_data) {
-      data_sample_len = raw_data[_.first(_.keys($scope.vendors))].length
-      data_samples = [];
-      for (var i = 0; i < data_sample_len; i ++) {
-        data_around_same_time = _.map(_.keys($scope.vendors), function (vendor) {
-          return raw_data[vendor][i];
-        });
-
-        data_around_same_time = _.filter(data_around_same_time, function (d) { return d !== undefined; });
-        console.log(data_around_same_time);
-
-        calculated_sample = {
-          "value": _.reduce(data_around_same_time, function (memo, num) { return memo + parseFloat(num.value) }, 0) / _.keys($scope.vendors).length,
-          "timestamp": _.reduce(data_around_same_time, function (memo, num) { return memo + num.timestamp }, 0) / _.keys($scope.vendors).length
-        }
-        data_samples.push(calculated_sample);
-      }
-
-      return data_samples;
+      return raw_data.map(function (data) {
+        timestamp = data.split("_")[0];
+        values    = data.split("_")[1].split("|");
+        values = _.filter(values, function (v) { return v != ""});
+        sum = _.reduce(values, function (memo, v) { return memo += parseFloat(v); }, 0);
+        return {"timestamp": timestamp, "value": (sum/values.length).toFixed(2)};
+      });
     }
 
     btcSocket.on("message", function (msg) {
@@ -48,12 +37,12 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
           $scope.data = data_sample(msg.data);
           break;
         case 'message:single':
-          $scope.data.unshift(data_sample(msg.data)[0]);
+          $scope.data.push(data_sample(msg.data)[0]);
           break;
         default:
       }
-      console.log($scope.data.length);
 
+        console.log($scope.data);
     });
 
 

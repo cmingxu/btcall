@@ -11,7 +11,7 @@ module Huobi
     entry.sell =  hash["sell"]
     entry.last =  hash["last"]
     entry.vol  =  hash["vol"]
-    entry.timestamp = Time.now.to_i
+    entry.timestamp = normalize_time(options)
 
     JSON.dump(entry.to_h)
   end

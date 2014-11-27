@@ -12,7 +12,7 @@ module Btce
     entry.sell =  (hash["sell"].to_f * rate).round(3)
     entry.last =  (hash["last"].to_f * rate).round(3)
     entry.vol  =  hash["vol"].to_f
-    entry.timestamp = Time.now.to_i
+    entry.timestamp = normalize_time(options)
 
     JSON.dump(entry.to_h)
   end

@@ -12,7 +12,7 @@ module Bitfinex
     entry.sell =  (hash["ask"].to_f * rate).round(3)
     entry.last =  (hash["last_price"].to_f * rate).round(3)
     entry.vol  =  hash["vol"].to_i
-    entry.timestamp = Time.now.to_i
+    entry.timestamp = normalize_time(options)
 
     JSON.dump(entry.to_h)
   end

@@ -16,9 +16,6 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       var x = d3.time.scale()
       .range([0, width]);
 
-      x.ticks(d3.time.minute, 15);
-      x.tickFormat("%I:%M");
-
       var y = d3.scale.linear()
       .range([height, 0]);
 
@@ -54,26 +51,26 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
         newVal.forEach(function(d) {
           d.date = new Date(d.timestamp * 1000);
-          d.value = +d.value;
+          d.value = parseFloat(d.value);
         });
 
         x.domain(d3.extent(newVal, function(d) { return d.date; }));
-        //y.domain([2400, d3.max(newVal, function(d) { return d.value; }) + 20]);
         y.domain([d3.min(newVal, function (d) { return d.value; }) - 2, d3.max(newVal, function(d) { return d.value; }) + 2]);
-
         svg.append("path")
         .datum(newVal)
         .attr("class", "area")
         .attr("d", area);
 
         if(_.last(newVal)){
+          last_value = _.last(newVal).value;
          svg.append("line").
            attr("x1", 0).
-           attr("y1", Math.abs(y.invert(_.last(newVal).value))).
+           attr("y1", y(last_value)).
            attr("x2", width).
-           attr("y2", Math.abs(y.invert(_.last(newVal).value))).
+           attr("y2", y(last_value)).
            style("stroke", "red").
-           style("stroke-width", 2);
+           style("stroke-width", 2).transition().
+           duration(500);
         }
 
         svg.append("g")

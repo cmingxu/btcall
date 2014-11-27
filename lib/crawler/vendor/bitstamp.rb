@@ -12,7 +12,7 @@ module Bitstamp
     entry.sell =  (hash["ask"].to_f * rate).round(3)
     entry.last =  (hash["last"].to_f * rate).round(3)
     entry.vol  =  hash["volume"].to_i
-    entry.timestamp = Time.now.to_i
+    entry.timestamp = normalize_time(options)
 
     JSON.dump(entry.to_h)
   end

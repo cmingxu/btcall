@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+
 require "httparty"
 require "redis"
 require 'faye/websocket'
@@ -22,6 +23,7 @@ require 'vendor/btce'
 require 'vendor/bitstamp'
 require 'vendor/bitfinex'
 require 'vendor/huobi'
+require 'vendor/data_filter'
 
 
 module Crawler
@@ -34,25 +36,30 @@ module Crawler
         Btce: "https://btc-e.com/api/3/ticker/btc_usd",
         Huobi: "http://market.huobi.com/staticmarket/ticker_btc_json.js",
         Bitfinex: "https://api.bitfinex.com/v1/pubticker/btcusd",
-        Bitstamp: "https://www.bitstamp.net/api/ticker/"
+        Bitstamp: "https://www.bitstamp.net/api/ticker/",
+        DataFilter: "placeholder"
       }
       options = {
         interval: 15,
         timeout: 30,
         rmb2usd_rate_key: "rmb2usd",
         rmbusd_rate_interval: 5 * 60,
-        max_list_len: 3 * 24 * 3600
+        max_list_len: 3 * 24 * 3600,
+        vendors_list: %w(v796 okcoin btce huobi bitfinex bitstamp)
       }
 
       vendors.each do |vendor, entry|
         pid = Process.fork do
           options[:redis] = Redis.new
-          options[:redis_key] = "data_list_#{vendor.downcase}"
+          options[:redis_key_prefix] = "data_list_"
+          options[:redis_key] = "#{options[:redis_key_prefix]}#{vendor.downcase}"
           options[:initial_handshake] = "{'event':'addChannel','channel':'ok_btccny_ticker'}" if vendor.to_s == "Okcoin"
           options[:initial_handshake] = '{"symbolId":"btccny","version":1,"msgType":"reqMarketDepthTop","requestIndex":1405131204513}' if vendor.to_s == "Huobi"
           $0 = "cralwer_#{vendor}"
           options[:entry_point] = entry
           options[:logger] = Logger.new("/tmp/btcall/#{vendor}.log")
+          options[:data_filter_interval] = 3
+          options[:filtered_data_key] = "filtered_data"
           Kernel.const_get(vendor).send :run, options
         end
 
