@@ -17,6 +17,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       .range([0, width]);
 
       x.ticks(d3.time.minute, 15);
+      x.tickFormat("%I:%M");
 
       var y = d3.scale.linear()
       .range([height, 0]);
@@ -30,7 +31,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       .orient("left");
 
       var area = d3.svg.area()
-      .x(function(d) { return x(d.timestamp); })
+      .x(function(d) { return x(d.date); })
       .y0(height)
       .y1(function(d) { return y(d.value); });
 
@@ -64,6 +65,16 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .datum(newVal)
         .attr("class", "area")
         .attr("d", area);
+
+        if(_.last(newVal)){
+         svg.append("line").
+           attr("x1", 0).
+           attr("y1", Math.abs(y.invert(_.last(newVal).value))).
+           attr("x2", width).
+           attr("y2", Math.abs(y.invert(_.last(newVal).value))).
+           style("stroke", "red").
+           style("stroke-width", 2);
+        }
 
         svg.append("g")
         .attr("class", "x axis")

@@ -1,12 +1,7 @@
 module V796
   extend Http
+  extend Utils
 
-  def self.run(options)
-    craw(options) do |content|
-      options[:redis].lpush options[:redis_key], handle(content, options)
-      options[:redis].ltrim options[:redis_key], 0, options[:max_list_len]
-    end
-  end
 
   def self.handle(content, options)
     hash = JSON.parse(content)["ticker"]

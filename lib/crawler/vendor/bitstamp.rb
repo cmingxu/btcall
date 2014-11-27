@@ -1,12 +1,6 @@
 module Bitstamp
   extend Http
-
-  def self.run(options)
-    craw(options) do |content|
-      options[:redis].lpush options[:redis_key], handle(content, options)
-      options[:redis].ltrim options[:redis_key], 0, options[:max_list_len]
-    end
-  end
+  extend Utils
 
   def self.handle(content, options)
     hash = JSON.parse(content)

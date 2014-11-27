@@ -13,6 +13,7 @@ class OpenStuct; def to_json; table.to_json; end; end
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 
 require 'lib/http'
+require 'lib/utils'
 require 'lib/websocket'
 require 'lib/rmb_usd'
 require 'vendor/v796'

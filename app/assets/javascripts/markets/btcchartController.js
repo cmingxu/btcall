@@ -28,6 +28,7 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
           return raw_data[vendor][i];
         });
 
+        data_around_same_time = _.filter(data_around_same_time, function (d) { return d !== undefined; });
         console.log(data_around_same_time);
 
         calculated_sample = {
