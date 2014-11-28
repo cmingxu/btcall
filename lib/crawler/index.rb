@@ -40,7 +40,7 @@ module Crawler
         DataFilter: "placeholder"
       }
       options = {
-        interval: 15,
+        interval: 10,
         timeout: 30,
         rmb2usd_rate_key: "rmb2usd",
         rmbusd_rate_interval: 5 * 60,

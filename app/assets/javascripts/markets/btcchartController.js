@@ -33,6 +33,10 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
     btcSocket.on("message", function (msg) {
       msg = JSON.parse(msg);
       switch (msg.type) {
+        case 'message:timespan_change':
+          $scope.data = [];
+          $scope.data = data_sample(msg.data);
+          break;
         case 'message:batch':
           $scope.data = data_sample(msg.data);
           break;
@@ -58,5 +62,14 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
       chart.addSeries(null, dimple.plot.area);
       chart.draw();
     }
+
+    $scope.change_timespan = function (timespan) {
+      $scope.timespan = timespan;
+      $(".timespan_switcher .btn").removeClass("active");
+      $(".timespan_switcher .btn[data-timespan="+ timespan +"]").addClass("active");
+      //axis interval change
+      //refresh dataset
+      btcSocket.emit("timespan_change", {"timespan": timespan})
+    };
 
 }]);

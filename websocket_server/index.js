@@ -5,8 +5,8 @@ var _ = require('lodash-node/underscore');
 
 var redis_list_key = ["v796", "okcoin", "bitstamp", "bitfinex", "huobi", "btce"];
 var filtered_data_key = "filtered_data";
-var default_return_len = 5 * 20 * 5 * 4;
-var default_heartbeat_inteval = 5 * 1000;
+var default_return_len = 30 * 6;
+var default_heartbeat_inteval = 10 * 1000;
 
 //connect to redis / default access point used
 var redis = redis.createClient();
@@ -44,6 +44,13 @@ io.on('connection', function (socket) {
     });
 
   }, default_heartbeat_inteval);
+
+  socket.on('timespan_change', function (message) {
+    redis.lrange(filtered_data_key, 0, parseInt(message.timespan) / 10 , function (err, data) {
+      msg = {"type": "message:timespan_change", "data": data.reverse()};
+      socket.send(JSON.stringify(msg));
+    });
+  });
 
   socket.on('disconnect', function () {
     clearInterval(task);

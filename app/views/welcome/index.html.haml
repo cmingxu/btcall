@@ -33,6 +33,13 @@
 
 
   .chart_panel{"ng-controller" => "btcchartController"}
+    .timespan_switcher.btn-group{:role => "group"}
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
     %btc_chart_directive{"val" => "data"}
     %span{:ng_repeat => "vendor in _.keys(vendors)"}
     .order_list.row.text-center
