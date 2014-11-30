@@ -6,7 +6,7 @@ var _ = require('lodash-node/underscore');
 var redis_list_key = ["v796", "okcoin", "bitstamp", "bitfinex", "huobi", "btce"];
 var filtered_data_key = "filtered_data";
 var default_return_len = 30 * 6;
-var default_heartbeat_inteval = 10 * 1000;
+var default_heartbeat_inteval = 3 * 1000;
 
 //connect to redis / default access point used
 var redis = redis.createClient();

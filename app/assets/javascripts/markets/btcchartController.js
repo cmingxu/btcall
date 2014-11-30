@@ -45,8 +45,6 @@ market.controller("btcchartController", ["$scope", "btcSocket", function ($scope
           break;
         default:
       }
-
-        console.log($scope.data);
     });
 
 

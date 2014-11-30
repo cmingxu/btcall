@@ -21,6 +21,6 @@ module Utils
   end
 
   def normalize_time(options)
-    Time.now.to_i / (options[:interval]) * options[:interval]
+    Time.now.to_i #/ (options[:interval]) * options[:interval]
   end
 end
