@@ -5,25 +5,26 @@
     %meta{ :charset => 'utf-8' }
     %meta{ "http-equiv" => "X-UA-Compatible", :content => 'IE=edge' }
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
-    %meta{ :name => 'description', "content" => "电子商务网站，电商网站，B2C网站，电商系统，独立建站" }
 
-    = stylesheet_link_tag "application", :media => :all
+    = stylesheet_link_tag "market", :media => :all
     = csrf_meta_tags
 
-  %body.dashboard
-    = render :partial => "widgets/dashboard_header"
+  %body{"ng-app" => "market", "class" => "market"}
     .container-fluid
-      .dashboard-main.row-fluid
+      .row-fluid
+        = render :partial => "widgets/market_header"
+      .row-fluid
         .col-md-2
           = render :partial => "widgets/dashboard_sidebar"
-        .col-md-10
+        .col-md-10.market_dashboard{"ng-controller" => "vendorListController"}
           = yield
 
-        .clearfix
-    = render :partial => "widgets/footer"
+      .clearfix
+      .row-fluid.footer
+        .container
+          = render :partial => "widgets/market_footer"
+    = javascript_include_tag "market"
 
-    = javascript_include_tag "application"
-    = render :partial => "widgets/statistics" if Rails.env.production?
 
 
 

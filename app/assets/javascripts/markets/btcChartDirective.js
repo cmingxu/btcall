@@ -9,12 +9,13 @@ market.directive('btcChartDirective', ["$window", function ($window) {
     },
     link: function (scope, element, attrs) {
       // constants
-      var margin = {top: 20, right: 20, bottom: 50, left: 50},
-      width = $window.innerWidth - 320,
+      var sidebar = $(".col-md-2");
+      var margin = {top: 10, right: 10, bottom: 40, left: 50},
+      width = $window.innerWidth - sidebar.width(),
       height = 350,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()
-      .rangeRound([0, width]);
+      .rangeRound([0, width - margin.right]);
 
       var y = d3.scale.linear()
       .range([height, 0]);
@@ -34,11 +35,22 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
       // set up initial svg object
       var parseDate = d3.time.format("%x");
+      d3.select(element[0]).append("div")
+      .style("position", "absolute")
+      .style("top", "50px")
+      .style("right", "20px")
+      .style("zindex", "10")
+      .html("<div id='current_info'>" +
+            "<p><i class='fa fa-clock'></i><strong id='current_time'>3:13</strong></p>" +
+            "<p><i class='fa fa-clock'></i><strong id='current_value'>2193.99</strong></p>" +
+            "</div>");
+
       var svg = d3.select(element[0])
       .append("svg")
-      .attr("width", width)
+      .attr("width", width - margin.right)
       .attr("height", height + margin.bottom).append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 
       scope.$watch('val', function (newVal, oldVal) {
@@ -50,14 +62,13 @@ market.directive('btcChartDirective', ["$window", function ($window) {
           return;
         }
 
-
         newVal.forEach(function(d) {
           d.date = new Date(d.timestamp * 1000);
           d.value = parseFloat(d.value);
         });
 
         x.domain(d3.extent(newVal, function(d) { return d.date; }));
-        y.domain([d3.min(newVal, function (d) { return d.value; }), d3.max(newVal, function(d) { return d.value; })]);
+        y.domain([d3.min(newVal, function (d) { return d.value; }) - 1, d3.max(newVal, function(d) { return d.value; }) + 1]);
 
         //linearGradient
         svg.append("defs").append("linearGradient")
@@ -66,8 +77,8 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .attr("x2", 0).attr("y2", "100%")
         .selectAll("stop")
         .data([
-          {offset: "0%", color: "red"},
-          {offset: "100%", color: "black"},
+          {offset: "0%", color: "green"},
+          {offset: "100%", color: "white"},
         ])
         .enter().append("stop")
         .attr("offset", function(d) { return d.offset; })
@@ -78,7 +89,16 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         svg.append("path")
         .datum(newVal)
         .attr("class", "area")
-        .attr("d", area);
+        .attr("d", area)
+        .on("mouseout", function () {
+          $("#current_info").hide();
+        }).on("mousemove", function (e) {
+          $("#current_info").show();
+          console.log(moment(x.invert(d3.mouse(this)[0]), "HH:MM:SS"));
+          $("#current_info #current_time").text(moment(x.invert(d3.mouse(this)[0]), "HH:MM:SS"));
+          console.log(x.invert(d3.mouse(this)[0]));
+          console.log(d3.mouse(this));
+        });
 
         //line && mesh
         if(_.last(newVal)){
@@ -88,8 +108,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
             attr("y1", y(last_value)).
             attr("x2", width).
             attr("y2", y(last_value)).
-            style("stroke", "red").
-            style("stroke-width", 2);
+            attr("stroke-dasharray", "5,5")
 
 
           var time_spans = [],
@@ -104,10 +123,10 @@ market.directive('btcChartDirective', ["$window", function ($window) {
           //half hour and 2hs
           else if(visible_time_window >= 60 * 30 && visible_time_window <= 2 * 60 * 60){
             big_interval = 10 * 60;   // 10m
-            small_interval = 5 * 60;  // 1m
+            small_interval = 5 * 60;  // 5m
           }
           //4 hours
-          else if(visible_time_window >= 4 * 60 * 60 && visible_time_window <= 5 * 60 * 60){
+          else if(visible_time_window >= 3 * 60 * 60 && visible_time_window <= 5 * 60 * 60){
             big_interval = 30 * 60;   // 30m
             small_interval = 10 * 60;  // 10m
           }
@@ -148,7 +167,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
             svg.append("line").
               attr("x1", 0).
               attr("y1", y(v)).
-              attr("x2", width).
+              attr("x2", width - margin.right).
               attr("y2", y(v)).
               classed(cls, true);
           }
@@ -157,7 +176,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
         svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height+ ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
         svg.append("g")
@@ -169,6 +188,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text("价格 (￥)");
+
 
       }, true);
 

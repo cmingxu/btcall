@@ -1,0 +1,49 @@
+.content_wraper
+
+  .chart_panel{"ng-controller" => "btcchartController"}
+    .timespan_switcher.btn-group{:role => "group"}
+      %button.btn.btn-sm.btn-primary.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
+      %button.btn.btn-sm.btn-primary{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
+    %btc_chart_directive{"val" => "data"}
+
+
+  .operation_panel
+    .operation_panel_inner
+      .list-group{"ng-controller" => "btcOrderController"}
+        .list-group-item
+          投资金额
+          %input.input_field.input-lg.input-inline{:placeholder => "100", "ng-model" => "investment", "ng-change" => "investmentChange()"}
+          .clearfix
+        .list-group-item
+          收益率
+          %span.percent.strong {{(1+roi_rate) * 100}}%
+          .clearfix
+        .list-group-item
+          潜在收益
+          %span.net-income.strong {{roi}}
+          .clearfix
+
+        .list-group-item
+          交易者选择
+          .progress-bar
+            %span.label.label-success.yes-progress.pull-left &nbsp;
+            %span.label.label-danger.no-progress.pull-right &nbsp;
+          .progress-notion
+            %span.yes-notion 40%
+            %span.no-notion.pull-right 60%
+        .list-group-item
+          %button.btn.btn-lg.btn-success.disabled
+            %i.glyphicon.glyphicon-arrow-up
+            看涨
+          %button.btn.btn-lg.btn-danger.pull-right
+            %i.glyphicon.glyphicon-arrow-down
+            看跌
+
+
+  .clearfix
+
+

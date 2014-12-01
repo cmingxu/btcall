@@ -19,6 +19,7 @@
 //= require socket.io
 //= require angular-socket-io
 //= require bootstrap-sprockets
+//= require moment
 //= require_self
 //= require_tree ./markets
 
