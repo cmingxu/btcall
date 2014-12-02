@@ -94,10 +94,8 @@ market.directive('btcChartDirective', ["$window", function ($window) {
           $("#current_info").hide();
         }).on("mousemove", function (e) {
           $("#current_info").show();
-          console.log(moment(x.invert(d3.mouse(this)[0]), "HH:MM:SS"));
-          $("#current_info #current_time").text(moment(x.invert(d3.mouse(this)[0]), "HH:MM:SS"));
-          console.log(x.invert(d3.mouse(this)[0]));
-          console.log(d3.mouse(this));
+          $("#current_info #current_time").text(moment(x.invert(d3.mouse(this)[0])).format("hh:mm:SS"));
+          $("#current_info #current_value").text(y.invert(d3.mouse(this)[1]).toFixed(2));
         });
 
         //line && mesh
@@ -157,8 +155,6 @@ market.directive('btcChartDirective', ["$window", function ($window) {
               attr("x2", x(v)).
               attr("y2", height).
               classed(cls, true);
-            //style("stroke", "#dadada").
-            //style("stroke-width", stroke_width)
           }
 
           var y_tick_values = y.ticks().map(function(t) { return t; });
