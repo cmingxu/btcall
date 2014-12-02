@@ -10,12 +10,12 @@ market.directive('btcChartDirective', ["$window", function ($window) {
     link: function (scope, element, attrs) {
       // constants
       var sidebar = $(".col-md-2");
-      var margin = {top: 10, right: 10, bottom: 40, left: 50},
-      width = $window.innerWidth - sidebar.width(),
+      var margin = {top: 10, right: 40, bottom: 40, left: 50},
+      width = $window.innerWidth - sidebar.width() - 30, // 30 is the default padding for bootstrap col-md-x
       height = 350,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()
-      .rangeRound([0, width - margin.right]);
+      .rangeRound([0, width - margin.right - margin.left]);
 
       var y = d3.scale.linear()
       .range([height, 0]);
@@ -26,7 +26,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
       var yAxis = d3.svg.axis()
       .scale(y)
-      .orient("left");
+      .orient("right");
 
       var area = d3.svg.area()
       .x(function(d) { return x(d.date); })
@@ -37,20 +37,26 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       var parseDate = d3.time.format("%x");
       d3.select(element[0]).append("div")
       .style("position", "absolute")
-      .style("top", "50px")
-      .style("right", "20px")
+      .style("top", "100px")
       .style("zindex", "10")
       .html("<div id='current_info'>" +
             "<p><i class='fa fa-clock'></i><strong id='current_time'>3:13</strong></p>" +
             "<p><i class='fa fa-clock'></i><strong id='current_value'>2193.99</strong></p>" +
             "</div>");
 
+      d3.select(element[0]).append("div")
+      .style("position", "absolute")
+      .style("zindex", "10")
+      .html("<div id='current_value_indicator'>" +
+            "<div class='arrow-left'></div>" +
+            "<div class='indicator'>1234</span></div>" +
+            "</div>");
+
       var svg = d3.select(element[0])
       .append("svg")
-      .attr("width", width - margin.right)
+      .attr("width", width)
       .attr("height", height + margin.bottom).append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+      .attr("transform", "translate(0," + margin.top + ")");
 
 
       scope.$watch('val', function (newVal, oldVal) {
@@ -90,6 +96,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .datum(newVal)
         .attr("class", "area")
         .attr("d", area)
+        .attr("width", width  - margin.right)
         .on("mouseout", function () {
           $("#current_info").hide();
         }).on("mousemove", function (e) {
@@ -98,15 +105,44 @@ market.directive('btcChartDirective', ["$window", function ($window) {
           $("#current_info #current_value").text(y.invert(d3.mouse(this)[1]).toFixed(2));
         });
 
-        //line && mesh
-        if(_.last(newVal)){
+        //draw frame lines
+        svg.append("line").
+          attr("x1", 0).
+          attr("y1", height).
+          attr("x2", 0).
+          attr("y2", 0).
+          style("stroke-width", 2);
+
+        svg.append("line").
+          attr("x1", 0).
+          attr("y1", 0).
+          attr("x2", width - margin.left - margin.right).
+          attr("y2", 0).
+          style("stroke-width", 1);
+
+          //line && mesh
+          if(_.last(newVal)){
           last_value = _.last(newVal).value;
           svg.append("line").
             attr("x1", 0).
             attr("y1", y(last_value)).
-            attr("x2", width).
+            attr("x2", width - margin.left - margin.right).
             attr("y2", y(last_value)).
             attr("stroke-dasharray", "5,5")
+
+          $("#current_value_indicator .indicator").html("" + last_value.toString().split(".")[0] + "<span>."
+                                                        + last_value.toString().split(".")[1] +"</span>");
+          $("#current_value_indicator").css("left", width - margin.left - margin.right );
+          $("#current_value_indicator").css("top", y(last_value)  - 6 );
+
+          //down
+          if(last_value - newVal[newVal.length - 2].value < 0){
+            $("#current_value_indicator .indicator").css("background-color", "red");
+            $("#current_value_indicator .arrow-left").css("border-right", "16px solid red");
+          }else{
+            $("#current_value_indicator .indicator").css("background-color", "green");
+            $("#current_value_indicator .arrow-left").css("border-right", "16px solid green");
+          }
 
 
           var time_spans = [],
@@ -140,7 +176,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
           }
 
           //xaxis interval ticks
-          xAxis.ticks(d3.time.second, small_interval);
+          xAxis.ticks(d3.time.minute, small_interval / 60);
 
           cls = "small_interval_class";
           var x_tick_values = x.ticks().map(function(t) { return t; });
@@ -163,7 +199,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
             svg.append("line").
               attr("x1", 0).
               attr("y1", y(v)).
-              attr("x2", width - margin.right).
+              attr("x2", width - margin.right - margin.left).
               attr("y2", y(v)).
               classed(cls, true);
           }
@@ -177,13 +213,14 @@ market.directive('btcChartDirective', ["$window", function ($window) {
 
         svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("价格 (￥)");
+        .attr("transform", "translate(" + (width - margin.right - margin.left) + ",0)")
+        .call(yAxis);
+        //.append("text")
+        //.attr("transform", "rotate(-90)")
+        //.attr("y", -16)
+        //.attr("dy", ".71em")
+        //.style("text-anchor", "end")
+        //.text("价格 (￥)");
 
 
       }, true);

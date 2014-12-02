@@ -90,7 +90,8 @@ $market-link-dark-color: #535353
       opacity: .7
       display: none
     .timespan_switcher
-      margin-left: 60px
+      .btn-sm
+        padding: 1px 10px
     margin-right: 320px
     #btcchart
       width: 100%
@@ -110,6 +111,26 @@ $market-link-dark-color: #535353
     .big_interval_class
       stroke: darken(#dadada, 15%)
       stroke-width: 1
+    #current_value_indicator
+      position: relative
+      .indicator
+        position: absolute
+        background-color: red
+        top: 0px
+        left: 16px
+        padding: 5px 7px 5px 7px
+        color: white
+        font-weight: bold
+        font-style: italic
+        span
+          font-size: 18px
+
+      .arrow-left
+        width: 0
+        height: 0
+        border-top: 18px solid transparent
+        border-bottom: 18px solid transparent
+        border-right:  18px solid red
 
 
   .footer
