@@ -128,7 +128,7 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         var lineGraph = svg.append("path")
         .attr("d", lineFunction(newVal))
         .attr("stroke", "green")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 1)
         .attr("fill", "none");
 
         //draw frame lines
