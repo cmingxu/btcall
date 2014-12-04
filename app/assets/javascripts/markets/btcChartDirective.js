@@ -156,79 +156,78 @@ market.directive('btcChartDirective', ["$window", function ($window) {
             attr("y2", y(last_value)).
             attr("stroke-dasharray", "5,5")
 
-          $("#current_value_indicator .indicator").html("" + last_value.toString().split(".")[0] + "<span>."
-                                                        + last_value.toString().split(".")[1] +"</span>");
-                                                        $("#current_value_indicator").css("left", width - margin.left - margin.right );
-                                                        $("#current_value_indicator").css("top", y(last_value) );
+          $("#current_value_indicator .indicator").html("" + last_value.toString().split(".")[0] + "<span>." + last_value.toString().split(".")[1] +"</span>");
+          $("#current_value_indicator").css("left", width - margin.left - margin.right );
+          $("#current_value_indicator").css("top", y(last_value) );
 
-                                                        //down
-                                                        if(last_value - newVal[newVal.length - 2].value < 0){
-                                                          $("#current_value_indicator .indicator").css("background-color", "red");
-                                                          $("#current_value_indicator .arrow-left").css("border-right", "16px solid red");
-                                                        }else{
-                                                          $("#current_value_indicator .indicator").css("background-color", "green");
-                                                          $("#current_value_indicator .arrow-left").css("border-right", "16px solid green");
-                                                        }
+          //down
+          if(last_value - newVal[newVal.length - 2].value < 0){
+            $("#current_value_indicator .indicator").css("background-color", "red");
+            $("#current_value_indicator .arrow-left").css("border-right", "16px solid red");
+          }else{
+            $("#current_value_indicator .indicator").css("background-color", "green");
+            $("#current_value_indicator .arrow-left").css("border-right", "16px solid green");
+          };
 
 
-                                                        var time_spans = [],
-                                                        big_interval = 0,
-                                                        small_interval = 0;
-                                                        visible_time_window = _.last(newVal).timestamp - _.first(newVal).timestamp;
-                                                        //less than half an hour
-                                                        if(visible_time_window < 60 * 30){
-                                                          big_interval = 10 * 60;   // 10m
-                                                          small_interval = 1 * 60;  // 1m
-                                                        }
-                                                        //half hour and 2hs
-                                                        else if(visible_time_window >= 60 * 30 && visible_time_window <= 2 * 60 * 60){
-                                                          big_interval = 10 * 60;   // 10m
-                                                          small_interval = 5 * 60;  // 5m
-                                                        }
-                                                        //4 hours
-                                                        else if(visible_time_window >= 3 * 60 * 60 && visible_time_window <= 5 * 60 * 60){
-                                                          big_interval = 30 * 60;   // 30m
-                                                          small_interval = 10 * 60;  // 10m
-                                                        }
-                                                        //6 hours
-                                                        else if(visible_time_window >= 5 * 60 * 60 && visible_time_window <= 7 * 60 * 60){
-                                                          big_interval = 60 * 60;   // 30m
-                                                          small_interval = 30 * 60;  // 10m
-                                                        }
-                                                        //12 hours
-                                                        else if(visible_time_window >= 11 * 60 * 60){
-                                                          big_interval = 60 * 60;   // 30m
-                                                          small_interval = 30 * 60;  // 10m
-                                                        }
+          var time_spans = [],
+          big_interval = 0,
+          small_interval = 0;
+          visible_time_window = _.last(newVal).timestamp - _.first(newVal).timestamp;
+          //less than half an hour
+          if(visible_time_window < 60 * 30){
+            big_interval = 10 * 60;   // 10m
+            small_interval = 1 * 60;  // 1m
+          }
+          //half hour and 2hs
+          else if(visible_time_window >= 60 * 30 && visible_time_window <= 3 * 60 * 60){
+            big_interval = 10 * 60;   // 10m
+            small_interval = 5 * 60;  // 5m
+          }
+          //4 hours
+          else if(visible_time_window >= 3 * 60 * 60 && visible_time_window <= 5 * 60 * 60){
+            big_interval = 30 * 60;   // 30m
+            small_interval = 15 * 60;  // 10m
+          }
+          //6 hours
+          else if(visible_time_window >= 5 * 60 * 60 && visible_time_window <= 7 * 60 * 60){
+            big_interval = 60 * 60;   // 30m
+            small_interval = 30 * 60;  // 10m
+          }
+          //12 hours
+          else if(visible_time_window >= 11 * 60 * 60){
+            big_interval = 60 * 60;   // 30m
+            small_interval = 30 * 60;  // 10m
+          }
 
-                                                        //xaxis interval ticks
-                                                        xAxis.ticks(d3.time.minute, small_interval / 60);
+          //xaxis interval ticks
+          xAxis.ticks(d3.time.minute, small_interval / 60);
 
-                                                        cls = "small_interval_class";
-                                                        var x_tick_values = x.ticks().map(function(t) { return t; });
-                                                        for (var i = x_tick_values.length - 1; i >= 0; i --) {
-                                                          var v = x_tick_values[i].getTime() ;
-                                                          if( v % 1000 % small_interval == 0 ){ cls = "small_interval_class"; }
-                                                          if ( v % 1000 % big_interval == 0 ) { cls = "big_interval_class"; }
+          cls = "small_interval_class";
+          var x_tick_values = x.ticks().map(function(t) { return t; });
+          for (var i = x_tick_values.length - 1; i >= 0; i --) {
+            var v = x_tick_values[i].getTime() ;
+            if( v % 1000 % small_interval == 0 ){ cls = "small_interval_class"; }
+            if( v % 1000 % big_interval == 0 ) { cls = "big_interval_class"; }
 
-                                                          svg.append("line").
-                                                            attr("x1", x(v)).
-                                                            attr("y1", 0).
-                                                            attr("x2", x(v)).
-                                                            attr("y2", height).
-                                                            classed(cls, true);
-                                                        }
+            svg.append("line").
+              attr("x1", x(v)).
+              attr("y1", 0).
+              attr("x2", x(v)).
+              attr("y2", height).
+              classed(cls, true);
+          }
 
-                                                        var y_tick_values = y.ticks().map(function(t) { return t; });
-                                                        for (var i = y_tick_values.length - 1; i >= 0; i --) {
-                                                          var v = y_tick_values[i];
-                                                          svg.append("line").
-                                                            attr("x1", 0).
-                                                            attr("y1", y(v)).
-                                                            attr("x2", width - margin.right - margin.left).
-                                                            attr("y2", y(v)).
-                                                            classed(cls, true);
-                                                        }
+          var y_tick_values = y.ticks().map(function(t) { return t; });
+          for (var i = y_tick_values.length - 1; i >= 0; i --) {
+            var v = y_tick_values[i];
+            svg.append("line").
+              attr("x1", 0).
+              attr("y1", y(v)).
+              attr("x2", width - margin.right - margin.left).
+              attr("y2", y(v)).
+              classed(cls, true);
+          }
         } // end of if(_.last(newVal)
 
 
