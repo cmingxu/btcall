@@ -37,11 +37,11 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       var parseDate = d3.time.format("%x");
       d3.select(element[0]).append("div")
       .style("position", "absolute")
-      .style("top", "60px")
+      .style("top", "50px")
       .style("zindex", "10")
       .html("<div id='current_info'>" +
-            "<p><i class='fa fa-clock'></i><strong id='current_time'>3:13</strong></p>" +
-            "<p><i class='fa fa-clock'></i><strong id='current_value'>2193.99</strong></p>" +
+            "<p>时间：<strong id='current_time'>3:13</strong></p>" +
+            "<p>价格：<strong id='current_value'>2193.99</strong></p>" +
             "</div>");
 
       d3.select(element[0]).append("div")
@@ -106,7 +106,14 @@ market.directive('btcChartDirective', ["$window", function ($window) {
         .datum(newVal)
         .attr("class", "area")
         .attr("d", area)
-        .attr("width", width  - margin.right)
+        .attr("width", width  - margin.right);
+
+        svg.append("rect").
+          attr("x", 0).
+          attr("y", 0).
+          attr("width", width-margin.right-margin.left).
+          attr("height", height).
+          style("opacity", 0)
         .on("mouseout", function () {
           $("#current_info").hide();
           vertical_line.style("opacity", 0);
