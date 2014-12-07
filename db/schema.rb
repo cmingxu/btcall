@@ -13,6 +13,13 @@
 
 ActiveRecord::Schema.define(version: 20141101152551) do
 
+  create_table "pages", force: true do |t|
+    t.string   "slug"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tickers", force: true do |t|
     t.string   "soure"
     t.integer  "high"
@@ -34,6 +41,19 @@ ActiveRecord::Schema.define(version: 20141101152551) do
     t.datetime "last_login_at"
     t.string   "reset_password_token"
     t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "withdraws", force: true do |t|
+    t.decimal  "amount",        precision: 10, scale: 8
+    t.string   "to_bc_address"
+    t.string   "txid"
+    t.integer  "user_id"
+    t.string   "status"
+    t.datetime "verified_at"
+    t.datetime "sent_at"
+    t.text     "msg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

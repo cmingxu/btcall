@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require underscore
+//= require underscore.strings
 //= require jquery_ujs
 //= require kindeditor
 //= require moment

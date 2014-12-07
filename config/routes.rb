@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  captcha_route
   get "login" => "session#login"
   post "login" => "session#login"
   delete "logout" => "session#logout"
