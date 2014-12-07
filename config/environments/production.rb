@@ -66,13 +66,13 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
 
-  #config.serve_static_assets = false
-  #config.assets.js_compressor =  :uglifier
-  #config.assets.css_compressor = :sass
-  #config.assets.compile = true
-  #config.assets.digest = true
+  config.serve_static_assets = false
+  config.assets.js_compressor =  :uglifier
+  config.assets.css_compressor = :sass
+  config.assets.compile = true
+  config.assets.digest = true
 
-  config.assets.debug = true
-  config.assets.logger =  false
-  config.assets.raise_runtime_errors = true
+  #config.assets.debug = true
+  #config.assets.logger =  false
+  #config.assets.raise_runtime_errors = true
 end
