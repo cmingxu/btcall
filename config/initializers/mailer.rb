@@ -1,10 +1,14 @@
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-  :address => "smtp.servername.com",
-  :port => 587,
-  :domain => "whatever.org",
-  :user_name => "username",
-  :password => "password",
-  :authentication => "plain",
-  :enable_starttls_auto => true
+  :address => "smtp.163.com",
+  :port => 25,
+  :domain => "163.com",
+  :user_name => "admin@btcall.com",
+  :password => "btc2014",
+  :authentication => :login,
+  :enable_starttls_auto => false
 }
+
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.default_url_options = { host: Settings.host }
+ActionMailer::Base.logger = MAIL_LOGGER

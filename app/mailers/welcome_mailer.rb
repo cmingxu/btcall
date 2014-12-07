@@ -1,3 +1,9 @@
 class WelcomeMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: Settings.default_email_sender
+
+
+  def activation_email(user)
+    @user = user
+    mail(to: user.email, subject: "您刚刚用Email#{user.email}注册了#{Settings.site_name}的服务，请您激活 ")
+  end
 end

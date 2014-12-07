@@ -21,6 +21,7 @@ class SessionController < ApplicationController
     if request.post?
       @user = User.new(user_params)
       if @user.save
+        WelcomeMailer.activation_email(@user).deliver
         redirect_to register_path, notice: "您已经成功注册为本站会员， 一封激活邮件已经发送到#{@user.email}, 请您查收"
       else
         redirect_to register_path, alert: @user.errors[:email].first
