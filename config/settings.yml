@@ -6,6 +6,7 @@ defaults: &defaults
   spider_usd_rmb_interval: 5 * 60
   default_email_sender: "admin@btcall.com"
   host: "121.40.129.130"
+  max_allowed_value: 1
 
 development:
   <<: *defaults

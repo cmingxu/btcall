@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 class Withdraw < ActiveRecord::Base
-  attr_accessible :amount, :sent_at, :status, :user_id, :verified_at, :to_bc_address, :amount, :msg
 
   belongs_to :user
   validates :to_bc_address, :presence => { :message => "必填内容"}

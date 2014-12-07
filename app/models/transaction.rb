@@ -8,7 +8,6 @@ class Transaction < ActiveRecord::Base
     "out_site"     => "D"
 
   }
-  attr_accessible :product_id, :status, :user_id, :bc_address_or_email, :msg, :rmb_amount
   belongs_to :product
   belongs_to :user
 

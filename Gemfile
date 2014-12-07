@@ -23,6 +23,7 @@ gem 'font-awesome-rails', '~> 4.2.0'
 gem 'autoprefixer-rails'
 
 gem "haml-rails"
+gem 'state_machine'
 
 
 gem 'capistrano-rails', group: :development
