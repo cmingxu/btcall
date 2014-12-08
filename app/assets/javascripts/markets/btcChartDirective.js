@@ -11,7 +11,8 @@ market.directive('btcChartDirective', ["$window", function ($window) {
       // constants
       var sidebar = $(".col-md-2");
       var margin = {top: 10, right: 70, bottom: 40, left: 50},
-      width = $window.innerWidth - sidebar.width() - 30, // 30 is the default padding for bootstrap col-md-x
+      //width = $window.innerWidth - sidebar.width() - 30, // 30 is the default padding for bootstrap col-md-x
+      width = 700,
       height = 350,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()
