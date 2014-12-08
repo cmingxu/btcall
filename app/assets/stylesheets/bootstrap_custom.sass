@@ -52,36 +52,32 @@ $market-link-dark-color: #535353
   .content_wraper
     width: 100%
     float: left
-  .operation_panel
-    width: 320px
-    float: right
-    height: 500px
-    .operation_panel_inner
-      margin: 20px 20px
-      .input_field
-        text-align: right
-        border: none
-        width: 120px
-        height: 30px
-        float: right
-        font-weight: bold
-        font-family: italic
-        border-bottom: 1px solid gray
-      .strong
-        font-size: 30px
-        float: right
-        font-weight: bold
-        font-weight: italic
-      .progress-bar
-        margin-top: 5px
-        margin-bottom: 5px
-        height: 10px
-        width: 100%
-        .yes-progress
-          width: 40%
-        .no-progress
-          width: 60%
+    background-color: #fff
 
+  .progress-bar
+    margin-top: 5px
+    margin-bottom: 15px
+    position: relative
+    height: 20px
+    width: 100%
+    .yes-progress
+      height: 20px
+      width: 40%
+    .no-progress
+      height: 20px
+      width: 60%
+
+    .yes-percentage
+      position: absolute
+      z-index: 10
+      top: 0px
+      left: 10px
+
+    .no-percentage
+      position: absolute
+      z-index: 10
+      top: 0px
+      right: 10px
 
   .chart_panel
     #current_info
@@ -140,6 +136,11 @@ $market-link-dark-color: #535353
         border-top: 10px solid transparent
         border-bottom: 10px solid transparent
         border-right:  10px solid red
+
+  .operation_panel
+    vertical-align: bottom
+    .strong
+      font-size: 2em
 
 
   .footer
