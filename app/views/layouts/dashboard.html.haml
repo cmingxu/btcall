@@ -16,8 +16,7 @@
       .row-fluid
         .col-md-2
           = render :partial => "widgets/dashboard_sidebar"
-        .col-md-10.market_dashboard{"ng-controller" => "vendorListController"}
-          = yield
+        = yield
 
       .clearfix
       .row-fluid.footer

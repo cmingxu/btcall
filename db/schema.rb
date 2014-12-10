@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141101152551) do
+ActiveRecord::Schema.define(version: 20141210012615) do
 
   create_table "pages", force: true do |t|
     t.string   "slug"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20141101152551) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "activation_code"
   end
 
   create_table "withdraws", force: true do |t|

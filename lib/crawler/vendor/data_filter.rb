@@ -1,5 +1,6 @@
 module DataFilter
   def self.run(options)
+    sleep 20
     while true
       last = options[:redis].lrange options[:filtered_data_key], 0, 0
       if last[0]

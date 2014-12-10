@@ -9,9 +9,10 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
     },
     link: function (scope, element, attrs) {
       // constants
-      var sidebar = $(".col-md-2");
+      var left_sidebar = $(".col-md-2");
       var margin = {top: 10, right: 70, bottom: 40, left: 50},
-      width = $window.innerWidth - sidebar.width() - 30, // 30 is the default padding for bootstrap col-md-x
+      width = $window.innerWidth - left_sidebar.width() * 2 - 30 * 2, // 30 is the default padding for bootstrap col-md-x
+      //width = chart_panel.width(), // 30 is the default padding for bootstrap col-md-x
       height = 350,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()

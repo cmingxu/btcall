@@ -49,11 +49,6 @@ $dashboard-link-dark-color: #535353
     padding: 5px 15px
     height: 30px
 
-  .content_wraper
-    width: 100%
-    float: left
-    background-color: #fff
-
   .progress-bar
     margin-top: 5px
     margin-bottom: 15px
@@ -138,9 +133,27 @@ $dashboard-link-dark-color: #535353
         border-right:  10px solid red
 
   .operation_panel
-    vertical-align: bottom
-    .strong
-      font-size: 2em
+    background-color: white
+    .bid_basic_info
+      .bid_basic_info_header_label
+        display: inline
+      .bid_basic_info_header_content
+        display: inline
+
+
+    .bid_left_info
+      text-align: center
+      vertical-align: bottom
+      .bid_current_price
+        display: inline
+
+    .bid_right_info
+      margin-right: -15px
+      .strong
+        font-weight: bold
+        font-size: 1.5em
+        font-style: italic
+        color: lighten(red, 20%)
 
 
   .footer
