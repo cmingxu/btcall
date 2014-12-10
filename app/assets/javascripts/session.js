@@ -1,4 +1,4 @@
-$("#refresh_captcha").click(function () {
+$("#captcha").click(function () {
   $("#captcha").attr("src", "captcha?!=" +  Math.round((new Date()).getTime()/1000));
 });
 
@@ -73,7 +73,7 @@ function password_validation(dom) {
   }
 
   if(!length_gt_than(val, 6)){
-    display_error($dom, "您输入的密码长度太短了， 容易被破解");
+    display_error($dom, "您的密码长度不符合我们的要求");
     return false;
   }
   return true;
@@ -125,6 +125,18 @@ $("#register_form").submit(function (event) {
     }else{
       event.preventDefault();
     }
+});
 
+$("#login_form").submit(function (event) {
 
+  cleanup_error();
+
+  if(email_validation("#email_field") &&
+     password_validation("#password_field") &&
+         captcha_validation("#captcha_field"))
+    {
+      return true;
+    }else{
+      event.preventDefault();
+    }
 });

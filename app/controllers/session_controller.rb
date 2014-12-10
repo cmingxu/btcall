@@ -1,4 +1,6 @@
 class SessionController < ApplicationController
+  layout "session"
+
   before_filter :no_login_required, :except => :logout
   before_filter :validate_captcha, :only => [:login, :register]
 
@@ -21,10 +23,10 @@ class SessionController < ApplicationController
     if request.post?
       @user = User.new(user_params)
       if @user.save
-        WelcomeMailer.activation_email(@user).deliver
+        send_email do WelcomeMailer.activation_email(@user).deliver; end
         redirect_to register_path, notice: "您已经成功注册为本站会员， 一封激活邮件已经发送到#{@user.email}, 请您查收"
       else
-        redirect_to register_path, alert: @user.errors[:email].first
+        redirect_to register_path, alert: @user.errors.messages.values.flatten.first
       end
       return
     end

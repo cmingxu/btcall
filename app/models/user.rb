@@ -38,7 +38,8 @@ class User < ActiveRecord::Base
 
 
   def self.login(params)
-    if user = (self.activated.find_by_email(params[:email]) || self.activated.find_by_name(params[:name]))
+    #if user = self.activated.find_by_email(params[:email])
+    if user = self.find_by_email(params[:email])
       return nil unless user.password_valid?(params[:password])
     end
     user

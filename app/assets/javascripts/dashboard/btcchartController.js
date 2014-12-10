@@ -1,4 +1,4 @@
-market.controller("btcchartController", ["$scope", "btcSocket", function ($scope, btcSocket) {
+dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($scope, btcSocket) {
   socket_events = ["connect", "connect_error", "connect_timeout",
     "reconnect", "reconnect_attempt", "reconnect_error", "econnect_failed"];
 

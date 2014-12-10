@@ -28,19 +28,19 @@ footer
 .dashboard-main
   background-color: $second-color
 
-//market settings
-$market-bg-light-color: white
-$market-bg-dark-color: #535353
-$market-text-light-color: #535353
-$market-text-dark-color: #535353
-$market-link-light-color: white
-$market-link-dark-color: #535353
+//dashboard settings
+$dashboard-bg-light-color: white
+$dashboard-bg-dark-color: #535353
+$dashboard-text-light-color: #535353
+$dashboard-text-dark-color: #535353
+$dashboard-link-light-color: white
+$dashboard-link-dark-color: #535353
 
 
-.market
+.dashboard
   .header
-    background-color: $market-bg-dark-color
-    color: $market-bg-light-color
+    background-color: $dashboard-bg-dark-color
+    color: $dashboard-bg-light-color
   .navbar-brand
     padding: 5px 15px
     height: 30px
@@ -144,20 +144,19 @@ $market-link-dark-color: #535353
 
 
   .footer
-    background-color: $market-bg-dark-color
+    background-color: $dashboard-bg-dark-color
     .list-group
       width: 25%
     .list-group-item
       border: none
-      background-color: $market-bg-dark-color
-      color: $market-link-light-color
+      background-color: $dashboard-bg-dark-color
+      color: $dashboard-link-light-color
 
 .dashboard
-  .list-group
   .left_sidebar
+    margin-top: 15px
     margin-left: -15px
     .list-group-item
-      border: none
       &:hover
         background-color: darken($body-bg, 10%)
     .list-group-header
@@ -188,3 +187,4 @@ $market-link-dark-color: #535353
   .form-group
     margin-top: 30px
     margin-bottom: 30px
+

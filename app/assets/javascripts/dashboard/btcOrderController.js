@@ -1,4 +1,4 @@
-market.controller("btcOrderController", ["$scope", function ($scope) {
+dashboard.controller("btcOrderController", ["$scope", function ($scope) {
 
   $scope.direction = "down";
   $scope.investment = 100;

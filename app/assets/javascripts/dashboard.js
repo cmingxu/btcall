@@ -21,6 +21,6 @@
 //= require bootstrap-sprockets
 //= require moment
 //= require_self
-//= require_tree ./markets
+//= require_tree ./dashboard
 
-var market = angular.module("market", ["btford.socket-io"]);
+var dashboard = angular.module("dashboard", ["btford.socket-io"]);
