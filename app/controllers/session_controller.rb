@@ -32,6 +32,16 @@ class SessionController < ApplicationController
     end
   end
 
+  def activation
+    @user = User.find_by_activation_code_and_email(params[:activation_code], params[:email])
+    if @user
+      @user.active!
+      @active = true
+    else
+      @active = false
+    end
+  end
+
   def logout
     session.delete[:user_id]
   end
@@ -42,8 +52,6 @@ class SessionController < ApplicationController
 
   def validate_captcha
     return true if request.get?
-
-    ap user_params
 
     if !valid_captcha?(user_params[:captcha])
       redirect_to :back, alert: "您输入的验证码有误" and return false

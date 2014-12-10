@@ -38,8 +38,7 @@ class User < ActiveRecord::Base
 
 
   def self.login(params)
-    #if user = self.activated.find_by_email(params[:email])
-    if user = self.find_by_email(params[:email])
+    if user = self.activated.find_by_email(params[:email])
       return nil unless user.password_valid?(params[:password])
     end
     user
@@ -49,9 +48,15 @@ class User < ActiveRecord::Base
     self.encrypted_password == Digest::MD5.hexdigest([self.salt, pass].join(":"))
   end
 
+  def active!
+    self.update_column :activation_code, ""
+    self.update_column :status, "activated"
+  end
+
   private
   def set_initial_status
     self.update_column :status, User::STATUS.first
     self.update_column :reset_password_token, SecureRandom.hex(16)
+    self.update_column :activation_code, SecureRandom.hex(32)
   end
 end
