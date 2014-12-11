@@ -36,14 +36,19 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
       switch (msg.type) {
         case 'message:timespan_change':
           $scope.data = [];
-          $scope.data = data_sample(msg.data);
-          break;
+        $scope.data = data_sample(msg.data);
+        break;
         case 'message:batch':
           $scope.data = data_sample(msg.data);
-          break;
+        break;
         case 'message:single':
-          $scope.data.push(data_sample(msg.data)[0]);
-          break;
+          latest_data = data_sample(msg.data)[0];
+          if($scope.current_price && latest_data.value){
+            $scope.trend = $scope.current_price - latest_data.value < 0 ? "up" : "down";
+          }
+          $scope.current_price = latest_data.value;
+          $scope.data.push(latest_data);
+        break;
         default:
       }
     });
@@ -61,5 +66,13 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
       //refresh dataset
       btcSocket.emit("timespan_change", {"timespan": timespan})
     };
+    $scope.direction = "down";
+    $scope.investment = 100;
+    $scope.roi_rate = 0.9;
+    $scope.roi = 190;
+
+    $scope.investmentChange = function () {
+      $scope.roi = Math.floor($scope.investment * (1 + $scope.roi_rate));
+    }
 
 }]);

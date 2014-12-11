@@ -53,8 +53,9 @@ $dashboard-link-dark-color: #535353
     margin-top: 5px
     margin-bottom: 15px
     position: relative
-    height: 20px
-    width: 100%
+    height: 12px
+    width: 60%
+    margin-left: 15%
     .yes-progress
       height: 20px
       width: 40%
@@ -75,6 +76,7 @@ $dashboard-link-dark-color: #535353
       right: 10px
 
   .chart_panel
+    margin-left: -15px
     #current_info
       #rect-notion
         margin-left: 10px
@@ -94,7 +96,6 @@ $dashboard-link-dark-color: #535353
     .timespan_switcher
       .btn-sm
         padding: 1px 10px
-    margin-right: 320px
     #btcchart
       width: 100%
     .btn
@@ -133,28 +134,15 @@ $dashboard-link-dark-color: #535353
         border-right:  10px solid red
 
   .operation_panel
-    background-color: white
-    .bid_basic_info
-      .bid_basic_info_header_label
-        display: inline
-      .bid_basic_info_header_content
-        display: inline
-
-
-    .bid_left_info
-      text-align: center
-      vertical-align: bottom
-      .bid_current_price
-        display: inline
-
-    .bid_right_info
-      margin-right: -15px
+    .col-md-2
+      padding-right: 0px
+    .operation_right_info
+      float: right
       .strong
+        font-size: 2.0em
         font-weight: bold
-        font-size: 1.5em
         font-style: italic
-        color: lighten(red, 20%)
-
+        color: darken(red, 20%)
 
   .footer
     background-color: $dashboard-bg-dark-color
@@ -167,8 +155,8 @@ $dashboard-link-dark-color: #535353
 
 .dashboard
   .left_sidebar
-    margin-top: 15px
-    margin-left: -15px
+    width: 180px
+    float: left
     .list-group-item
       &:hover
         background-color: darken($body-bg, 10%)

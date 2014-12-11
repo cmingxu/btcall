@@ -1,17 +1,5 @@
-.col-md-8
-  .chart_panel{"ng-controller" => "btcchartController"}
-    .timespan_switcher.btn-group{:role => "group"}
-      %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
-      %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
-      %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
-      %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
-      %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
-      %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
-    %btc_chart_directive{"val" => "data"}
-
-    .clearfix
-
-  .operation_panel{"ng-controller" => "btcOrderController"}
+.row-fluid
+  .col-lg-9.col-md-9.col-sm-12.operation_panel{"ng-controller" => "btcchartController"}
     %ul.list-group.bid_basic_info
       %li.list-group-item.col-md-4
         .bid_basic_info_header_label 资产：
@@ -22,80 +10,45 @@
       %li.list-group-item.col-md-4
         .bid_basic_info_header_label 金额：
         .bid_basic_info_header_content
-          %input.input_field.input-inline{:placeholder => "100", "ng-model" => "investment", "ng-change" => "investmentChange()"}
-
-    .bid_left_info
-      .col-md-9
+          100
+          -#%input.input_field.input-inline{:placeholder => "100", "ng-model" => "investment", "ng-change" => "investmentChange()"}
+    .chart_panel.col-md-10
+      .timespan_switcher.btn-group{:role => "group"}
+        %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
+        %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
+        %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
+        %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
+        %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
+        %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
+      %btc_chart_directive{"val" => "data"}
+      .progress-bar
+        %span.yes-percentage 40%
+        %span.label.label-success.yes-progress.pull-left &nbsp;
+        %span.label.label-danger.no-progress.pull-right &nbsp;
+        %span.no-percentage 60%
+    %ul.list-group.operation_right_info.col-md-2.text-right
+      %li.list-group-item
+        %span.notion
+          潜在收益
+        .strong {{roi}}
+      %li.list-group-item
+        %span.notion
+          订单收益比
+        .strong {{(1+roi_rate) * 100}}%
+      %li.list-group-item
+        %span.notion
+          剩余时间
+        .strong 5:10
+      %li.list-group-item
         %button.btn.btn-success
           %i.glyphicon.glyphicon-arrow-up
           看涨
-        .bid_current_price
-          1234.3
+      %li.list-group-item.bid_current_price.strong
+        {{current_price}}
+      %li.list-group-item
         %button.btn.btn-danger
           %i.glyphicon.glyphicon-arrow-down
           看跌
 
-        .progress-bar
-          %span.yes-percentage 40%
-          %span.label.label-success.yes-progress.pull-left &nbsp;
-          %span.label.label-danger.no-progress.pull-right &nbsp;
-          %span.no-percentage 60%
-
-      .col-md-3
-        %ul.list-group.bid_right_info
-          %li.list-group-item
-            %span.notion
-              潜在收益
-            .strong {{roi}}
-          %li.list-group-item
-            %span.notion
-              订单收益比
-            .strong {{(1+roi_rate) * 100}}%
-          %li.list-group-item
-            %span.notion
-              剩余时间
-            .strong 5:10
-
-    .clearfix
-  .bids
-    .btn-group{:role => "group"}
-      %button.btn.btn-success 持有合约
-      %button.btn.btn-success 历史合约
-    %table.table.table-bordered
-      %thead
-        %th 时间
-        %th 结算价
-        %th 购时价
-        %th 涨跌
-        %th 价格
-        %th 赔率
-      %tbody
-        %tr
-          %td 11/10 11:00
-          %td 2340.88
-          %td 2134.78
-          %td 涨
-          %td 200
-          %td 90%
-        %tr
-          %td 11/10 10:00
-          %td 2340.88
-          %td 2134.78
-          %td 涨
-          %td 200
-          %td 90%
-        %tr
-          %td 11/10 10:00
-          %td 2340.88
-          %td 2134.78
-          %td 涨
-          %td 200
-          %td 90%
-
-.col-md-2
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-.clearfix
-
-
+  .col-md-1
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
