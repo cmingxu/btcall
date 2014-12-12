@@ -11,7 +11,7 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
       // constants
       var chart_panel = $(".chart_panel");
       var operation_right_panel = $(".operation_right_panel");
-      var margin = {top: 10, right: 10, bottom: 40, left: 40},
+      var margin = {top: 10, right: 20, bottom: 40, left: 40},
       //width = $window.innerWidth - left_sidebar.width() * 3 - 30 * 2, // 30 is the default padding for bootstrap col-md-x
       width = chart_panel.width(), // 30 is the default padding for bootstrap col-md-x
       height = Math.floor(width * 2 / 5),

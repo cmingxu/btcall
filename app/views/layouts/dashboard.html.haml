@@ -13,13 +13,12 @@
     .container-fluid
       .row-fluid
         = render :partial => "widgets/dashboard_header"
-      .left_sidebar
-        = render :partial => "widgets/dashboard_sidebar"
-      .main
-        .container-fluid
-          = yield
 
-      .clearfix
+    .wrapper
+      .sidebar
+        = render :partial => "widgets/dashboard_sidebar"
+      .page-wraper
+        = yield
       .row-fluid.footer
         .container
           = render :partial => "widgets/dashboard_footer"

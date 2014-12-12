@@ -24,3 +24,5 @@
 //= require_tree ./dashboard
 
 var dashboard = angular.module("dashboard", ["btford.socket-io"]);
+
+

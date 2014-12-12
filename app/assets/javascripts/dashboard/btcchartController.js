@@ -1,4 +1,4 @@
-dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($scope, btcSocket) {
+dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", function ($scope, btcSocket, $interval) {
   socket_events = ["connect", "connect_error", "connect_timeout",
     "reconnect", "reconnect_attempt", "reconnect_error", "econnect_failed"];
 
@@ -41,6 +41,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
         case 'message:batch':
           $scope.data = data_sample(msg.data);
           $scope.open_at_times_change();
+          $scope.selected_opening = $scope.open_times[0];
         break;
         case 'message:single':
           latest_data = data_sample(msg.data)[0];
@@ -62,16 +63,20 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
 
     $scope.open_at_times_change = function () {
       var  next_10_min_round = Math.round((new Date()).getTime() / 1000 / 600) * 600 * 1000 + 600 * 1000;
-      console.log(next_10_min_round);
       $scope.open_times = [
         new Date(next_10_min_round),
         new Date(next_10_min_round + 10 * 60 * 1000),
         new Date(next_10_min_round + 20 * 60 * 1000),
         new Date(next_10_min_round + 30 * 60 * 1000),
         new Date(next_10_min_round + 40 * 60 * 1000),
-        new Date(next_10_min_round + 50 * 60 * 1000),
-        new Date(next_10_min_round + 60 * 60 * 1000)
+        new Date(next_10_min_round + 50 * 60 * 1000)
       ];
+    }
+
+    $scope.format_opening = function (opening) {
+      var hour = opening.getHours();
+      var min  = opening.getMinutes()
+      return (hour.length == 1 ? "0" + hour : hour) + ":" + (min.length == 1 ? "0" + min : min);
     }
 
     $scope.change_timespan = function (timespan) {
@@ -82,6 +87,19 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
       //refresh dataset
       btcSocket.emit("timespan_change", {"timespan": timespan})
     };
+
+    $scope.opening_selector_open = function () {
+      $(".opening_items").toggle();
+    }
+
+    $scope.opening_selected = function (index) {
+      $scope.selected_opening = $scope.open_times[index];
+      $(".opening_items").hide();
+    }
+
+    $interval(function () {
+      $scope.remain_time =  moment($scope.selected_opening - (new Date())).format("mm:ss");
+    }, 1000);
 
     $scope.direction = "down";
     $scope.investment = 100;
