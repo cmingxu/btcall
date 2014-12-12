@@ -6,7 +6,11 @@
         .bid_basic_info_header_content BTC/RMB
       %li.list-group-item.col-md-4
         .bid_basic_info_header_label 到期时间：
-        .bid_basic_info_header_content 21:10
+        .bid_basic_info_header_content
+          %ul.list-group
+            %li.list-group-item{"ng-repeat" => "open_at in open_times"}
+              {{moment(open_at).format("ddd")}}
+
       %li.list-group-item.col-md-4
         .bid_basic_info_header_label 金额：
         .bid_basic_info_header_content

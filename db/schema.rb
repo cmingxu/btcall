@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141210012615) do
+ActiveRecord::Schema.define(version: 20141212000219) do
+
+  create_table "bids", force: true do |t|
+    t.datetime "open_at"
+    t.string   "trend"
+    t.boolean  "win"
+    t.integer  "amount"
+    t.integer  "user_id"
+    t.string   "status"
+    t.integer  "order_price"
+    t.integer  "open_price"
+    t.integer  "win_reward"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", force: true do |t|
     t.string   "slug"

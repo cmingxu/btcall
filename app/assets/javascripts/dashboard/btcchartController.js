@@ -40,6 +40,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
         break;
         case 'message:batch':
           $scope.data = data_sample(msg.data);
+          $scope.open_at_times_change();
         break;
         case 'message:single':
           latest_data = data_sample(msg.data)[0];
@@ -48,6 +49,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
           }
           $scope.current_price = latest_data.value;
           $scope.data.push(latest_data);
+          $scope.open_at_times_change();
         break;
         default:
       }
@@ -58,6 +60,20 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
       $scope.chart_dom = $("#btcchart");
     }
 
+    $scope.open_at_times_change = function () {
+      var  next_10_min_round = Math.round((new Date()).getTime() / 1000 / 600) * 600 * 1000 + 600 * 1000;
+      console.log(next_10_min_round);
+      $scope.open_times = [
+        new Date(next_10_min_round),
+        new Date(next_10_min_round + 10 * 60 * 1000),
+        new Date(next_10_min_round + 20 * 60 * 1000),
+        new Date(next_10_min_round + 30 * 60 * 1000),
+        new Date(next_10_min_round + 40 * 60 * 1000),
+        new Date(next_10_min_round + 50 * 60 * 1000),
+        new Date(next_10_min_round + 60 * 60 * 1000)
+      ];
+    }
+
     $scope.change_timespan = function (timespan) {
       $scope.timespan = timespan;
       $(".timespan_switcher .btn").removeClass("active");
@@ -66,6 +82,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", function ($sc
       //refresh dataset
       btcSocket.emit("timespan_change", {"timespan": timespan})
     };
+
     $scope.direction = "down";
     $scope.investment = 100;
     $scope.roi_rate = 0.9;

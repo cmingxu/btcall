@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_at: 2014-12-12 08:02:20
+  trend: MyString
+  win: false
+  amount: 1
+  user_id: 1
+  status: MyString
+  order_price: 1
+  open_price: 1
+  win_reward: 1
+
+two:
+  open_at: 2014-12-12 08:02:20
+  trend: MyString
+  win: false
+  amount: 1
+  user_id: 1
+  status: MyString
+  order_price: 1
+  open_price: 1
+  win_reward: 1
