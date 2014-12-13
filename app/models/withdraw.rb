@@ -1,4 +1,21 @@
 # -*- encoding : utf-8 -*-
+# == Schema Information
+#
+# Table name: withdraws
+#
+#  id            :integer          not null, primary key
+#  amount        :decimal(10, 8)
+#  to_bc_address :string(255)
+#  txid          :string(255)
+#  user_id       :integer
+#  status        :string(255)
+#  verified_at   :datetime
+#  sent_at       :datetime
+#  msg           :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 class Withdraw < ActiveRecord::Base
 
   belongs_to :user

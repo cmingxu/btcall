@@ -1,4 +1,4 @@
-dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", function ($scope, btcSocket, $interval) {
+dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", "$http", function ($scope, btcSocket, $interval, $http) {
   socket_events = ["connect", "connect_error", "connect_timeout",
     "reconnect", "reconnect_attempt", "reconnect_error", "econnect_failed"];
 
@@ -108,6 +108,20 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
 
     $scope.investmentChange = function () {
       $scope.roi = Math.floor($scope.investment * (1 + $scope.roi_rate));
+    }
+
+    $scope.make_transaction = function () {
+      $("#submit_bid_button").text("提交中...").addClass("disabled");
+      var bid = {bid: {trend: $scope.direction,
+        amount: $scope.investment,
+        open_at: $scope.selected_opening}};
+
+      $http.post("/dashboard/bids.json", bid, {"headers": {"Content-Type": "application/json"}}).success(function(data, status, headers, config){
+        console.log('成功');
+        $('#myModal').modal('hide')
+      }).error(function(data, status, headers, config){
+        console.log('失败');
+      });
     }
 
 }]);

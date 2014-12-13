@@ -81,5 +81,5 @@
 
           .modal-footer
             %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
-            %button.btn.btn-primary 确定交易
+            %button.btn.btn-primary#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
 

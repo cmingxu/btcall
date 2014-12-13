@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get "/" => "base#index"
 
-    resources :orders
+    resources :bids, :only => [:create]
   end
 
   namespace :admin do
