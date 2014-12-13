@@ -1,6 +1,6 @@
 .container-fluid
-  .row-fluid
-    .operation_panel.col-md-10{"ng-controller" => "btcchartController"}
+  .row-fluid{"ng-controller" => "btcchartController"}
+    .operation_panel.col-md-10
       %ul.list-group.bid_basic_info
         %li.list-group-item.col-md-4
           .bid_basic_info_header_label 资产：
@@ -47,14 +47,39 @@
             剩余时间
           .strong {{remain_time}}
         %li.list-group-item
-          %button.btn.btn-success
+          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal"}
             %i.glyphicon.glyphicon-arrow-up
             看涨
         %li.list-group-item.bid_current_price.strong
           {{current_price}}
         %li.list-group-item
-          %button.btn.btn-danger
+          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal"}
             %i.glyphicon.glyphicon-arrow-down
             看跌
     .col-md-2
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+    .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{"data-dismiss" =>  "modal"}
+              %span{"aria-hidden" => "true"} &times;
+              %span.sr-only 关
+            %h4.modal-title#myModalLabel Modal Title
+          .modal-body
+            %ul.list-group
+              .list-group-item
+                到期时间{{format_opening(selected_opening)}}
+              .list-group-item
+                下注金额{{investment}}
+              .list-group-item
+                剩余时间{{remain_time}}
+              .list-group-item
+                当前价格{{current_price}}
+
+
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
+            %button.btn.btn-primary 确定交易
+
