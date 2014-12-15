@@ -17,4 +17,16 @@
 #
 
 class Bid < ActiveRecord::Base
+  belongs_to :user
+  before_validation :set_defaults, :on => :create
+
+  enum status: [:new_created, :open]
+
+  def set_defaults
+    self.win = false
+    #self.new_created!
+    self.order_price = current_btc_price_in_int
+  end
+
+
 end

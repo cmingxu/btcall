@@ -74,8 +74,12 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     }
 
     $scope.format_opening = function (opening) {
+      if(_.isUndefined(opening)){
+        return "未设置";
+      }
       var hour = opening.getHours();
       var min  = opening.getMinutes()
+
       return (hour.length == 1 ? "0" + hour : hour) + ":" + (min.length == 1 ? "0" + min : min);
     }
 
@@ -113,14 +117,15 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     $scope.make_transaction = function () {
       $("#submit_bid_button").text("提交中...").addClass("disabled");
       var bid = {bid: {trend: $scope.direction,
-        amount: $scope.investment,
+        amount: Math.abs(parseFloat($scope.investment) * 100),
         open_at: $scope.selected_opening}};
 
       $http.post("/dashboard/bids.json", bid, {"headers": {"Content-Type": "application/json"}}).success(function(data, status, headers, config){
-        console.log('成功');
         $('#myModal').modal('hide')
+        $("#submit_bid_button").text("提交订单").removeClass("disabled");
+
       }).error(function(data, status, headers, config){
-        console.log('失败');
+        $("#submit_bid_button").text("提交订单").removeClass("disabled");
       });
     }
 

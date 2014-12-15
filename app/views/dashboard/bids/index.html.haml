@@ -1,0 +1,22 @@
+.container-fluid
+  .row-fluid
+    %table.table.table-stripped.table-condensed
+      %thead
+        %th 时间
+        %th 结算价
+        %th 购时价
+        %th 涨跌
+        %th 投注
+        %th 赔率
+
+      %tbody
+        - @bids.each do |bid|
+          %tr
+            %td= bid.created_at.to_s(:btc_short)
+            %td= int_to_float(bid.open_price)
+            %td= int_to_float(bid.order_price)
+            %td= up_or_down(bid.trend)
+            %td= int_to_float(bid.amount)
+            %td= odds_in_percentage
+
+    = paginate @bids

@@ -1,0 +1,1 @@
+class NoCurrentBtcPriceFound < StandardError; end

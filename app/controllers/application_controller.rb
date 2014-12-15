@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include HelperUtils
   # reset captcha code after each request for security
   after_filter :reset_last_captcha_code!
 
@@ -8,11 +9,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def admin_required
-    true
+    current_user && current_user.admin?
   end
 
   def login_required
-    true
+    !!current_user
   end
 
   def current_user

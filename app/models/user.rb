@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
 
   after_create :set_initial_status
 
+  has_many :bids, :dependent => :destroy
+
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }
   end
@@ -52,6 +54,9 @@ class User < ActiveRecord::Base
   def active!
     self.update_column :activation_code, ""
     self.update_column :status, "activated"
+  end
+
+  def admin?
   end
 
   private

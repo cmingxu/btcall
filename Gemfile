@@ -31,6 +31,8 @@ gem 'awesome_print', group: :development
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
+gem 'kaminari'
+
 
 gem 'settingslogic', '~> 2.0.9'
 gem 'httparty', '~>0.13.1'

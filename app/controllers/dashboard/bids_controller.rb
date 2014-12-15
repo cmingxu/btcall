@@ -1,7 +1,12 @@
 class Dashboard::BidsController < Dashboard::BaseController
   skip_before_action :verify_authenticity_token
+
+  def index
+    @bids = current_user.bids.page(params[:page])
+  end
+
   def create
-    @bid = Bid.new(bid_params)
+    @bid = current_user.bids.new(bid_params)
 
     respond_to do |format|
       if @bid.save
