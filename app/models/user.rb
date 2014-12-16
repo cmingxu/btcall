@@ -54,6 +54,11 @@ class User < ActiveRecord::Base
   def active!
     self.update_column :activation_code, ""
     self.update_column :status, "activated"
+    self.update_column :account, self.account_name
+  end
+
+  def account_name
+    self.account || "user-#{self.id}-#{SecureRandom.hex(16)}"
   end
 
   def admin?
