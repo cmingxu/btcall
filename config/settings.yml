@@ -9,6 +9,7 @@ defaults: &defaults
   max_allowed_value: 1
   send_email_enabled: false
   odds: 1.9
+  listtransactions_count: 50
   bitcoind:
     host: 'localhost'
     user: 'bitcoinrpc'

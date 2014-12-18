@@ -56,6 +56,7 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    chronic (0.10.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -205,6 +206,8 @@ GEM
       rack
       raindrops (~> 0.7)
     websocket-driver (0.3.5)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
     yard (0.8.7.6)
 
 PLATFORMS
@@ -241,3 +244,4 @@ DEPENDENCIES
   state_machine
   uglifier (>= 1.3.0)
   unicorn
+  whenever

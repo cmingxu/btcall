@@ -1,5 +1,6 @@
 class Address < ActiveRecord::Base
   belongs_to :user
+  has_many :recharges
 
   before_validation :on => :create do
     self.account_name = self.user.account_name

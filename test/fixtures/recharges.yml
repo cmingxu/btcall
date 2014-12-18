@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  txid: MyString
+  status: MyString
+  address: MyString
+  user_id: 1
+  amount: 
+  amount_decimal: 9.99
+
+two:
+  txid: MyString
+  status: MyString
+  address: MyString
+  user_id: 1
+  amount: 
+  amount_decimal: 9.99

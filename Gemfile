@@ -24,6 +24,8 @@ gem 'autoprefixer-rails'
 
 gem "haml-rails"
 gem 'state_machine'
+gem 'whenever', :require => false
+
 
 
 gem 'capistrano-rails', group: :development

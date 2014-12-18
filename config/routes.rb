@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get "/" => "base#index"
 
     resources :bids, :only => [:create, :index]
+    resources :recharges, :only => [:index]
   end
 
   namespace :admin do

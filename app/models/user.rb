@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   has_many :bids, :dependent => :destroy
   has_one :address
+  has_many :recharges
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }

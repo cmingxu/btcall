@@ -1,0 +1,18 @@
+.container-fluid
+  .row-fluid
+    %table.table.table-stripped.table-condensed
+      %thead
+        %th 时间
+        %th 数量
+        %th TXID
+
+      %tbody
+        - @recharges.each do |recharge|
+          %tr
+            %td= recharge.created_at.to_s(:btc_short)
+            %td= int_to_float(recharge.amount)
+            %td= bid.txid
+
+    = paginate @recharges
+
+%h2 您的充值地址是#{current_user.address.btcaddress}
