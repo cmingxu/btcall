@@ -9,6 +9,11 @@ defaults: &defaults
   max_allowed_value: 1
   send_email_enabled: false
   odds: 1.9
+  bitcoind:
+    host: 'localhost'
+    user: 'bitcoinrpc'
+    password: 'a98bb3ac968ec4d48f578b12baa9bd86'
+    port: '8332'
 
 development:
   <<: *defaults

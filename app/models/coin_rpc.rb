@@ -25,7 +25,7 @@ class CoinRPC
 
     def http_post_request(post_body)
       #uri = URI.parse "http://Ulysseys:YourSuperGreatPasswordNumber_385593@42.96.173.64:8332"
-      uri = URI.parse "http://Ulysseys:YourSuperGreatPasswordNumber_385593@106.186.27.55:8332"
+      uri = URI.parse "http://#{Settings.bitcoind.user}:#{Settings.bitcoind.password}@#{Settings.bitcoind.host}:#{Settings.bitcoind.port}"
       http    = Net::HTTP.new(uri.host, uri.port)
       request = Net::HTTP::Post.new(uri.request_uri)
       request.basic_auth uri.user, uri.password

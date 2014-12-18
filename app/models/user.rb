@@ -25,10 +25,12 @@ class User < ActiveRecord::Base
   validates :email, presence: { :message => "Email不能为空" }
   validates :email, uniqueness: { :message => "Email已经存在， 尝试我们的找回密码功能" }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create, message: "Email格式不正确" }
+  validate :sufficient_btc_balance, :on => :update
 
   after_create :set_initial_status
 
   has_many :bids, :dependent => :destroy
+  has_one :address
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }
@@ -52,9 +54,11 @@ class User < ActiveRecord::Base
   end
 
   def active!
+    return true if self.activated?
     self.update_column :activation_code, ""
     self.update_column :status, "activated"
     self.update_column :account, self.account_name
+    self.address.create!
   end
 
   def account_name
@@ -64,10 +68,32 @@ class User < ActiveRecord::Base
   def admin?
   end
 
+  def activated?
+    self.status == "activated"
+  end
+
+  def win_rate
+    self.bids.count.zero? ? 0 : (self.bids.win.count / self.bids.count.to_f)
+  end
+
+  def btc_balance_enough?(amount)
+    self.btc_balance > amount
+  end
+
+  def sufficient_btc_balance
+    self.errors.add :btc_balance, "账户内比特币余额不足" if self.btc_balance < 0
+  end
+
+  def adjust_btc_balance(amount)
+    self.btc_balance += amount
+    self.save
+  end
+
   private
   def set_initial_status
     self.update_column :status, User::STATUS.first
     self.update_column :reset_password_token, SecureRandom.hex(16)
     self.update_column :activation_code, SecureRandom.hex(32)
+    self.update_column :btc_balance, 0
   end
 end

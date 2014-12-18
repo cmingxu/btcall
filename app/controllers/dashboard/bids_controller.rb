@@ -7,12 +7,13 @@ class Dashboard::BidsController < Dashboard::BaseController
 
   def create
     @bid = current_user.bids.new(bid_params)
+    @bid.open_at_code = open_at_code(@bid.open_at)
 
     respond_to do |format|
-      if @bid.save
+      if @bid.make_bid
         format.json  { render :json => {:result => true}}
       else
-        format.json  { render :json => {:result => false}}
+        format.json  { render :json => {:result => false}, :status => :unprocessable_entity }
       end
     end
   end

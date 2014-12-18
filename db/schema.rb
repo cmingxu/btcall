@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212000219) do
+ActiveRecord::Schema.define(version: 20141217143611) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "account_name"
+    t.integer  "user_id"
+    t.string   "btcaddress"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bids", force: true do |t|
     t.datetime "open_at"
@@ -25,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141212000219) do
     t.integer  "win_reward"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "open_at_code"
   end
 
   create_table "pages", force: true do |t|
@@ -58,6 +67,8 @@ ActiveRecord::Schema.define(version: 20141212000219) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "activation_code"
+    t.string   "account"
+    t.decimal  "btc_balance",          precision: 10, scale: 4
   end
 
   create_table "withdraws", force: true do |t|

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class WubalaAccount
+class BtcallAccount
   class << self
     attr_accessor :account_name
     include BcHelper
@@ -27,6 +27,6 @@ class WubalaAccount
     end
   end
 
-  self.account_name = "wubala"
+  self.account_name = "btcall"
 
 end

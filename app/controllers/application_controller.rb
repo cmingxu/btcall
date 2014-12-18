@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
-    !!current_user
+    if(!current_user)
+      redirect_to root_path and return false
+    end
   end
 
   def current_user
