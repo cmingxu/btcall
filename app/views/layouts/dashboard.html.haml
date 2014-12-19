@@ -7,6 +7,7 @@
     %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
 
     = stylesheet_link_tag "dashboard", :media => :all
+    = javascript_include_tag "dashboard"
     = csrf_meta_tags
 
   %body{"ng-app" => "dashboard", "class" => "dashboard"}
@@ -22,7 +23,6 @@
       .row-fluid.footer
         .container
           = render :partial => "widgets/dashboard_footer"
-    = javascript_include_tag "dashboard"
 
 
 

@@ -1,5 +1,16 @@
 .container-fluid
   .row-fluid
+    %h4
+      充值地址
+      %label.label.label-warning #{current_user.address.btcaddress}
+      %button.btn.btn-primary#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.address.btcaddress}", :title => ""}
+        拷贝
+        = fa_icon(:clipboard)
+    :javascript
+      $(document).ready(function() {
+        var clip = new ZeroClipboard($("#d_clip_button"))
+      });
+  .row-fluid
     %table.table.table-stripped.table-condensed
       %thead
         %th 时间
@@ -15,4 +26,3 @@
 
     = paginate @recharges
 
-%h2 您的充值地址是#{current_user.address.btcaddress}

@@ -14,6 +14,9 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  activation_code      :string(255)
+#  account              :string(255)
+#  btc_balance          :decimal(10, 4)
+#  withdraw_address     :string(255)
 #
 
 require 'digest/md5'
@@ -32,6 +35,7 @@ class User < ActiveRecord::Base
   has_many :bids, :dependent => :destroy
   has_one :address
   has_many :recharges
+  has_many :withdraws
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }

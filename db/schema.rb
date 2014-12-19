@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218150013) do
+ActiveRecord::Schema.define(version: 20141219143402) do
 
   create_table "addresses", force: true do |t|
     t.string   "account_name"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20141218150013) do
     t.string   "activation_code"
     t.string   "account"
     t.decimal  "btc_balance",          precision: 10, scale: 4
+    t.string   "withdraw_address"
   end
 
   create_table "withdraws", force: true do |t|

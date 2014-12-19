@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     resources :bids, :only => [:create, :index]
     resources :recharges, :only => [:index]
+    resources :withdraws, :only => [:index]
   end
 
   namespace :admin do

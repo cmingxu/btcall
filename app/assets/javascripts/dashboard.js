@@ -22,6 +22,7 @@
 //= require moment
 //= require_self
 //= require_tree ./dashboard
+//= require zeroclipboard
 
 var dashboard = angular.module("dashboard", ["btford.socket-io"]);
 

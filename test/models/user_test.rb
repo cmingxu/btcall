@@ -14,6 +14,9 @@
 #  created_at           :datetime
 #  updated_at           :datetime
 #  activation_code      :string(255)
+#  account              :string(255)
+#  btc_balance          :decimal(10, 4)
+#  withdraw_address     :string(255)
 #
 
 require 'test_helper'
