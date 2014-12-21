@@ -43,7 +43,8 @@ class SessionController < ApplicationController
   end
 
   def logout
-    session.delete[:user_id]
+    session.delete( :user_id )
+    redirect_to root_path
   end
 
   def user_params

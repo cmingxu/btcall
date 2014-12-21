@@ -20,6 +20,7 @@
 //= require angular-socket-io
 //= require bootstrap-sprockets
 //= require moment
+//= require jquery_ujs
 //= require_self
 //= require_tree ./dashboard
 //= require zeroclipboard

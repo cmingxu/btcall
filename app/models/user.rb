@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   after_create :set_initial_status
 
   has_many :bids, :dependent => :destroy
-  has_one :address
+  has_one :recharge_address
   has_many :recharges
   has_many :withdraws
 
@@ -63,7 +63,10 @@ class User < ActiveRecord::Base
     self.update_column :activation_code, ""
     self.update_column :status, "activated"
     self.update_column :account, self.account_name
-    self.address.create!
+    RechargeAddress.new do |a|
+      a.label = "default"
+      a.user = self
+    end.save
   end
 
   def account_name

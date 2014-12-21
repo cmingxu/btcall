@@ -52,7 +52,7 @@ function email_validation(dom) {
   val = $dom.val();
 
   if(field_blank(val)){
-    display_error($dom, "Email是必填内容， 请提供您的Emai地址");
+    display_error($dom, "Email是必填内容， 请提供您的Email地址");
     return false;
   }
 

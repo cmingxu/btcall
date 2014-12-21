@@ -4,7 +4,7 @@ class CreateRecharges < ActiveRecord::Migration
       t.string :txid
       t.string :status
       t.string :btc_address
-      t.integer :address_id
+      t.integer :recharge_address_id
       t.integer :user_id
       t.integer :amount
       t.string :account

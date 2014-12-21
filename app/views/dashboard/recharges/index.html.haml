@@ -2,8 +2,8 @@
   .row-fluid
     %h4
       充值地址
-      %label.label.label-warning #{current_user.address.btcaddress}
-      %button.btn.btn-primary#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.address.btcaddress}", :title => ""}
+      %label.label.label-warning #{current_user.recharge_address.btcaddress}
+      %button.btn.btn-primary#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => ""}
         拷贝
         = fa_icon(:clipboard)
     :javascript

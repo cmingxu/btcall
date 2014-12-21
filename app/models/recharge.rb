@@ -17,7 +17,7 @@
 
 class Recharge < ActiveRecord::Base
   belongs_to :user
-  belongs_to :address
+  belongs_to :recharge_address
 
   state_machine :status, :initial => :unconfirmed do
     after_transition :on => :confirmed, :do => :add_to_user_btc_balance
@@ -43,7 +43,7 @@ class Recharge < ActiveRecord::Base
           r.btc_address = t['address']
           r.txid = t['txid']
           r.user_id = User.find_by_account(t['account']).try(:id)
-          r.address_id = Address.find_by_btcaddress(t['address']).try(:id)
+          r.recharge_address_id = RechargeAddress.find_by_btcaddress(t['address']).try(:id)
           r.amount = float_to_int(t['amount'])
           r.amount_decimal = t['amount']
         end

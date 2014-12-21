@@ -17,7 +17,7 @@
 #
 
 class Withdraw < ActiveRecord::Base
-
+  belongs_to :withdraw_address
   belongs_to :user
   after_commit :job_to_send_coin
 

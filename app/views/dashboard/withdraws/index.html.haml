@@ -1,11 +1,11 @@
 .container-fluid
   .row-fluid
     %h4
-      输入提现地址#{current_user.withdraw_address} 拷贝
-    :javascript
-      $(document).ready(function() {
-        var clip = new ZeroClipboard($("#d_clip_button"))
-      });
+      输入提现地址
+      = form_tag update_withdraw_address_dashboard_users_path, :class => "form-inline", :role => "form" do
+        = text_field_tag :withdraw_address, current_user.withdraw_address, :class => "form-control"
+        = submit_tag "修改", :class => "btn btn-primary"
+
   .row-fluid
     %table.table.table-stripped.table-condensed
       %thead
