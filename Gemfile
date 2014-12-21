@@ -34,6 +34,7 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
 gem 'kaminari'
+gem "resque"
 gem 'resque-scheduler'
 gem 'resque-web', require: 'resque_web'
 

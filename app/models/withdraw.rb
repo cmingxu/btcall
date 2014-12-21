@@ -23,6 +23,9 @@ class Withdraw < ActiveRecord::Base
   before_validation :set_defaults, :on => :create
 
   state_machine :status, :initial => :new do
+
+    after_transition :on => :bc_sending, :do => :deduct_user_btc_balance
+
      event :send_coin do
        transition :new => :bc_sending
      end
@@ -46,4 +49,7 @@ class Withdraw < ActiveRecord::Base
     self.errors.add(:amount, "账户余额不足") if self.amount > self.user.btc_balance
   end
 
+  def deduct_user_btc_balance
+    self.user.adjust_btc_balance(-self.amount_decimal)
+  end
 end
