@@ -8,6 +8,8 @@
 #  btcaddress   :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
+#  label        :string(255)
+#  type         :string(255)
 #
 
 class Address < ActiveRecord::Base

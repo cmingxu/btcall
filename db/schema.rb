@@ -49,11 +49,11 @@ ActiveRecord::Schema.define(version: 20141221055128) do
     t.string   "txid"
     t.string   "status"
     t.string   "btc_address"
-    t.integer  "address_id"
+    t.integer  "recharge_address_id"
     t.integer  "user_id"
     t.integer  "amount"
     t.string   "account"
-    t.decimal  "amount_decimal", precision: 10, scale: 8
+    t.decimal  "amount_decimal",      precision: 16, scale: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -88,14 +88,15 @@ ActiveRecord::Schema.define(version: 20141221055128) do
   end
 
   create_table "withdraws", force: true do |t|
-    t.decimal  "amount",        precision: 10, scale: 8
-    t.string   "to_bc_address"
+    t.integer  "amount"
+    t.decimal  "amount_decimal",       precision: 16, scale: 8
+    t.integer  "withdraw_address_id"
+    t.string   "withdraw_btc_address"
     t.string   "txid"
     t.integer  "user_id"
     t.string   "status"
     t.datetime "verified_at"
     t.datetime "sent_at"
-    t.text     "msg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,3 +5,6 @@ ABOUT_PAGES = {
   "jobs" => "加入我们"
 }
 
+  BITCOIND_ERROR_MAP = {
+   -6 => "账户余额不足"
+  }

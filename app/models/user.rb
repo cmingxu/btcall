@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
 
   has_many :bids, :dependent => :destroy
   has_one :recharge_address
+  has_many :withdraw_addresses
   has_many :recharges
   has_many :withdraws
 

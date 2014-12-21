@@ -1,16 +1,11 @@
 .container-fluid
-  .row-fluid
-    %h4
-      输入提现地址
-      = form_tag update_withdraw_address_dashboard_users_path, :class => "form-inline", :role => "form" do
-        = text_field_tag :withdraw_address, current_user.withdraw_address, :class => "form-control"
-        = submit_tag "修改", :class => "btn btn-primary"
 
   .row-fluid
     %table.table.table-stripped.table-condensed
       %thead
         %th 时间
         %th 数量
+        %th 状态
         %th TXID
 
       %tbody
@@ -18,8 +13,21 @@
           %tr
             %td= withdraw.created_at.to_s(:btc_short)
             %td= int_to_float(withdraw.amount)
-            %td= bid.txid
+            %td= withdraw.status
+            %td= withdraw.txid
 
     = paginate @withdraws
 
 
+  .row-fluid
+    = form_for [:dashboard, current_user.withdraws.build], :class => "form", :role => "form" do |f|
+      .form-group
+        %label 提现地址
+        = f.select :withdraw_address_id, current_user.withdraw_addresses.map {|wa| [wa.address_with_label, wa.id]}, {}, :class => "form-control"
+        = link_to "管理提现地址", dashboard_withdraw_addresses_path, :target => :blank
+
+      .form-group
+        %label 提现金额
+        = f.text_field "amount_decimal", :class => "form-control"
+      .form-actions
+        = f.submit "确定提现", :class => "btn btn-primary"

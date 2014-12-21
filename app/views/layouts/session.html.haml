@@ -12,14 +12,7 @@
   %body
     = render :partial => "widgets/header"
     .container.user_actions
-      - if flash[:notice]
-        .row
-          .alert.alert-info{:role => "alert"}= flash[:notice]
-    
-      - if flash[:alert]
-        .row
-          .alert.alert-warning{:role => "alert"}= flash[:alert]
-    
+      = render :partial => "widgets/notice_bar"
       .row.register_form
         .col-md-6
           = yield

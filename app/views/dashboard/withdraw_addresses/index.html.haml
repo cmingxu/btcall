@@ -1,0 +1,30 @@
+.container-fluid
+
+  .row-fluid
+    %table.table.table-stripped.table-condensed
+      %thead
+        %th 标签
+        %th 地址
+        %th 添加时间
+
+      %tbody
+        - @withdraw_addresses.each do |withdraw_address|
+          %tr
+            %td= withdraw_address.label
+            %td= withdraw_address.btcaddress
+            %td= withdraw_address.created_at
+
+
+
+  .row-fluid
+    = form_for [:dashboard, current_user.withdraw_addresses.build], :class => "form", :role => "form" do |f|
+      .form-group
+        %label 标签
+        = f.text_field :label, :class => "form-control"
+
+      .form-group
+        %label 提现地址
+        = f.text_field :btcaddress, :class => "form-control"
+
+      .form-actions
+        = submit_tag "添加", :class => "btn btn-primary"

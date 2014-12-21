@@ -1,5 +1,13 @@
-Rails.application.routes.draw do
 
+
+Rails.application.routes.draw do
+  ResqueWeb::Engine.eager_load!
+
+  require 'resque_web'
+  resque_web_constraint = lambda { |request| request.remote_ip == '127.0.0.1' }
+  constraints resque_web_constraint do
+    mount ResqueWeb::Engine => "/resque_web"
+  end
   captcha_route
   get "login" => "session#login"
   post "login" => "session#login"
@@ -18,12 +26,15 @@ Rails.application.routes.draw do
 
     resources :bids, :only => [:create, :index]
     resources :recharges, :only => [:index]
-    resources :withdraws, :only => [:index]
+    resources :withdraws, :only => [:index, :create]
     resources :users do
       collection do
         put :update_withdraw_address
       end
     end
+
+    resources :withdraw_addresses, :only => [:index, :create]
+
   end
 
   namespace :admin do

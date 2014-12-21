@@ -2,7 +2,8 @@
 class CreateWithdraws < ActiveRecord::Migration
   def change
     create_table :withdraws do |t|
-      t.decimal :amount, :precision => 10, :scale => 8
+      t.integer :amount
+      t.decimal :amount_decimal, :precision => 16, :scale => 8
       t.integer :withdraw_address_id
       t.string :withdraw_btc_address
       t.string :txid

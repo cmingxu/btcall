@@ -8,7 +8,7 @@ class CreateRecharges < ActiveRecord::Migration
       t.integer :user_id
       t.integer :amount
       t.string :account
-      t.decimal :amount_decimal, :precision => 10, :scale => 8
+      t.decimal :amount_decimal, :precision => 16, :scale => 8
 
       t.timestamps
     end

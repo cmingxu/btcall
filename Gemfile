@@ -1,4 +1,4 @@
-source 'https://ruby.taobao.org/'
+#source 'https://ruby.taobao.org/'
 
 
 gem 'rails', '4.1.6'
@@ -34,6 +34,9 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
 gem 'kaminari'
+gem 'resque-scheduler'
+gem 'resque-web', require: 'resque_web'
+
 
 
 gem 'settingslogic', '~> 2.0.9'

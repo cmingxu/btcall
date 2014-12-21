@@ -1,0 +1,7 @@
+- if flash[:notice]
+  .row
+    .alert.alert-info{:role => "alert"}= flash[:notice]
+
+- if flash[:alert]
+  .row
+    .alert.alert-warning{:role => "alert"}= flash[:alert]
