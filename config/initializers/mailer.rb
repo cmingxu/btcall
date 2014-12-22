@@ -5,8 +5,7 @@ ActionMailer::Base.smtp_settings = {
   :domain => "163.com",
   :user_name => "admin@btcall.com",
   :password => "btc2014",
-  :authentication => :login,
-  :enable_starttls_auto => false
+  :authentication => :login
 }
 
 ActionMailer::Base.raise_delivery_errors = true

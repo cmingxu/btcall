@@ -1,6 +1,4 @@
 你好，
 = @user.email
-  请点击下面地址激活您的账号
-  = link_to activation_url(:activation_code => @user.activation_code, :email => @user.email), activation_url(:activation_code => @user.activation_code, :email => @user.email)
-
-
+请点击下面地址激活您的账号
+= link_to activation_url(:activation_code => @user.activation_code, :email => @user.email), activation_url(:activation_code => @user.activation_code, :email => @user.email)
