@@ -1,0 +1,31 @@
+# == Schema Information
+#
+# Table name: maker_opens
+#
+#  id                      :integer          not null, primary key
+#  open_at_code            :string(255)
+#  user_id                 :integer
+#  platform_deduct_rate    :integer
+#  platform_deduct         :integer
+#  platform_deduct_decimal :decimal(10, 4)
+#  net_income              :integer
+#  net_income_decimal      :integer
+#  created_at              :datetime
+#  updated_at              :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_at_code: MyString
+  user_id: 1
+  platform_deduct_rate: 1
+  platform_deduct: 1
+  net_income: 1
+
+two:
+  open_at_code: MyString
+  user_id: 1
+  platform_deduct_rate: 1
+  platform_deduct: 1
+  net_income: 1

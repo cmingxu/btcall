@@ -17,6 +17,7 @@
 #  account              :string(255)
 #  btc_balance          :decimal(10, 4)
 #  withdraw_address     :string(255)
+#  maker_btc_balance    :decimal(10, 4)
 #
 
 require 'digest/md5'
@@ -37,6 +38,8 @@ class User < ActiveRecord::Base
   has_many :withdraw_addresses
   has_many :recharges
   has_many :withdraws
+  has_many :makers
+  has_many :maker_opens
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }
@@ -104,5 +107,6 @@ class User < ActiveRecord::Base
     self.update_column :reset_password_token, SecureRandom.hex(16)
     self.update_column :activation_code, SecureRandom.hex(32)
     self.update_column :btc_balance, 0
+    self.update_column :make_btc_balance, 0
   end
 end

@@ -1,4 +1,22 @@
 # -*- encoding : utf-8 -*- # == Schema Information # # Table name: withdraws # #  id                   :integer          not null, primary key #  amount               :decimal(10, 8) #  withdraw_address_id  :integer
+# == Schema Information
+#
+# Table name: withdraws
+#
+#  id                   :integer          not null, primary key
+#  amount               :integer
+#  amount_decimal       :decimal(16, 8)
+#  withdraw_address_id  :integer
+#  withdraw_btc_address :string(255)
+#  txid                 :string(255)
+#  user_id              :integer
+#  status               :string(255)
+#  verified_at          :datetime
+#  sent_at              :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+
 #  withdraw_btc_address :string(255)
 #  txid                 :string(255)
 #  user_id              :integer

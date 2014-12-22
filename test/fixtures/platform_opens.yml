@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: platform_opens
+#
+#  id           :integer          not null, primary key
+#  open_at_code :string(255)
+#  user_id      :integer
+#  int_amount   :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_at_code: MyString
+  maker_id: 1
+  int_amount: 1
+
+two:
+  open_at_code: MyString
+  maker_id: 1
+  int_amount: 1

@@ -1,0 +1,2 @@
+module Dashboard::MakersHelper
+end

@@ -1,6 +1,11 @@
 
 
 Rails.application.routes.draw do
+
+  namespace :dashboard do
+  get 'makers/index'
+  end
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -34,6 +39,7 @@ Rails.application.routes.draw do
     end
 
     resources :withdraw_addresses, :only => [:index, :create]
+    resources :makers, :only => [:index, :create]
 
   end
 

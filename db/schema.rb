@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141221055128) do
+ActiveRecord::Schema.define(version: 20141222130853) do
 
   create_table "addresses", force: true do |t|
     t.string   "account_name"
@@ -38,9 +38,38 @@ ActiveRecord::Schema.define(version: 20141221055128) do
     t.string   "open_at_code"
   end
 
+  create_table "maker_opens", force: true do |t|
+    t.string   "open_at_code"
+    t.integer  "user_id"
+    t.integer  "platform_deduct_rate"
+    t.integer  "platform_deduct"
+    t.decimal  "platform_deduct_decimal", precision: 10, scale: 4
+    t.integer  "net_income"
+    t.integer  "net_income_decimal"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "makers", force: true do |t|
+    t.decimal  "decimal_amount", precision: 10, scale: 0
+    t.integer  "amount"
+    t.string   "in_or_out"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "pages", force: true do |t|
     t.string   "slug"
     t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "platform_opens", force: true do |t|
+    t.string   "open_at_code"
+    t.integer  "user_id"
+    t.integer  "int_amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -85,6 +114,7 @@ ActiveRecord::Schema.define(version: 20141221055128) do
     t.string   "account"
     t.decimal  "btc_balance",          precision: 10, scale: 4
     t.string   "withdraw_address"
+    t.decimal  "maker_btc_balance",    precision: 10, scale: 4
   end
 
   create_table "withdraws", force: true do |t|

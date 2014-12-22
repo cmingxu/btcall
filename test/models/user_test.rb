@@ -17,6 +17,7 @@
 #  account              :string(255)
 #  btc_balance          :decimal(10, 4)
 #  withdraw_address     :string(255)
+#  maker_btc_balance    :decimal(10, 4)
 #
 
 require 'test_helper'

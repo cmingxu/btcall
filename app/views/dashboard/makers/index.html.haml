@@ -1,0 +1,45 @@
+.container-fluid
+  .row-fluid
+    我的市商余额
+    = current_user.maker_btc_balance
+
+  .row-fluid
+
+  .row-fluid
+    %table.table.table-stripped.table-condensed
+      %thead
+        %th 入市/出市
+        %th 数量
+        %th 时间
+
+      %tbody
+        - @maker_records.each do |maker_record|
+          %tr
+            %td= maker_record.in_or_out
+            %td= maker_record.decimal_amount
+            %td= maker_record.created_at.to_s(:btc_short)
+
+    = paginate @maker_records
+
+  .row-fluid
+    %table.table.table-stripped.table-condensed
+      %thead
+        %th 编号
+        %th 开盘时间
+        %th 收益
+        %th 平台提成
+
+      %tbody
+        - @maker_opens.each do |maker_open|
+          %tr
+            %td= maker_open.open_at_code
+            %td= maker_open.created_at
+            %td= maker_open.net_income_decimal
+            %td= maker_open.platform_deduct_decimal
+            %td= maker_open.platform_deduct_rate
+
+    = paginate @maker_opens, :param_name => :open_page
+
+
+
+

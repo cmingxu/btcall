@@ -1,5 +1,16 @@
 .container-fluid
+  .row-fluid
+    = form_for [:dashboard, current_user.withdraws.build], :class => "form", :role => "form" do |f|
+      .form-group
+        %label 提现地址
+        = f.select :withdraw_address_id, current_user.withdraw_addresses.map {|wa| [wa.address_with_label, wa.id]}, {}, :class => "form-control"
+        = link_to "管理提现地址", dashboard_withdraw_addresses_path, :target => :blank
 
+      .form-group
+        %label 提现金额
+        = f.text_field "amount_decimal", :class => "form-control"
+      .form-actions
+        = f.submit "确定提现", :class => "btn btn-primary"
   .row-fluid
     %table.table.table-stripped.table-condensed
       %thead
@@ -19,15 +30,3 @@
     = paginate @withdraws
 
 
-  .row-fluid
-    = form_for [:dashboard, current_user.withdraws.build], :class => "form", :role => "form" do |f|
-      .form-group
-        %label 提现地址
-        = f.select :withdraw_address_id, current_user.withdraw_addresses.map {|wa| [wa.address_with_label, wa.id]}, {}, :class => "form-control"
-        = link_to "管理提现地址", dashboard_withdraw_addresses_path, :target => :blank
-
-      .form-group
-        %label 提现金额
-        = f.text_field "amount_decimal", :class => "form-control"
-      .form-actions
-        = f.submit "确定提现", :class => "btn btn-primary"
