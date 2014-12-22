@@ -5,5 +5,15 @@ class Dashboard::MakersController < Dashboard::BaseController
   end
 
   def create
+    @maker_record = current_user.makers.build maker_params
+    if @maker_record.save
+      redirect_to dashboard_makers_path, :alert => "操作成功"
+    else
+      redirect_to dashboard_makers_path, :notice => @maker_record.errors.full_messages.first
+    end
+  end
+
+  def maker_params
+    params[:maker].permit(:in_or_out, :decimal_amount)
   end
 end

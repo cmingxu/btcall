@@ -4,6 +4,21 @@
     = current_user.maker_btc_balance
 
   .row-fluid
+    = form_for [:dashboard, current_user.makers.new(:in_or_out => "in")], :role => "form", :class => "form" do |f|
+      = f.hidden_field :in_or_out
+      .control-group
+        %label 入市数量
+        = f.text_field :decimal_amount, :class => "form-control"
+      = f.submit "入市", :class => "btn btn-primary"
+
+    = form_for [:dashboard, current_user.makers.new(:in_or_out => "out")], :role => "form", :class => "form" do |f|
+      = f.hidden_field :in_or_out
+      .control-group
+        %label 出市
+        = f.text_field :decimal_amount, :class => "form-control"
+      = f.submit "出市", :class => "btn btn-primary"
+
+
 
   .row-fluid
     %table.table.table-stripped.table-condensed
