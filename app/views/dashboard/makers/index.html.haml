@@ -30,9 +30,9 @@
       %tbody
         - @maker_records.each do |maker_record|
           %tr
-            %td= maker_record.in_or_out
+            %td= maker_record.in_or_out_in_word
             %td= maker_record.decimal_amount
-            %td= maker_record.created_at.to_s(:btc_short)
+            %td= maker_record.created_at.to_s(:btc_cn_normal)
 
     = paginate @maker_records
 

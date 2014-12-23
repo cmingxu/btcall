@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include HelperUtils
   # reset captcha code after each request for security
   after_filter :reset_last_captcha_code!
+  before_filter :set_active_sidebar_item
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -32,5 +33,9 @@ class ApplicationController < ActionController::Base
 
   def store_request_path
     session[:redirect_to] = params[:redirect_to] || request.referer
+  end
+
+  def set_active_sidebar_item
+    @active_nav_item  = controller_name
   end
 end

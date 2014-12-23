@@ -22,9 +22,9 @@
       %tbody
         - @withdraws.each do |withdraw|
           %tr
-            %td= withdraw.created_at.to_s(:btc_short)
+            %td= withdraw.created_at.to_s(:btc_cn_normal)
             %td= int_to_float(withdraw.amount)
-            %td= withdraw.status
+            %td= withdraw.status_in_word
             %td= withdraw.txid
 
     = paginate @withdraws

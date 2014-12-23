@@ -36,6 +36,7 @@ class Withdraw < ActiveRecord::Base
 
   validates :amount_decimal, presence: { message: "请输入提现数量" }
   validates :amount_decimal, numericality: { message: "金额不是合法金额", :greater_than => 0.0001 }
+  validates :withdraw_address_id, presence: { message: "请选择您想提现的地址" }
   validate :user_have_sufficient_btc
 
   before_validation :set_defaults, :on => :create
@@ -53,9 +54,20 @@ class Withdraw < ActiveRecord::Base
      end
   end
 
+  def status_in_word
+    case self.status
+    when "new"
+      "尚未发送"
+    when "bc_sending"
+      "发送/未确认"
+    when "bc_acked"
+      "发送/已确认"
+    end
+  end
+
   def set_defaults
     self.amount = float_to_int(self.amount_decimal)
-    self.withdraw_btc_address = self.withdraw_address.btcaddress
+    self.withdraw_btc_address = self.withdraw_address.try(:btcaddress)
   end
 
   def job_to_send_coin

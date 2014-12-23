@@ -17,6 +17,7 @@ class WithdrawAddress < Address
   validates :label,  :presence => { :message => "输入一个标签" }
   validates :label, uniqueness: { message: "标签重复出现了多次" }
   validates :btcaddress, presence: { message: "地址不能空" }
+  validates :btcaddress, uniqueness: { message: "提现地址重复了", :scope => :user_id }
 
   def address_with_label
     "@#{self.label} - #{self.btcaddress}"

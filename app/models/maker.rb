@@ -33,4 +33,8 @@ class Maker < ActiveRecord::Base
     self.user.maker_btc_balance += self.decimal_amount
     self.user.save
   end
+
+  def in_or_out_in_word
+    self.in_or_out == "in" ? "入市" : "出市"
+  end
 end

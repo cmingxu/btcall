@@ -1,7 +1,7 @@
 - if flash[:notice]
   .row
-    .alert.alert-info{:role => "alert"}= flash[:notice]
+    .alert.alert-info{:role => "alert"}= flash[:notice].split(" ").last
 
 - if flash[:alert]
   .row
-    .alert.alert-warning{:role => "alert"}= flash[:alert]
+    .alert.alert-warning{:role => "alert"}= flash[:alert].split(" ").last

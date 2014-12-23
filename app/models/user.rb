@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   STATUS = %w(new_join activated suspended)
   attr_accessor :password, :password_confirmation, :captcha
 
+  scope :makers, lambda { where("maker_btc_balance > 0") }
+
   validates :email, presence: { :message => "Email不能为空" }
   validates :email, uniqueness: { :message => "Email已经存在， 尝试我们的找回密码功能" }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create, message: "Email格式不正确" }
@@ -101,12 +103,16 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def my_maker_share
+    self.maker_btc_balance / User.sum(:maker_btc_balance).to_f
+  end
+
   private
   def set_initial_status
     self.update_column :status, User::STATUS.first
     self.update_column :reset_password_token, SecureRandom.hex(16)
     self.update_column :activation_code, SecureRandom.hex(32)
     self.update_column :btc_balance, 0
-    self.update_column :make_btc_balance, 0
+    self.update_column :maker_btc_balance, 0
   end
 end
