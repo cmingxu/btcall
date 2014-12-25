@@ -27,3 +27,8 @@ test:
 production:
   <<: *defaults
   host: "btcall"
+  bitcoind:
+    host: '207.226.141.226'
+    user: 'bitcoinrpc'
+    password: 'E5gXa2k3er4vcifUutKGxSWVF3qVuozAfGt229DWJ5fe'
+    port: '8332'
