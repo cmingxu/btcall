@@ -32,8 +32,6 @@ class CoinRPC
       request.content_type = 'application/json'
       request.body = post_body
       http.request(request).body
-      Rails.logger.debug uri
-      Rails.logger.debug post_body
     rescue Errno::ECONNREFUSED => e
       $stderr.puts uri
       $stderr.puts "ECONNREFUSED"
