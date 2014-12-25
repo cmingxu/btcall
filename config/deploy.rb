@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'btcall.com'
+set :application, '900bit.com'
 set :repo_url, 'git@github.com:cmingxu/btcall.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/deploy/btcall'
+set :deploy_to, '/home/deploy/900bit'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -35,7 +35,7 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :keep_releases, 5 
 
 set :rvm_type, :user
-set :rvm_ruby_version, '2.1.4'
+set :rvm_ruby_version, '2.1.5'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 
 namespace :deploy do
@@ -48,12 +48,12 @@ namespace :deploy do
     end
   end
 
-  task :change_dazahui_permission do
+  task :change_900bit_permission do
     on roles(:all) do |host|
       execute "chmod a+x #{current_path}/config/btcall.sh"
     end
   end
-  after "deploy:published", "deploy:change_dazahui_permission"
+  after "deploy:published", "deploy:change_900bit_permission"
 
 
   task :setup_config do
