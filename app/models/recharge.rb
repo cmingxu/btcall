@@ -20,7 +20,8 @@ class Recharge < ActiveRecord::Base
   belongs_to :recharge_address
 
   state_machine :status, :initial => :unconfirmed do
-    after_transition :on => :confirmed, :do => :add_to_user_btc_balance
+    after_transition :on => :confirm, :do => :add_to_user_btc_balance
+    after_transition :on => :confirm, :do => :move_to_btcall_account
 
     event :confirm do
       transition :unconfirmed => :confirmed
@@ -31,6 +32,10 @@ class Recharge < ActiveRecord::Base
     self.user.adjust_btc_balance self.amount
   end
 
+  def move_to_btcall_account
+    Resque.enqueue_at Time.now, MoveToBtcall, self.user.account_name, self.amount_decimal
+  end
+
   def self.scan_transactions_in_block_chain
     transactions = CoinRPC.listtransactions '*', Settings.listtransactions_count
     transactions.each do |t|
@@ -38,7 +43,7 @@ class Recharge < ActiveRecord::Base
       next if User.find_by_account(t['account']).nil?
       recharge = Recharge.find_by_txid(t['txid'])
       if recharge.nil?
-        Recharge.create do |r|
+        Recharge.create! do |r|
           r.account = t['account']
           r.btc_address = t['address']
           r.txid = t['txid']

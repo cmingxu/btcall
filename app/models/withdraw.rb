@@ -32,7 +32,7 @@ class Withdraw < ActiveRecord::Base
 
   belongs_to :withdraw_address
   belongs_to :user
-  after_commit :job_to_send_coin
+  after_commit :job_to_send_coin, :on => :create
 
   validates :amount_decimal, presence: { message: "请输入提现数量" }
   validates :amount_decimal, numericality: { message: "金额不是合法金额", :greater_than => 0.0001 }
@@ -42,8 +42,7 @@ class Withdraw < ActiveRecord::Base
   before_validation :set_defaults, :on => :create
 
   state_machine :status, :initial => :new do
-
-    after_transition :on => :bc_sending, :do => :deduct_user_btc_balance
+    after_transition :on => :send_coin, :do => :deduct_user_btc_balance
 
      event :send_coin do
        transition :new => :bc_sending

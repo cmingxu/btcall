@@ -5,7 +5,7 @@ class SendCoin
   def self.perform(tid)
     BG_LOGGER.debug "entering send_coin #{tid}"
     return unless t = Transaction.find_by_id(tid)
-    result, error_message, txid = WubalaAccount.send_to_bc_address(t.to_bc_address, t.bc_amount.to_f)
+    result, error_message, txid = BtcallAccount.send_to_bc_address(t.to_bc_address, t.bc_amount.to_f)
     if result
       BG_LOGGER.debug "send to #{t.to_bc_address} #{t.bc_amount} send_coin #{tid}"
       t.update_attribute :bc_sent_at, Time.now

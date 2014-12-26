@@ -25,7 +25,10 @@
             %td= withdraw.created_at.to_s(:btc_cn_normal)
             %td= int_to_float(withdraw.amount)
             %td= withdraw.status_in_word
-            %td= withdraw.txid
+            - if withdraw.txid
+              %td=link_to withdraw.txid, "https://blockchain.info/tx/#{withdraw.txid}", :target => "_blank"
+            - else
+              %td "请稍后..."
 
     = paginate @withdraws
 

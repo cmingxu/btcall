@@ -18,7 +18,7 @@ class ConfirmWithdrawCoin
 
     BG_LOGGER.debug "confirm success #{res}"
 
-    if res[:confirmations] < 6
+    if res[:confirmations] < 1
       BG_LOGGER.debug "retry confirm #{res[:confirmations]}"
       Resque.enqueue_at Time.now + 60, ConfirmWithdrawCoin, wid
     else
