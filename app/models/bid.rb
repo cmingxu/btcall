@@ -55,11 +55,13 @@ class Bid < ActiveRecord::Base
   end
 
   def self.finish_bid(bid_code = open_at_code(Time.now))
+    BG_LOGGER.debug "oooooooooooooooooooo BEGIN #{bid_code} oooooooooooooooooooooo"
     current_btc_price = current_btc_price_in_int
     begin
       ActiveRecord::Base.transaction do
         total_btc = 0
         Bid.where(open_at_code: bid_code).all.each do |bid|
+          BG_LOGGER.debug "oooooooooooooooooooo checking bid #{bid.id} oooooooooooooooooooooo"
           if current_btc_price > bid.order_price && bid.trend == "up"
             bid.win = true
             bid.win_reward = (bid.amount * (Settings.odds - 1)).floor
@@ -74,6 +76,7 @@ class Bid < ActiveRecord::Base
           bid.status = "open"
           bid.save
           bid.user.adjust_btc_balance(bid.win_reward)
+          BG_LOGGER.debug "oooooooooooooooooooo  bid win #{bid.id}  #{bid.win_reward} oooooooooooooooooooooo"
         end
 
         # for maker side - flip value
@@ -81,11 +84,13 @@ class Bid < ActiveRecord::Base
 
         User.makers.each do |maker|
           #TDOO add lower limit for maker to participate the market
+          BG_LOGGER.debug "oooooooooooooooooooo maker cal #{maker.id} oooooooooooooooooooooo"
           maker_share = maker.my_maker_share * total_btc
           platform_deduct = total_btc > 0 ? maker_share * Settings.platform_interest : 0
           maker_net_income = total_btc > 0 ? maker_share * (1 - Settings.platform_interest) : maker_share
 
           maker.maker_btc_balance += maker_net_income
+          BG_LOGGER.debug "oooooooooooooooo create maker_open   #{maker.id} #{platform_deduct} #{maker_net_income} oooooooooooooooooooooo"
           maker.maker_opens.create!(:open_at_code => bid_code,
                                     :platform_deduct_rate => Settings.platform_interest * 100,
                                     :platform_deduct => platform_deduct,
@@ -93,6 +98,7 @@ class Bid < ActiveRecord::Base
                                    )
 
           if total_btc > 0
+            BG_LOGGER.debug "oooooooooooooooo create platform open   #{maker.id} #{platform_deduct} oooooooooooooooooooooo"
             maker.platform_opens.create!(:open_at_code => bid_code,
                                          :amount => platform_deduct)
           end
@@ -100,7 +106,7 @@ class Bid < ActiveRecord::Base
         end
 
       end
-      BG_LOGGER.error "oooooooooooooooooooo DONE #{bid_code} oooooooooooooooooooooo"
+      BG_LOGGER.debug "oooooooooooooooooooo DONE #{bid_code} oooooooooooooooooooooo"
     rescue ActiveRecord::RecordInvalid
       BG_LOGGER.error "xxxxxxxxxxxxxxxxxxxx ROLLBACK #{bid_code} xxxxxxxxxxxxxxxxxxxxx"
     end
