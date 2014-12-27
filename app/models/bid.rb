@@ -67,6 +67,9 @@ class Bid < ActiveRecord::Base
           if current_btc_price > bid.order_price && bid.trend == "up"
             bid.win = true
             bid.win_reward = (bid.amount * (Settings.odds - 1)).floor
+          elsif current_btc_price < bid.order_price && bid.trend == "down"
+            bid.win = true
+            bid.win_reward = (bid.amount * (Settings.odds - 1)).floor
           else
             bid.win = false
             bid.win_reward = -bid.amount
