@@ -26,7 +26,7 @@ test:
 
 production:
   <<: *defaults
-  host: "btcall"
+  host: "www.900bit.com"
   bitcoind:
     host: '207.226.141.226'
     user: 'bitcoinrpc'

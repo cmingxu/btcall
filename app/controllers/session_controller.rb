@@ -33,7 +33,7 @@ class SessionController < ApplicationController
   end
 
   def activation
-    @user = User.find_by_activation_code_and_email(params[:activation_code], params[:email])
+    @user = User.find_by_activation_code(params[:activation_code])
     if @user
       @user.active!
       redirect_to login_path, :notice => "成功激活您的#{Settings.cn_site_name}账号， 请登录"
