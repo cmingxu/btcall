@@ -60,7 +60,7 @@ class Bid < ActiveRecord::Base
     begin
       ActiveRecord::Base.transaction do
         total_btc = 0
-        bids_in_batch = Bid.where(open_at_code: bid_code)
+        bids_in_batch = Bid.where(open_at_code: bid_code, status: "0")
         return if bids_in_batch.count.zero?
         bids_in_batch.all.each do |bid|
           BG_LOGGER.debug "oooooooooooooooooooo checking bid #{bid.id} oooooooooooooooooooooo"
@@ -76,7 +76,7 @@ class Bid < ActiveRecord::Base
 
           bid.open_price = current_btc_price
           bid.status = "open"
-          bid.save
+          bid.save!
           bid.user.adjust_btc_balance(bid.win_reward)
           BG_LOGGER.debug "oooooooooooooooooooo  bid win #{bid.id}  #{bid.win_reward} oooooooooooooooooooooo"
         end
@@ -105,7 +105,7 @@ class Bid < ActiveRecord::Base
             maker.platform_opens.create!(:open_at_code => bid_code,
                                          :amount => platform_deduct)
           end
-          maker.save
+          maker.save!
         end
 
       end
