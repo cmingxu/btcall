@@ -84,6 +84,7 @@ class Bid < ActiveRecord::Base
 
         # for maker side - flip value
         total_btc = -total_btc
+        return if total_btc.zero?
 
         User.makers.each do |maker|
           #TDOO add lower limit for maker to participate the market
