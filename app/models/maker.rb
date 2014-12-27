@@ -20,7 +20,11 @@ class Maker < ActiveRecord::Base
   after_save :update_user_btc_balance_and_maker_btc_balance, :on => :create
 
   def user_have_sufficient_btc
-    self.errors.add(:amount, "账户余额不足") if self.amount && self.amount > self.user.btc_balance
+    if self.in_or_out == "in"
+      self.errors.add(:amount, "账户余额不足") if self.amount && self.amount > self.user.btc_balance
+    else
+      self.errors.add(:amount, "账户余额不足") if self.user.maker_btc_balance && self.amount > self.user.maker_btc_balance
+    end
   end
 
   def set_defaults
