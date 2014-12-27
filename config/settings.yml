@@ -1,7 +1,8 @@
 defaults: &defaults
   title: "btcall"
   description: "bitcoin"
-  site_name: "btcall"
+  site_name: "900bit"
+  cn_site_name: "900bit"
   spider_interval: 5 * 60
   spider_usd_rmb_interval: 5 * 60
   default_email_sender: "noreply@900bit.com"
