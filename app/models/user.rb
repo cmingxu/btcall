@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   has_many :withdraws
   has_many :makers
   has_many :maker_opens
+  has_many :platform_opens
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }
@@ -88,7 +89,7 @@ class User < ActiveRecord::Base
   end
 
   def win_rate
-    self.bids.count.zero? ? 0 : (self.bids.win.count / self.bids.count.to_f)
+    self.bids.count.zero? ? 0 : (self.bids.win.count / self.bids.count.to_f).round(2)
   end
 
   def btc_balance_enough?(amount)

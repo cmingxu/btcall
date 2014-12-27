@@ -19,6 +19,11 @@
 
 # Learn more: http://github.com/javan/whenever
 #
-every 1.minutes do
+every 2.minutes do
   runner "Recharge.scan_transactions_in_block_chain"
+end
+
+
+every 10.minutes do
+  runner "Bid.finish_bid"
 end

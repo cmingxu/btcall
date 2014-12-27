@@ -1,5 +1,5 @@
 defaults: &defaults
-  title: "btcall"
+  title: "900bit.com"
   description: "bitcoin"
   site_name: "900bit"
   cn_site_name: "900bit"
@@ -12,6 +12,7 @@ defaults: &defaults
   odds: 1.9
   listtransactions_count: 50
   blacklists: ["14.17.34.191"]
+  platform_interest: 0.01
   bitcoind:
     host: 'localhost'
     user: 'bitcoinrpc'

@@ -1,7 +1,7 @@
 - if flash[:notice]
   .row
-    .alert.alert-info{:role => "alert"}= flash[:notice].split(" ").last
+    .alert.alert-info{:role => "alert"}= flash[:notice].gsub(/^[a-zA-Z]*/, "")
 
 - if flash[:alert]
   .row
-    .alert.alert-warning{:role => "alert"}= flash[:alert].split(" ").last
+    .alert.alert-warning{:role => "alert"}= flash[:alert].gsub(/^[a-zA-Z]*/, "")

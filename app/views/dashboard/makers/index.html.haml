@@ -43,15 +43,16 @@
         %th 开盘时间
         %th 收益
         %th 平台提成
+        %th 平台比例
 
       %tbody
         - @maker_opens.each do |maker_open|
           %tr
             %td= maker_open.open_at_code
-            %td= maker_open.created_at
-            %td= maker_open.net_income_decimal
-            %td= maker_open.platform_deduct_decimal
-            %td= maker_open.platform_deduct_rate
+            %td= maker_open.created_at.to_s(:btc_cn_normal)
+            %td= btc_int_to_float maker_open.net_income
+            %td= btc_int_to_float maker_open.platform_deduct
+            %td= interest_in_percentage
 
     = paginate @maker_opens, :param_name => :open_page
 

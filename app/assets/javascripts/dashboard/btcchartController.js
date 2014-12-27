@@ -110,6 +110,10 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     $scope.roi_rate = 0.9;
     $scope.roi = 0.19;
 
+    $scope.changeDirection = function(d) {
+      $scope.direction = d;
+    }
+
     $scope.investmentChange = function () {
       $scope.roi = Math.floor($scope.investment * (1 + $scope.roi_rate));
     }

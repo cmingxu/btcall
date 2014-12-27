@@ -12,7 +12,7 @@
       %tbody
         - @bids.each do |bid|
           %tr
-            %td= bid.created_at.to_s(:btc_short)
+            %td= bid.created_at.to_s(:btc_cn_normal)
             %td= rmb_int_to_float(bid.open_price)
             %td= rmb_int_to_float(bid.order_price)
             %td= up_or_down(bid.trend)

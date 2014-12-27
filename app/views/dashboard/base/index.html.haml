@@ -47,13 +47,13 @@
             剩余时间
           .strong {{remain_time}}
         %li.list-group-item
-          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal"}
+          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
             %i.glyphicon.glyphicon-arrow-up
             看涨
         %li.list-group-item.bid_current_price.strong
           {{current_price}}
         %li.list-group-item
-          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal"}
+          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
             %i.glyphicon.glyphicon-arrow-down
             看跌
       %table.table.table-stripped.table-condensed
@@ -68,7 +68,7 @@
         %tbody
           - current_user.bids.limit(30).each do |bid|
             %tr
-              %td= bid.created_at.to_s(:btc_short)
+              %td= bid.created_at.to_s(:btc_cn_normal)
               %td= rmb_int_to_float(bid.open_price)
               %td= rmb_int_to_float(bid.order_price)
               %td= up_or_down(bid.trend)

@@ -33,6 +33,10 @@ module HelperUtils
     "%d%" % (Settings.odds * 100)
   end
 
+  def interest_in_percentage
+    "%d%" % (Settings.platform_interest * 100)
+  end
+
   def open_at_code(open_at)
     Time.at(open_at).strftime("%Y%m%H%M")
   end

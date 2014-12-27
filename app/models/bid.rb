@@ -54,7 +54,7 @@ class Bid < ActiveRecord::Base
     end
   end
 
-  def self.finish_bid(bid_code)
+  def self.finish_bid(bid_code = open_at_code(Time.now))
     current_btc_price = current_btc_price_in_int
     begin
       ActiveRecord::Base.transaction do
@@ -62,10 +62,10 @@ class Bid < ActiveRecord::Base
         Bid.where(open_at_code: bid_code).all.each do |bid|
           if current_btc_price > bid.order_price && bid.trend == "up"
             bid.win = true
-            bid.win_reward = bid.amount * (Settings.odds - 1).floor
+            bid.win_reward = (bid.amount * (Settings.odds - 1)).floor
           else
             bid.win = false
-            bid.win_reward = - bid.amount
+            bid.win_reward = -bid.amount
           end
 
           total_btc += bid.win_reward
@@ -76,22 +76,26 @@ class Bid < ActiveRecord::Base
           bid.user.adjust_btc_balance(bid.win_reward)
         end
 
+        # for maker side - flip value
+        total_btc = -total_btc
+
         User.makers.each do |maker|
           #TDOO add lower limit for maker to participate the market
           maker_share = maker.my_maker_share * total_btc
-          platform_deduct = maker_share * Settings.platform_interest
-          maker_net_income = maker_share * (1 - Settings.platform_interest)
+          platform_deduct = total_btc > 0 ? maker_share * Settings.platform_interest : 0
+          maker_net_income = total_btc > 0 ? maker_share * (1 - Settings.platform_interest) : maker_share
+
           maker.maker_btc_balance += maker_net_income
           maker.maker_opens.create!(:open_at_code => bid_code,
                                     :platform_deduct_rate => Settings.platform_interest * 100,
                                     :platform_deduct => platform_deduct,
-                                    :platform_deduct_decimal => btc_int_to_float(platform_deduct),
-                                    :net_income => net_income,
-                                    :net_income_decimal => btc_int_to_float(net_income)
+                                    :net_income => maker_net_income
                                    )
 
-          maker.platform_opens.create!(:open_at_code => bid_code,
-                                        :int_amount => net_income)
+          if total_btc > 0
+            maker.platform_opens.create!(:open_at_code => bid_code,
+                                         :amount => platform_deduct)
+          end
           maker.save
         end
 
