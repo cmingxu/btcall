@@ -9,7 +9,7 @@ defaults: &defaults
   host: "121.40.129.130"
   max_allowed_value: 1
   send_email_enabled: true
-  odds: 1.9
+  odds: 1.8
   listtransactions_count: 50
   blacklists: ["14.17.34.191"]
   platform_interest: 0.01
