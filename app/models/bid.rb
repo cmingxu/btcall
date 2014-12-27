@@ -60,7 +60,9 @@ class Bid < ActiveRecord::Base
     begin
       ActiveRecord::Base.transaction do
         total_btc = 0
-        Bid.where(open_at_code: bid_code).all.each do |bid|
+        bids_in_batch = Bid.where(open_at_code: bid_code)
+        return if bids_in_batch.count.zero?
+        bids_in_batch.all.each do |bid|
           BG_LOGGER.debug "oooooooooooooooooooo checking bid #{bid.id} oooooooooooooooooooooo"
           if current_btc_price > bid.order_price && bid.trend == "up"
             bid.win = true
@@ -78,6 +80,7 @@ class Bid < ActiveRecord::Base
           bid.user.adjust_btc_balance(bid.win_reward)
           BG_LOGGER.debug "oooooooooooooooooooo  bid win #{bid.id}  #{bid.win_reward} oooooooooooooooooooooo"
         end
+
 
         # for maker side - flip value
         total_btc = -total_btc
