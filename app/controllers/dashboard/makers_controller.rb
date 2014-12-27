@@ -14,6 +14,7 @@ class Dashboard::MakersController < Dashboard::BaseController
   end
 
   def maker_params
-    params[:maker].permit(:in_or_out, :decimal_amount)
+    params[:maker][:amount] = btc_float_to_int(params[:maker][:amount])
+    params[:maker].permit(:in_or_out, :amount)
   end
 end

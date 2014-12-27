@@ -140,3 +140,15 @@ $("#login_form").submit(function (event) {
       event.preventDefault();
     }
 });
+
+$("#forget_password_form").submit(function (event) {
+
+  cleanup_error();
+
+  if(email_validation("#email_field") && captcha_validation("#captcha_field"))
+    {
+      return true;
+    }else{
+      event.preventDefault();
+    }
+});

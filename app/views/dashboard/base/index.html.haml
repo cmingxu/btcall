@@ -18,7 +18,7 @@
         %li.list-group-item.col-md-4
           .bid_basic_info_header_label 金额：
           .bid_basic_info_header_content
-            %input.input_field.input-inline{:placeholder => "100", "ng-model" => "investment", "ng-change" => "investmentChange()"}
+            %input.input_field.input-inline{:placeholder => "0.2", "ng-model" => "investment", "ng-change" => "investmentChange()"}
       .chart_panel.col-md-10
         .timespan_switcher.btn-group{:role => "group"}
           %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
@@ -56,9 +56,26 @@
           %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal"}
             %i.glyphicon.glyphicon-arrow-down
             看跌
-    .col-md-2
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      %table.table.table-stripped.table-condensed
+        %thead
+          %th 时间
+          %th 结算价
+          %th 购时价
+          %th 买涨/跌
+          %th 投注
+          %th 赔率
 
+        %tbody
+          - current_user.bids.limit(30).each do |bid|
+            %tr
+              %td= bid.created_at.to_s(:btc_short)
+              %td= rmb_int_to_float(bid.open_price)
+              %td= rmb_int_to_float(bid.order_price)
+              %td= up_or_down(bid.trend)
+              %td= btc_int_to_float(bid.amount).to_f
+              %td= odds_in_percentage
+
+    .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
     .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
       .modal-dialog
         .modal-content

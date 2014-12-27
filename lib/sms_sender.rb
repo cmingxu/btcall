@@ -38,19 +38,19 @@ module SmsSender
   private
   class << self
     def request_uri
-      "#{API_POINT}/#{SOFT_VERSION}/Accounts/#{ACCOUNT_SID}/Messages/templateSMS?SigParameter=#{sign}"
+      "#{API_POINT}/#{SOFT_VERSION}/Accounts/#{ACCOUNT_SID}/Messages/templateSMS?sig=#{sign}"
     end
 
     def request_headers
       {
         "Accept" => "application/json",
         "Content-Type" => "application/json;charset=utf-8",
-        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}")
+        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}").chomp.chomp("=")
       }
     end
 
     def sign
-      Digest::MD5.hexdigest "#{ACCOUNT_SID}#{AUTH_TOKEN}#{self.timestamp}"
+      Digest::MD5.hexdigest("#{ACCOUNT_SID}#{AUTH_TOKEN}#{self.timestamp}").upcase
     end
   end
 end

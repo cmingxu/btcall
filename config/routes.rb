@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   get "register" => "session#register"
   get "activation" => "session#activation"
   post "register" => "session#register"
+  get "forget_password" => "session#forget_password"
+  post "forget_password" => "session#forget_password"
+  get "reset_password" => "session#reset_password"
+  post "reset_password" => "session#reset_password"
 
   %w(about team company jobs).each do |page|
     get page => "welcome##{page}"

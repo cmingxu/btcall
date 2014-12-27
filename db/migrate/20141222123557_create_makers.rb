@@ -1,8 +1,7 @@
 class CreateMakers < ActiveRecord::Migration
   def change
     create_table :makers do |t|
-      t.decimal :decimal_amount
-      t.integer :amount
+      t.integer :amount, :limit => 8
       t.string :in_or_out
       t.integer :user_id
 

@@ -21,6 +21,11 @@ class Bid < ActiveRecord::Base
   belongs_to :user
   before_validation :set_defaults, :on => :create
 
+
+  validates :amount, presence: { message: "请输入提现数量" }
+  validates :amount, numericality: { message: "金额不是合法金额", :greater_than =>0.0001 * (10 ** 8) }
+  validate :user_have_sufficient_btc
+
   enum status: [:new_created, :open]
 
   scope :win, lambda { where(win: true) }
@@ -30,6 +35,11 @@ class Bid < ActiveRecord::Base
     self.win = false
     self.status = "new_created"
     self.order_price = current_btc_price_in_int
+  end
+
+
+  def user_have_sufficient_btc
+    self.errors.add(:amount, "账户余额不足") if self.user.btc_balance < 0
   end
 
   def make_bid
@@ -75,9 +85,9 @@ class Bid < ActiveRecord::Base
           maker.maker_opens.create!(:open_at_code => bid_code,
                                     :platform_deduct_rate => Settings.platform_interest * 100,
                                     :platform_deduct => platform_deduct,
-                                    :platform_deduct_decimal => int_to_float(platform_deduct),
+                                    :platform_deduct_decimal => btc_int_to_float(platform_deduct),
                                     :net_income => net_income,
-                                    :net_income_decimal => int_to_float(net_income)
+                                    :net_income_decimal => btc_int_to_float(net_income)
                                    )
 
           maker.platform_opens.create!(:open_at_code => bid_code,

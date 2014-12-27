@@ -7,7 +7,7 @@ defaults: &defaults
   default_email_sender: "noreply@900bit.com"
   host: "121.40.129.130"
   max_allowed_value: 1
-  send_email_enabled: false
+  send_email_enabled: true
   odds: 1.9
   listtransactions_count: 50
   bitcoind:

@@ -10,7 +10,6 @@
 #  user_id             :integer
 #  amount              :integer
 #  account             :string(255)
-#  amount_decimal      :decimal(16, 8)
 #  created_at          :datetime
 #  updated_at          :datetime
 #

@@ -17,7 +17,8 @@
 #  account              :string(255)
 #  btc_balance          :decimal(10, 4)
 #  withdraw_address     :string(255)
-#  maker_btc_balance    :decimal(10, 4)
+#  maker_btc_balance    :integer
+#  mobile               :string(255)
 #
 
 require 'digest/md5'
@@ -105,6 +106,10 @@ class User < ActiveRecord::Base
 
   def my_maker_share
     self.maker_btc_balance / User.sum(:maker_btc_balance).to_f
+  end
+
+  def forget_password!
+    self.update_column :reset_password_token, SecureRandom.hex(16)
   end
 
   private

@@ -106,9 +106,9 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     }, 1000);
 
     $scope.direction = "down";
-    $scope.investment = 100;
+    $scope.investment = 0.1;
     $scope.roi_rate = 0.9;
-    $scope.roi = 190;
+    $scope.roi = 0.19;
 
     $scope.investmentChange = function () {
       $scope.roi = Math.floor($scope.investment * (1 + $scope.roi_rate));
@@ -117,7 +117,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     $scope.make_transaction = function () {
       $("#submit_bid_button").text("提交中...").addClass("disabled");
       var bid = {bid: {trend: $scope.direction,
-        amount: Math.abs(parseFloat($scope.investment) * 100),
+        amount: Math.abs(parseFloat($scope.investment)),
         open_at: $scope.selected_opening}};
 
       $http.post("/dashboard/bids.json", bid, {"headers": {"Content-Type": "application/json"}}).success(function(data, status, headers, config){

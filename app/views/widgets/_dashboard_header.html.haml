@@ -6,7 +6,7 @@
     %li
       %a{:href => "/"} 我的胜率(#{ current_user.win_rate})
     %li
-      %a{:href => "/"} 我的资产(#{ int_to_float(current_user.btc_balance) }￥）
+      %a{:href => "/"} 我的资产(#{ btc_int_to_float(current_user.btc_balance) }￥）
     %li
       %a{:href => "/"} 交易大厅
     %li

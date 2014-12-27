@@ -13,10 +13,10 @@
         - @bids.each do |bid|
           %tr
             %td= bid.created_at.to_s(:btc_short)
-            %td= int_to_float(bid.open_price)
-            %td= int_to_float(bid.order_price)
+            %td= rmb_int_to_float(bid.open_price)
+            %td= rmb_int_to_float(bid.order_price)
             %td= up_or_down(bid.trend)
-            %td= int_to_float(bid.amount)
+            %td= btc_int_to_float(bid.amount)
             %td= odds_in_percentage
 
     = paginate @bids

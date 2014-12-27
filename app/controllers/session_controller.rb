@@ -2,7 +2,7 @@ class SessionController < ApplicationController
   layout "session"
 
   before_filter :no_login_required, :except => :logout
-  before_filter :validate_captcha, :only => [:login, :register]
+  before_filter :validate_captcha, :only => [:login, :register, :forget_password, :reset_password], :if => lambda { !request.get? }
 
   def login
     store_request_path
@@ -47,8 +47,37 @@ class SessionController < ApplicationController
     redirect_to root_path
   end
 
+  def forget_password
+    if request.post?
+      @user = User.find_by_email(params[:user][:email])
+      if @user
+        @user.forget_password!
+        send_email do WelcomeMailer.forget_password_email(@user).deliver; end
+        redirect_to forget_password_path, :alert => "一封找回密码邮件已经发送到您的邮箱里了"
+      else
+        redirect_to forget_password_path, :alert => "您输入的email还未注册！"
+      end
+      return
+    end
+  end
+
+  def reset_password
+    @user = User.find_by_reset_password_token(params[:reset_password_token])
+    if !@user
+      flash.now[:alert] = "重置密码失败"
+      render and return
+    end
+
+    if request.post? && params[:user][:password].length >= 6
+      @user.password = params[:user][:password]
+      @user.reset_password_token = ""
+      @user.save
+      redirect_to login_path, :notice => "密码重置成功请登陆"
+    end
+  end
+
   def user_params
-    params[:user].permit(:email, :password, :password_confirmation, :captcha)
+    params[:user].permit(:email, :password, :password_confirmation, :captcha, :reset_password_token)
   end
 
   def validate_captcha

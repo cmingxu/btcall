@@ -11,14 +11,15 @@ class Dashboard::BidsController < Dashboard::BaseController
 
     respond_to do |format|
       if @bid.make_bid
-        format.json  { render :json => {:result => true}}
+        format.json  { render :json => {:result => true, :msg => "success"}}
       else
-        format.json  { render :json => {:result => false}, :status => :unprocessable_entity }
+        format.json  { render :json => {:result => false, :msg => @bid.errors.full_messages.first}, :status => :unprocessable_entity }
       end
     end
   end
 
   def bid_params
+    params[:bid][:amount] = btc_float_to_int(params[:bid][:amount])
     params[:bid].permit(:open_at, :amount, :trend)
   end
 end

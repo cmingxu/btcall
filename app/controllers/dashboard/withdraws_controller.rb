@@ -16,6 +16,7 @@ class Dashboard::WithdrawsController < Dashboard::BaseController
   end
 
   def withdraw_params
-    params[:withdraw].permit(:withdraw_address_id, :amount_decimal)
+    params[:withdraw][:amount] = btc_float_to_int(params[:withdraw][:amount])
+    params[:withdraw].permit(:withdraw_address_id, :amount)
   end
 end

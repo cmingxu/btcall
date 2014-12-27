@@ -5,7 +5,6 @@
 #
 #  id                   :integer          not null, primary key
 #  amount               :integer
-#  amount_decimal       :decimal(16, 8)
 #  withdraw_address_id  :integer
 #  withdraw_btc_address :string(255)
 #  txid                 :string(255)
@@ -34,8 +33,8 @@ class Withdraw < ActiveRecord::Base
   belongs_to :user
   after_commit :job_to_send_coin, :on => :create
 
-  validates :amount_decimal, presence: { message: "请输入提现数量" }
-  validates :amount_decimal, numericality: { message: "金额不是合法金额", :greater_than => 0.0001 }
+  validates :amount, presence: { message: "请输入提现数量" }
+  validates :amount, numericality: { message: "金额不是合法金额", :greater_than =>0.0001 * (10 ** 8) }
   validates :withdraw_address_id, presence: { message: "请选择您想提现的地址" }
   validate :user_have_sufficient_btc
 
@@ -65,7 +64,6 @@ class Withdraw < ActiveRecord::Base
   end
 
   def set_defaults
-    self.amount = float_to_int(self.amount_decimal)
     self.withdraw_btc_address = self.withdraw_address.try(:btcaddress)
   end
 
@@ -79,6 +77,6 @@ class Withdraw < ActiveRecord::Base
   end
 
   def deduct_user_btc_balance
-    self.user.adjust_btc_balance(-self.amount_decimal)
+    self.user.adjust_btc_balance(-self.amount)
   end
 end
