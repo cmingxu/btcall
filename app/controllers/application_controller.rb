@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # reset captcha code after each request for security
   after_filter :reset_last_captcha_code!
   before_filter :set_active_sidebar_item
+  before_filter :filter_blacklist_requests
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -37,5 +38,12 @@ class ApplicationController < ActionController::Base
 
   def set_active_sidebar_item
     @active_nav_item  = controller_name
+  end
+
+  def filter_blacklist_requests
+    Rails.logger.debug request.remote_ip
+    if Settings.blacklists.include?(request.remote_ip)
+      render :text => "interesting" and return
+    end
   end
 end
