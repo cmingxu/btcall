@@ -26,7 +26,7 @@ class Bid < ActiveRecord::Base
   validates :amount, numericality: { message: "金额不是合法金额", :greater_than =>0.0001 * (10 ** 8) }
   validate :user_have_sufficient_btc
 
-  enum status: [:new_created, :open]
+  #enum status: [:new_created, :open]
 
   scope :win, lambda { where(win: true) }
   scope :lose, lambda { where(win: false) }
@@ -54,13 +54,22 @@ class Bid < ActiveRecord::Base
     end
   end
 
+  def status_in_word
+    case self.status
+    when "new_created"
+      "未开"
+    when "open"
+      "已开"
+    end
+  end
+
   def self.finish_bid(bid_code = open_at_code(Time.now))
     BG_LOGGER.debug "oooooooooooooooooooo BEGIN #{bid_code} oooooooooooooooooooooo"
     current_btc_price = current_btc_price_in_int
     begin
       ActiveRecord::Base.transaction do
         total_btc = 0
-        bids_in_batch = Bid.where(open_at_code: bid_code, status: "0")
+        bids_in_batch = Bid.where(open_at_code: bid_code, status: "new_created")
         return if bids_in_batch.count.zero?
         bids_in_batch.all.each do |bid|
           BG_LOGGER.debug "oooooooooooooooooooo checking bid #{bid.id} oooooooooooooooooooooo"
