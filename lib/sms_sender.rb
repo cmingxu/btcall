@@ -10,7 +10,7 @@ module SmsSender
   API_POINT   = "https://api.ucpaas.com"
   ACCOUNT_SID = "aa7babf14bfa412fdb44d650d557f8c3"
   AUTH_TOKEN  = "16ec16484acae680df94a436e20e623a"
-  APP_ID      = "ID8de26cc1d7d24fc1818e9471f9f8b637"
+  APP_ID      = "8de26cc1d7d24fc1818e9471f9f8b637"
   SOFT_VERSION = "2014-06-30"
 
   DEFAULT_PARMAS = {
@@ -31,8 +31,10 @@ module SmsSender
     ap p
     ap request_uri
     ap request_headers
+    ap self.timestamp
 
-    self.post(request_uri,:query => p, :headers => request_headers)
+    r = self.post(request_uri, :body => p.to_json, :headers => request_headers)
+    ap r
   end
 
   private
@@ -45,11 +47,13 @@ module SmsSender
       {
         "Accept" => "application/json",
         "Content-Type" => "application/json;charset=utf-8",
-        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}").chomp.chomp("=")
+        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}")
       }
     end
 
     def sign
+      ap self.timestamp
+      ap "11111"
       Digest::MD5.hexdigest("#{ACCOUNT_SID}#{AUTH_TOKEN}#{self.timestamp}").upcase
     end
   end
