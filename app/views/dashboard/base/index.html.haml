@@ -17,8 +17,9 @@
                   {{format_opening(open_at)}}
         %li.list-group-item.col-md-4
           .bid_basic_info_header_label 金额：
-          .bid_basic_info_header_content
-            %input.input_field.input-inline{:placeholder => "0.2", "ng-model" => "investment", "ng-change" => "investmentChange()"}
+          .bid_basic_info_header_content{:style => "position: absolute; top: -1px"}
+            .input-group
+              %input.input_field.input-inline{:placeholder => "0.2", "ng-model" => "investment", "ng-change" => "investmentChange()", :style => "height: 41px; border: none; border-bottom: 2px solid red; font-style: italic"}
       .chart_panel.col-md-10
         .timespan_switcher.btn-group{:role => "group"}
           %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
@@ -47,13 +48,13 @@
             剩余时间
           .strong {{remain_time}}
         %li.list-group-item
-          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
+          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');", :style => "width: 95%"}
             %i.glyphicon.glyphicon-arrow-up
             看涨
         %li.list-group-item.bid_current_price.strong
           {{current_price}}
         %li.list-group-item
-          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
+          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');", :style => "width: 95%"}
             %i.glyphicon.glyphicon-arrow-down
             看跌
       %table.table.table-condensed

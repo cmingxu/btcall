@@ -12,6 +12,7 @@ $link-hover-color: darken($link-color, 30%) !default
 
 .navbar
   margin-bottom: 0px!important
+  min-height: 32px!important
 
 .color-bar
   height: 4px
@@ -139,6 +140,8 @@ $dashboard-link-dark-color: #535353
       padding-right: 0px
     .operation_right_info
       float: right
+      .notion
+        font-weight: bold
       .strong
         font-size: 2.0em
         font-weight: bold
@@ -148,6 +151,7 @@ $dashboard-link-dark-color: #535353
   .operation_panel
     .bid_basic_info
       .bid_basic_info_header_label
+        font-weight: bold
         display: inline
       .bid_basic_info_header_content
         display: inline
@@ -191,11 +195,17 @@ $dashboard-link-dark-color: #535353
     padding-left: 180px
     .sidebar
       width: 180px
-      position: fixed
+      position: absolute
       left: 0px
       .list-group-item
+        a
+          text-decoration: none
+          height: 100%
+          width: 100%
+          display: block
         &:hover
           background-color: darken($body-bg, 10%)
+          cursor: pointer
       .list-group-header
         font-size: 16px
         padding: 15px 15px
