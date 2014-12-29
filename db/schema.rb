@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141227041758) do
+ActiveRecord::Schema.define(version: 20141229133127) do
 
   create_table "addresses", force: true do |t|
     t.string   "account_name"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20141227041758) do
   create_table "platform_opens", force: true do |t|
     t.string   "open_at_code"
     t.integer  "user_id"
-    t.integer  "int_amount",   limit: 8
+    t.integer  "amount",       limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,6 +79,19 @@ ActiveRecord::Schema.define(version: 20141227041758) do
     t.integer  "user_id"
     t.integer  "amount",              limit: 8
     t.string   "account"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sms_notices", force: true do |t|
+    t.string   "template_id"
+    t.string   "template_content"
+    t.string   "param"
+    t.string   "phone"
+    t.string   "status"
+    t.string   "send_reason"
+    t.integer  "user_id"
+    t.datetime "entered_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

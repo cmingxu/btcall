@@ -3,9 +3,6 @@
 Rails.application.routes.draw do
 
 
-  namespace :dashboard do
-    get 'makers/index'
-  end
 
   ResqueWeb::Engine.eager_load!
 
@@ -46,6 +43,9 @@ Rails.application.routes.draw do
     resources :withdraw_addresses, :only => [:index, :create]
     resources :makers, :only => [:index, :create]
 
+    resources :settings, :only => [:index, :create] do
+      get :send_sms
+    end
   end
 
   namespace :admin do

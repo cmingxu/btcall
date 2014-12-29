@@ -5,7 +5,9 @@ module SmsSender
   cattr_accessor :timestamp
 
   MESSAGE_TEMPLATE = {
-    :test => "2247"
+    :test => "2247",
+    :withdraw => "2303",
+    :verify => "2247"
   }
   API_POINT   = "https://api.ucpaas.com"
   ACCOUNT_SID = "aa7babf14bfa412fdb44d650d557f8c3"
@@ -29,6 +31,14 @@ module SmsSender
     SMS_LOGGER.debug params
 
     self.post(request_uri, :body => p.to_json, :headers => request_headers)
+  end
+
+  def self.verify_sms(user, sms_notice)
+    self.send_sms(user, :verify, sms_notice.param)
+  end
+
+  def self.withdraw(user, sms_notice)
+    self.send_sms(user, :verify, sms_notice.param)
   end
 
   private

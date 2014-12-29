@@ -1,0 +1,2 @@
+module Dashboard::SettingHelper
+end

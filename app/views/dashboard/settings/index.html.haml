@@ -1,0 +1,9 @@
+= form_tag :url => dashboard_settings_path, :role => "form", :class => "form-inline" do
+  .form-group
+    %label 您的手机号码
+    = text_field_tag "user[mobile]", "", :class => "form-control"
+
+    %label 验证码
+    = text_field_tag "sms_code", "", :class => "form-control"
+
+    %button.btn.btn-default 添加

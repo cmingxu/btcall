@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: { :message => "Email已经存在， 尝试我们的找回密码功能" }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create, message: "Email格式不正确" }
   validate :sufficient_btc_balance, :on => :update
+  validates :mobile, format: { with: /\d{11}/, message: "你输入的手机号码不正确" }
 
   after_create :set_initial_status
 
@@ -44,6 +45,7 @@ class User < ActiveRecord::Base
   has_many :makers
   has_many :maker_opens
   has_many :platform_opens
+  has_many :sms_notices
 
   User::STATUS.each do |status|
     scope status, -> { where(status: status) }
