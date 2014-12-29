@@ -22,19 +22,13 @@ module SmsSender
     self.timestamp = Time.now.strftime("%Y%m%d%H%M%S")
 
     p = { :templateSMS =>
-      DEFAULT_PARMAS.merge( :to => user.try(:mobile), :templateId => MESSAGE_TEMPLATE[message_template], :params => params)
+      DEFAULT_PARMAS.merge( :to => user.try(:mobile), :templateId => MESSAGE_TEMPLATE[message_template], :param => params)
     }
 
     SMS_LOGGER.debug "sending message #{message_template} to user #{user.email} / #{user.try(:mobile)}"
     SMS_LOGGER.debug params
 
-    ap p
-    ap request_uri
-    ap request_headers
-    ap self.timestamp
-
-    r = self.post(request_uri, :body => p.to_json, :headers => request_headers)
-    ap r
+    self.post(request_uri, :body => p.to_json, :headers => request_headers)
   end
 
   private
@@ -47,13 +41,11 @@ module SmsSender
       {
         "Accept" => "application/json",
         "Content-Type" => "application/json;charset=utf-8",
-        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}")
+        "Authorization" => Base64.encode64("#{ACCOUNT_SID}:#{self.timestamp}").gsub("\n", "")
       }
     end
 
     def sign
-      ap self.timestamp
-      ap "11111"
       Digest::MD5.hexdigest("#{ACCOUNT_SID}#{AUTH_TOKEN}#{self.timestamp}").upcase
     end
   end
