@@ -8,10 +8,6 @@
     %li
       %a{:href => "/"} 我的资产(#{ btc_int_to_float(current_user.btc_balance) < 0.00001 ? 0 : btc_int_to_float(current_user.btc_balance) }）
     %li
-      %a{:href => "/"} 交易大厅
-    %li
       = link_to "退出登陆", logout_path, :method => :delete
-    %li
-      %a{:href => "/dashboard"} 管理
 
 
