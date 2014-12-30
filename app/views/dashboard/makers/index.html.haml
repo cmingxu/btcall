@@ -3,20 +3,22 @@
     %h4
       我的市商余额
       %label.label.label-success
+        = fa_icon("btc")
         = btc_int_to_float current_user.maker_btc_balance
 
+    %hr
   .row-fluid
     = form_for [:dashboard, current_user.makers.new(:in_or_out => "in")], :role => "form", :class => "form" do |f|
       = f.hidden_field :in_or_out
       .control-group
-        %label 入市数量
+        %label 入市数量(#{fa_icon("btc")})
         = f.text_field :amount, :class => "form-control"
       = f.submit "入市", :class => "btn btn-success"
 
     = form_for [:dashboard, current_user.makers.new(:in_or_out => "out")], :role => "form", :class => "form" do |f|
       = f.hidden_field :in_or_out
       .control-group
-        %label 出市
+        %label 出市数量(#{fa_icon("btc")})
         = f.text_field :amount, :class => "form-control"
       = f.submit "出市", :class => "btn btn-success"
 
@@ -26,14 +28,16 @@
     %table.table.table-striped.table-condensed.table-hover.table-bordered
       %thead
         %th 入市/出市
-        %th 数量
+        %th
+          数量
+          (#{fa_icon(:btc)})
         %th 时间
 
       %tbody
         - @maker_records.each do |maker_record|
           %tr
             %td= maker_record.in_or_out_in_word
-            %td= btc_int_to_float(maker_record.amount)
+            %td.align_right= btc_int_to_float(maker_record.amount)
             %td= maker_record.created_at.to_s(:btc_cn_normal)
 
     = paginate @maker_records
@@ -43,8 +47,12 @@
       %thead
         %th 编号
         %th 开盘时间
-        %th 收益
-        %th 平台提成
+        %th 
+          收益
+          (#{fa_icon(:btc)})
+        %th
+          平台提成
+          (#{fa_icon(:btc)})
         %th 平台比例
 
       %tbody
@@ -52,9 +60,9 @@
           %tr
             %td= maker_open.open_at_code
             %td= maker_open.created_at.to_s(:btc_cn_normal)
-            %td= btc_int_to_float maker_open.net_income
-            %td= btc_int_to_float maker_open.platform_deduct
-            %td= interest_in_percentage
+            %td.align_right= btc_int_to_float maker_open.net_income
+            %td.align_right= btc_int_to_float maker_open.platform_deduct
+            %td.align_right= interest_in_percentage
 
     = paginate @maker_opens, :param_name => :open_page
 

@@ -3,20 +3,39 @@
     %table.table.table-striped.table-condensed.table-hover.table-bordered
       %thead
         %th 时间
-        %th 结算价
-        %th 购时价
+        %th
+          结算价
+          (
+          = fa_icon(:rmb)
+          )
+        %th
+          购时价
+          (
+          = fa_icon(:rmb)
+          )
         %th 涨跌
-        %th 投注
+        %th
+          投注
+          (
+          = fa_icon(:btc)
+          )
         %th 赔率
 
       %tbody
         - @bids.each do |bid|
           %tr
             %td= bid.created_at.to_s(:btc_cn_normal)
-            %td= rmb_int_to_float(bid.open_price)
-            %td= rmb_int_to_float(bid.order_price)
+            %td.align_right
+              = rmb_int_to_float(bid.open_price)
+              - if bid.open_price > bid.order_price
+                %span{:style => "color: red"}
+                  = fa_icon("arrow-down rotate-180")
+              - else
+                %span{:style => "color: green"}
+                  = fa_icon("arrow-down")
+            %td.align_right= rmb_int_to_float(bid.order_price)
             %td= up_or_down(bid.trend)
-            %td= btc_int_to_float(bid.amount)
+            %td.align_right= btc_int_to_float(bid.amount)
             %td= odds_in_percentage
 
     = paginate @bids

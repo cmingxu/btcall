@@ -4,8 +4,8 @@
       充值地址
       %label.label.label-success #{current_user.recharge_address.btcaddress}
       %button.btn.btn-success#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => ""}
-        拷贝
         = fa_icon(:clipboard)
+        拷贝
     :javascript
       $(document).ready(function() {
         var clip = new ZeroClipboard($("#d_clip_button"))

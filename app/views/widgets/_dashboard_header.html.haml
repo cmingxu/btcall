@@ -4,9 +4,15 @@
     %a.navbar-brand{:href => '/'} BTCall
   %ul.nav.navbar-nav.pull-right
     %li
-      %a{:href => "/"} 我的胜率(#{ current_user.win_rate})
+      %a{:href => "/"}
+        我的胜率(#{ current_user.win_rate}
+        = fa_icon(:star)
+        )
     %li
-      %a{:href => "/"} 我的资产(#{ btc_int_to_float(current_user.btc_balance) < 0.00001 ? 0 : btc_int_to_float(current_user.btc_balance) }）
+      %a{:href => "/"}
+        我的资产(#{ btc_int_to_float(current_user.btc_balance) < 0.00001 ? 0 : btc_int_to_float(current_user.btc_balance) }
+        = fa_icon(:btc)
+        )
     %li
       = link_to "退出登陆", logout_path, :method => :delete
 
