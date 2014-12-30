@@ -27,7 +27,7 @@
             %td= bid.created_at.to_s(:btc_cn_normal)
             %td.align_right
               = rmb_int_to_float(bid.open_price)
-              - if bid.open_price > bid.order_price
+              - if (bid.open_price || 0) > (bid.order_price || 0)
                 %span{:style => "color: red"}
                   = fa_icon("arrow-down rotate-180")
               - else
