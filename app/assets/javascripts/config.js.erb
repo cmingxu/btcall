@@ -1,7 +1,6 @@
 <% if Rails.env.production? %>
     <%#var config = { "websocket_url": "121.40.129.130/socket.io/" };%>
-    var config = { "websocket_url": "121.40.129.130:3001" };
-    var config = { "websocket_url": "207.226.141.225:3001" };
+    var config = { "websocket_url": "207.226.141.225" };
 <% else  %>
     var config = { "websocket_url": "localhost:3001" };
 <% end %>
