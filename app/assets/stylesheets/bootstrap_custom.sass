@@ -37,12 +37,17 @@ $dashboard-text-dark-color: #535353
 $dashboard-link-light-color: white
 $dashboard-link-dark-color: #535353
 
+$dashboard-header-bg-dark-color: #535353
+$dashboard-header-text-dark-color: #535353
+$dashboard-header-text-light-color: white
+
 
 .dashboard
+  background-color: $dashboard-bg-light-color
   min-width: 1200px
   .header
-    background-color: $dashboard-bg-dark-color
-    color: $dashboard-bg-light-color
+    background-color: $dashboard-header-bg-dark-color
+    color: $dashboard-header-text-light-color
   .navbar-brand
     padding: 5px 15px
     height: 30px
@@ -134,6 +139,11 @@ $dashboard-link-dark-color: #535353
         border-top: 10px solid transparent
         border-bottom: 10px solid transparent
         border-right:  10px solid red
+  .modal-body
+    .list-group-item
+      span
+        float: right
+        font-weight: bold
 
   .operation_panel
     .col-md-2
@@ -188,6 +198,9 @@ $dashboard-link-dark-color: #535353
       background-color: $dashboard-bg-dark-color
       color: $dashboard-link-light-color
 
+.page-wraper
+  padding: 10px
+  
 .dashboard
   .wrapper
     width: 100%
@@ -213,6 +226,17 @@ $dashboard-link-dark-color: #535353
 
       .sidebar_item_active
         border-right: 4px solid $highlight-color
+
+  form
+    padding: 30px
+    margin-bottom: 30px
+    margin: auto
+    float: left
+    width: 48%
+
+    .btn
+      float: right
+      margin-top: 15px
 
 
 .user_actions

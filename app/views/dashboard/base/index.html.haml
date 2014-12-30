@@ -92,22 +92,30 @@
             %button.close{"data-dismiss" =>  "modal"}
               %span{"aria-hidden" => "true"} &times;
               %span.sr-only 关
-            %h4.modal-title#myModalLabel Modal Title
+            %h4.modal-title#myModalLabel {{format_opening(selected_opening)}} / {{investment}}
           .modal-body
             %ul.list-group
               .list-group-item
-                到期时间{{format_opening(selected_opening)}}
+                到期时间
+                %span
+                  {{format_opening(selected_opening)}}
               .list-group-item
-                下注金额{{investment}}
+                下注金额
+                %span
+                  {{investment}}
               .list-group-item
-                剩余时间{{remain_time}}
+                剩余时间
+                %span
+                  {{remain_time}}
               .list-group-item
-                当前价格{{current_price}}
+                当前价格
+                %span
+                  {{current_price}}
 
 
           .modal-footer
             %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
-            %button.btn.btn-primary#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
+            %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
 
 :javascript
   $(document).ready(function(){ $("#investment").focus()});

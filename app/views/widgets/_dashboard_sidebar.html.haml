@@ -1,18 +1,16 @@
 .list-group
   .list-group-item.chart
-    = link_to raw(fa_icon(:at)) + "BTC涨跌交易", dashboard_path
+    = link_to raw(fa_icon(:btc)) + "BTC涨跌交易", dashboard_path
   .list-group-item.bids
-    = link_to "历史订单", dashboard_bids_path
+    = link_to raw(fa_icon(:history)) +"历史订单", dashboard_bids_path
   .list-group-item.recharges
-    = link_to "充值", dashboard_recharges_path
+    = link_to raw(fa_icon(:plus)) +"充值", dashboard_recharges_path
   .list-group-item.withdraws
-    = link_to "提现", dashboard_withdraws_path
+    = link_to raw(fa_icon(:minus)) +"提现", dashboard_withdraws_path
   .list-group-item.makers
-    = link_to "市商", dashboard_makers_path
-  .list-group-item
-    = link_to "推荐人系统", dashboard_path
+    = link_to raw(fa_icon(:bank)) +"市商", dashboard_makers_path
   .list-group-item.setting
-    = link_to "个人设置", dashboard_settings_path
+    = link_to raw(fa_icon(:wrench)) +"个人设置", dashboard_settings_path
 
 
 :javascript

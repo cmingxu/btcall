@@ -1,7 +1,9 @@
 .container-fluid
   .row-fluid
-    我的市商余额
-    = btc_int_to_float current_user.maker_btc_balance
+    %h4
+      我的市商余额
+      %label.label.label-success
+        = btc_int_to_float current_user.maker_btc_balance
 
   .row-fluid
     = form_for [:dashboard, current_user.makers.new(:in_or_out => "in")], :role => "form", :class => "form" do |f|
@@ -9,19 +11,19 @@
       .control-group
         %label 入市数量
         = f.text_field :amount, :class => "form-control"
-      = f.submit "入市", :class => "btn btn-primary"
+      = f.submit "入市", :class => "btn btn-success"
 
     = form_for [:dashboard, current_user.makers.new(:in_or_out => "out")], :role => "form", :class => "form" do |f|
       = f.hidden_field :in_or_out
       .control-group
         %label 出市
         = f.text_field :amount, :class => "form-control"
-      = f.submit "出市", :class => "btn btn-primary"
+      = f.submit "出市", :class => "btn btn-success"
 
 
 
   .row-fluid
-    %table.table.table-stripped.table-condensed
+    %table.table.table-striped.table-condensed.table-hover.table-bordered
       %thead
         %th 入市/出市
         %th 数量
@@ -37,7 +39,7 @@
     = paginate @maker_records
 
   .row-fluid
-    %table.table.table-stripped.table-condensed
+    %table.table.table-striped.table-condensed.table-hover.table-bordered
       %thead
         %th 编号
         %th 开盘时间

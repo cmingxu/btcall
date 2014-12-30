@@ -2,8 +2,8 @@
   .row-fluid
     %h4
       充值地址
-      %label.label.label-warning #{current_user.recharge_address.btcaddress}
-      %button.btn.btn-primary#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => ""}
+      %label.label.label-success #{current_user.recharge_address.btcaddress}
+      %button.btn.btn-success#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => ""}
         拷贝
         = fa_icon(:clipboard)
     :javascript
@@ -11,7 +11,7 @@
         var clip = new ZeroClipboard($("#d_clip_button"))
       });
   .row-fluid
-    %table.table.table-stripped.table-condensed
+    %table.table.table-striped.table-condensed.table-hover.table-bordered
       %thead
         %th 时间
         %th 数量

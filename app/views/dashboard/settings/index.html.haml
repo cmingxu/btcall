@@ -1,13 +1,16 @@
-- if current_user.mobile_is_valid
-  您在本站注册的手机号码为
-  %span.label.lable-warning= current_user.mobile
-
-- else
-  = form_tag dashboard_settings_path, :role => "form", :class => "form" do
-    .form-group
-      %label 您的手机号码
-      = text_field_tag "user[mobile]", current_user.mobile, :class => "form-control", :id => "mobile_num"
-    = render :partial => "widgets/sms_code_partial"
-    .form-group
-      %button.btn.btn-default 添加
-
+.container-fluid
+  .row-fluid
+    - if current_user.mobile_is_valid
+      %h4
+        您在本站注册的手机号码为
+        %label.label.label-success= current_user.mobile
+    
+    - else
+      = form_tag dashboard_settings_path, :role => "form", :class => "form" do
+        .form-group
+          %label 您的手机号码
+          = text_field_tag "user[mobile]", current_user.mobile, :class => "form-control", :id => "mobile_num"
+        = render :partial => "widgets/sms_code_partial"
+        .form-group
+          %button.btn.btn-default 添加
+    
