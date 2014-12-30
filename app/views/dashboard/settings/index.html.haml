@@ -1,9 +1,13 @@
-= form_tag :url => dashboard_settings_path, :role => "form", :class => "form-inline" do
-  .form-group
-    %label 您的手机号码
-    = text_field_tag "user[mobile]", "", :class => "form-control"
+- if current_user.mobile_is_valid
+  您在本站注册的手机号码为
+  %span.label.lable-warning= current_user.mobile
 
-    %label 验证码
-    = text_field_tag "sms_code", "", :class => "form-control"
+- else
+  = form_tag dashboard_settings_path, :role => "form", :class => "form" do
+    .form-group
+      %label 您的手机号码
+      = text_field_tag "user[mobile]", current_user.mobile, :class => "form-control", :id => "mobile_num"
+    = render :partial => "widgets/sms_code_partial"
+    .form-group
+      %button.btn.btn-default 添加
 
-    %button.btn.btn-default 添加

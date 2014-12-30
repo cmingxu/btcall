@@ -19,7 +19,7 @@
           .bid_basic_info_header_label 金额：
           .bid_basic_info_header_content{:style => "position: absolute; top: -1px"}
             .input-group
-              %input.input_field.input-inline{:placeholder => "0.2", "ng-model" => "investment", "ng-change" => "investmentChange()", :style => "height: 41px; border: none; border-bottom: 2px solid red; font-style: italic"}
+              %input.input_field.input-inline#investment{:placeholder => "0.1", "ng-model" => "investment", "ng-change" => "investmentChange()", :style => "height: 41px; border: none; border-bottom: 2px solid red; font-style: italic"}
       .chart_panel.col-md-10
         .timespan_switcher.btn-group{:role => "group"}
           %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
@@ -109,3 +109,5 @@
             %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
             %button.btn.btn-primary#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
 
+:javascript
+  $(document).ready(function(){ $("#investment").focus()});

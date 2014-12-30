@@ -12,7 +12,7 @@
           %tr
             %td= withdraw_address.label
             %td= withdraw_address.btcaddress
-            %td= withdraw_address.created_at.strftime(:btc_cn_normal)
+            %td= withdraw_address.created_at.to_s(:btc_cn_normal)
 
 
 
@@ -25,6 +25,8 @@
       .form-group
         %label 提现地址
         = f.text_field :btcaddress, :class => "form-control"
+      = render :partial => "widgets/sms_code_partial"
+      = hidden_field_tag "sms_send_reason", "withdraw", :id => "sms_send_reason"
 
       .form-actions
         = submit_tag "添加", :class => "btn btn-primary"

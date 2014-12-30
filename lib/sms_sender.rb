@@ -7,8 +7,9 @@ module SmsSender
   MESSAGE_TEMPLATE = {
     :test => "2247",
     :withdraw => "2303",
-    :verify => "2247"
-  }
+    :verify => "2302"
+  }.with_indifferent_access
+
   API_POINT   = "https://api.ucpaas.com"
   ACCOUNT_SID = "aa7babf14bfa412fdb44d650d557f8c3"
   AUTH_TOKEN  = "16ec16484acae680df94a436e20e623a"
@@ -19,17 +20,32 @@ module SmsSender
     "appId" =>  APP_ID
   }
 
+  def self.send_sms_to_mobile(mobile, message_template, params)
+    self.timestamp = Time.now.strftime("%Y%m%d%H%M%S")
+
+    p = { :templateSMS =>
+      DEFAULT_PARMAS.merge( :to => mobile, :templateId => MESSAGE_TEMPLATE[message_template], :param => params)
+    }
+
+    SMS_LOGGER.debug "sending message #{message_template}  #{params} to  #{mobile}"
+
+    begin
+      self.post(request_uri, :body => p.to_json, :headers => request_headers)
+      [true, nil]
+    rescue Exception => e
+      [false, e]
+    end
+  end
+
   def self.send_sms(user, message_template, params)
     return [false, "no mobile for user"] if user.mobile.blank?
     self.timestamp = Time.now.strftime("%Y%m%d%H%M%S")
 
     p = { :templateSMS =>
-      DEFAULT_PARMAS.merge( :to => user.try(:mobile), :templateId => MESSAGE_TEMPLATE[message_template], :param => params)
+          DEFAULT_PARMAS.merge( :to => user.try(:mobile), :templateId => MESSAGE_TEMPLATE[message_template], :param => params)
     }
 
     SMS_LOGGER.debug "sending message #{message_template} to user #{user.email} / #{user.try(:mobile)}"
-    SMS_LOGGER.debug params
-
     self.post(request_uri, :body => p.to_json, :headers => request_headers)
   end
 

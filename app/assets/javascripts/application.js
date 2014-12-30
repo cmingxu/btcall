@@ -19,3 +19,9 @@
 //= require d3
 //= require_tree .
 //= require bootstrap-sprockets
+
+
+function show_error(content) {
+  $("#notice_bar .alert").text(content);
+  $("#notice_bar").show();
+}

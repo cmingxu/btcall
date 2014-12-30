@@ -1,6 +1,8 @@
 class SmsNotice < ActiveRecord::Base
+  validates :phone, presence: { :message => "手机号码不能空" }
+  validates :param, presence: { message: "参数不能空" }
+
   belongs_to :user
-  scope :latest_sms_notice, lambda { where(:status => "sent_out").order("id DESC").first }
 
   state_machine :status, :initial => :new_created do
     event :sent do

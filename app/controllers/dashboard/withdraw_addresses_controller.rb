@@ -1,4 +1,5 @@
 class Dashboard::WithdrawAddressesController < Dashboard::BaseController
+  before_filter :sms_code_verify, :only => :create
   def index
     @withdraw_addresses = current_user.withdraw_addresses
   end

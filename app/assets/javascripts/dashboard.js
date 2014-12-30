@@ -28,3 +28,8 @@
 var dashboard = angular.module("dashboard", ["btford.socket-io"]);
 
 
+
+function show_error(content) {
+  $("#notice_bar .alert").text(content);
+  $("#notice_bar").removeClass("hidden");
+}

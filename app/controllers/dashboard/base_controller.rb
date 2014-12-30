@@ -7,7 +7,7 @@ class Dashboard::BaseController < ApplicationController
   end
 
   def sms_code_verify
-    if params[:sms_code] != current_user.latest_sms_notice.param
+    if params[:sms_code] != current_user.latest_sms_notice.try(:param)
       redirect_to :back, :notice => "手机验证码不正确" and return
     else
       current_user.latest_sms_notice.enter!

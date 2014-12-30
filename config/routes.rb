@@ -44,7 +44,9 @@ Rails.application.routes.draw do
     resources :makers, :only => [:index, :create]
 
     resources :settings, :only => [:index, :create] do
-      get :send_sms
+      collection do
+        get :send_sms
+      end
     end
   end
 
