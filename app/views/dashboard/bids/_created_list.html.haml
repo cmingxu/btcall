@@ -23,7 +23,9 @@
       %tr
         %td= bid.id
         %td RMB/BTC
-        %td.align_right.order_price_td= rmb_int_to_float(bid.order_price)
+        %td.align_right.order_price_td
+          = rmb_int_to_float(bid.order_price)
+          %span
         %td.align_right.current_price_td
         %td= up_or_down(bid.trend)
         %td= bid.created_at.to_s(:btc_cn_normal)

@@ -132,9 +132,9 @@
       $("#bids_new_created tr td.order_price_td").each(function(){
       if(current_price){
       if(parseFloat($(this).text()) > parseFloat(current_price)){
-        $(this).append("<span style='color: red'><i class='fa fa-arrow-down'></i></span>");
+        $(this).find("span").css("color", "red").html("<i class='fa fa-arrow-down'></i>");
       }else{
-        $(this).append("<span style='color: green'><i class='fa fa-arrow-down fa-rotate-180'></i></span>");
+        $(this).find("span").css("color", "green").html("<i class='fa fa-arrow-down fa-rotate-180'></i>");
       } }
       });
     });
