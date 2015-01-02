@@ -1,136 +1,140 @@
 .container-fluid
   .row-fluid{"ng-controller" => "btcchartController"}
     .operation_panel.col-md-10
-      %ul.list-group.bid_basic_info
-        %li.list-group-item.col-md-4
-          .bid_basic_info_header_label 资产：
-          .bid_basic_info_header_content BTC/RMB
-        %li.list-group-item.col-md-4
-          .bid_basic_info_header_label 到期时间：
-          .bid_basic_info_header_content
-            .dropdown_selector
-              .selected_opening{"ng-click" => "opening_selector_open()", "ng-hover" => "opening_selector_open()"}
-                %span{"ng-if" => "selected_opening"}
-                  {{format_opening(selected_opening)}}
-              %ul.list-group.opening_items
-                %li.list-group-item{"ng-repeat" => "open_at in open_times", "ng-click" => "opening_selected($index)"}
-                  {{format_opening(open_at)}}
-        %li.list-group-item.col-md-4
-          .bid_basic_info_header_label 金额：
-          .bid_basic_info_header_content{:style => "position: absolute; top: -1px"}
-            .input-group
-              %input.input_field.input-inline#investment{:placeholder => "0.1", "ng-model" => "investment", "ng-change" => "investmentChange()", :style => "height: 41px; border: none; border-bottom: 2px solid red; font-style: italic"}
-      .chart_panel.col-md-10
-        .timespan_switcher.btn-group{:role => "group"}
-          %button.btn.btn-sm.btn-success.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
-          %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
-          %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
-          %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
-          %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
-          %button.btn.btn-sm.btn-success{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
-        %btc_chart_directive{"val" => "data"}
-        .progress-bar
-          %span.yes-percentage 40%
-          %span.label.label-success.yes-progress.pull-left &nbsp;
-          %span.label.label-danger.no-progress.pull-right &nbsp;
-          %span.no-percentage 60%
-      %ul.list-group.operation_right_info.col-md-2.text-right
-        %li.list-group-item
-          %span.notion
-            潜在收益
-          .strong {{roi}}
-        %li.list-group-item
-          %span.notion
-            订单收益比
-          .strong {{(1+roi_rate) * 100}}%
-        %li.list-group-item
-          %span.notion
-            剩余时间
-          .strong {{remain_time}}
-        %li.list-group-item
-          %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');", :style => "width: 95%"}
-            %i.glyphicon.glyphicon-arrow-up
-            看涨
-        %li.list-group-item.bid_current_price.strong
-          {{current_price}}
-        %li.list-group-item
-          %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');", :style => "width: 95%"}
-            %i.glyphicon.glyphicon-arrow-down
-            看跌
-      %table.table.table-bordered.table-striped.table-hover
-        %thead
-          %th 订单ID
-          %th 资产
-          %th 
-            执行价格
-            (#{fa_icon(:rmb)})
-          %th
-            当前价格
-            (#{fa_icon(:rmb)})
-          %th 看涨/看跌
-          %th 开始时间
-          %th 到期时间
-          %th
-            投资
-            (#{fa_icon(:btc)})
-          %th
-            收益
-            (#{fa_icon(:btc)})
-          %th 状态
-
-        %tbody
-          - current_user.bids.limit(30).order("id DESC").each do |bid|
-            %tr
-              %td= bid.id
-              %td RMB/BTC
-              %td.align_right
-                = rmb_int_to_float(bid.open_price)
-                - if (bid.open_price || 0) > (bid.order_price || 0)
-                  %span{:style => "color: red"}
-                    = fa_icon("arrow-down rotate-180")
-                - else
-                  %span{:style => "color: green"}
-                    = fa_icon("arrow-down")
-              %td.align_right= rmb_int_to_float(bid.order_price)
-              %td= up_or_down(bid.trend)
-              %td= bid.created_at.to_s(:btc_cn_normal)
-              %td= bid.open_at.to_s(:btc_cn_normal)
-              %td.align_right= btc_int_to_float(bid.amount).to_f
-              %td.align_right= btc_int_to_float(bid.win_reward).to_f
-              %td= bid.status_in_word
-
-    .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
-    .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button.close{"data-dismiss" =>  "modal"}
-              %span{"aria-hidden" => "true"} &times;
-              %span.sr-only 关
-            %h4.modal-title#myModalLabel {{format_opening(selected_opening)}} / {{investment}}
-          .modal-body
-            %ul.list-group
-              .list-group-item
-                到期时间
-                %span
-                  {{format_opening(selected_opening)}}
-              .list-group-item
-                下注金额
-                %span
-                  {{investment}}
-              .list-group-item
+      .chart_panel_wrapper
+        %ul.list-group.bid_basic_info
+          %li.list-group-item.col-md-4
+            .bid_basic_info_header_label 资产：
+            .bid_basic_info_header_content
+              %select
+                %option{"value" =>  "BTC/RMB"} BTC/RMB
+          %li.list-group-item.col-md-4
+            .bid_basic_info_header_label 到期：
+            .bid_basic_info_header_content
+              %select{"ng-model" => "selected_opening"}
+                %option{"ng-repeat" => "selected_opening in open_times", "value" => "{{selected_opening}}"} {{format_opening(selected_opening)}}
+          %li.list-group-item.col-md-4
+            .bid_basic_info_header_label 金额：
+            .bid_basic_info_header_content
+              .input-group
+                %input.input_field.input-inline{"ng-model" => "investment", "ng-change" => "investmentChange()"}
+        .chart_panel.col-md-10
+          .timespan_switcher
+            %span.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
+            %span{"data-timespan" => 60 * 60, :ng_click => "change_timespan(60*60)"} 1小时
+            %span{"data-timespan" => 60 * 60 * 2, :ng_click => "change_timespan(60*60*2)"} 2小时
+            %span{"data-timespan" => 60 * 60 * 4, :ng_click => "change_timespan(60*60*4)"} 4小时
+            %span{"data-timespan" => 60 * 60 * 6, :ng_click => "change_timespan(60*60*6)"} 6小时
+            %span{"data-timespan" => 60 * 60 * 12, :ng_click => "change_timespan(60*60*12)"} 12小时
+          %btc_chart_directive{"val" => "data"}
+          .progress-bar
+            %span.yes-percentage 40%
+            %span.label.label-success.yes-progress.pull-left &nbsp;
+            %span.label.label-danger.no-progress.pull-right &nbsp;
+            %span.no-percentage 60%
+        .chart_info_right_panel_wrapper.col-md-2.text-right.operation_right_info
+          %ul.list-group
+            %li.list-group-item
+              %span.notion
+                潜在收益
+              .strong {{roi}}
+            %li.list-group-item
+              %span.notion
+                订单收益比
+              .strong {{(1+roi_rate) * 100}}%
+            %li.list-group-item
+              %span.notion
                 剩余时间
-                %span
-                  {{remain_time}}
-              .list-group-item
-                当前价格
-                %span
-                  {{current_price}}
+            .strong {{remain_time}}
+
+          %p
+            %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
+              看涨
+              %i.glyphicon.glyphicon-arrow-up
+          %p
+            %button.btn.btn-default
+              {{current_price}}
+          %p
+            %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
+              看跌
+              %i.glyphicon.glyphicon-arrow-down
+
+        .clearfix
+      .table_wrapper
+        %table.table.table-bordered.table-striped.table-hover
+          %thead
+            %th 订单ID
+            %th 资产
+            %th 
+              执行价格
+              (#{fa_icon(:rmb)})
+            %th
+              当前价格
+              (#{fa_icon(:rmb)})
+            %th 看涨/看跌
+            %th 开始时间
+            %th 到期时间
+            %th
+              投资
+              (#{fa_icon(:btc)})
+            %th
+              收益
+              (#{fa_icon(:btc)})
+            %th 状态
+
+          %tbody
+            - current_user.bids.limit(30).order("id DESC").each do |bid|
+              %tr
+                %td= bid.id
+                %td RMB/BTC
+                %td.align_right
+                  = rmb_int_to_float(bid.open_price)
+                  - if (bid.open_price || 0) > (bid.order_price || 0)
+                    %span{:style => "color: red"}
+                      = fa_icon("arrow-down rotate-180")
+                  - else
+                    %span{:style => "color: green"}
+                      = fa_icon("arrow-down")
+                %td.align_right= rmb_int_to_float(bid.order_price)
+                %td= up_or_down(bid.trend)
+                %td= bid.created_at.to_s(:btc_cn_normal)
+                %td= bid.open_at.to_s(:btc_cn_normal)
+                %td.align_right= btc_int_to_float(bid.amount).to_f
+                %td.align_right= btc_int_to_float(bid.win_reward).to_f
+                %td= bid.status_in_word
+
+  .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
+  .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"data-dismiss" =>  "modal"}
+            %span{"aria-hidden" => "true"} &times;
+            %span.sr-only 关
+          %h4.modal-title#myModalLabel {{format_opening(selected_opening)}} / {{investment}}
+        .modal-body
+          %ul.list-group
+            .list-group-item
+              到期时间
+              %span
+                {{format_opening(selected_opening)}}
+            .list-group-item
+              下注金额
+              %span
+                {{investment}}
+            .list-group-item
+              剩余时间
+              %span
+                {{remain_time}}
+            .list-group-item
+              当前价格
+              %span
+                {{current_price}}
 
 
-          .modal-footer
-            %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
-            %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
+          %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
 
 :javascript
   $(document).ready(function(){ $("#investment").focus()});

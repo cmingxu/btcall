@@ -33,3 +33,6 @@ function show_error(content) {
   $("#notice_bar .alert").text(content);
   $("#notice_bar").removeClass("hidden");
 }
+
+if (!console) console = {log: function() {}};
+

@@ -14,7 +14,8 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
       var margin = {top: 10, right: 20, bottom: 40, left: 40},
       //width = $window.innerWidth - left_sidebar.width() * 3 - 30 * 2, // 30 is the default padding for bootstrap col-md-x
       width = chart_panel.width(), // 30 is the default padding for bootstrap col-md-x
-      height = Math.floor(width * 2 / 5),
+      //height = Math.floor(width * 2 / 5),
+      height = 290,
       color = d3.interpolateRgb("#f77", "#77f");
       var x = d3.time.scale()
       .rangeRound([0, width - margin.right - margin.left]);
@@ -86,7 +87,7 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
         .attr("x2", 0).attr("y2", "100%")
         .selectAll("stop")
         .data([
-          {offset: "0%", color: "green"},
+          {offset: "0%", color: "#234177"},
           {offset: "100%", color: "white"},
         ])
         .enter().append("stop")
@@ -137,7 +138,7 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
 
         var lineGraph = svg.append("path")
         .attr("d", lineFunction(newVal))
-        .attr("stroke", "green")
+        .attr("stroke", "#234177")
         .attr("stroke-width", 1)
         .attr("fill", "none");
 

@@ -30,16 +30,24 @@ footer
   background-color: $second-color
 
 //dashboard settings
-$dashboard-bg-light-color: white
+$dashboard-bg-light-color: #EFEFF3
 $dashboard-bg-dark-color: #535353
 $dashboard-text-light-color: #535353
 $dashboard-text-dark-color: #535353
 $dashboard-link-light-color: white
 $dashboard-link-dark-color: #535353
 
-$dashboard-header-bg-dark-color: darken(#f1f9f7, 40%)
-$dashboard-header-text-dark-color: #535353
-$dashboard-header-text-light-color: white
+$dashboard-header-bg-color: #1682b7
+$dashboard-header-text-color: white
+
+$dashboard-info-bg-color: #306b95
+$dashboard-info-text-color: white
+
+$dashboard-sidebar-bg-color: #273542
+$dashboard-sidebar-text-color: #979eae
+$dashboard-sidebar-text-hover-color: #535353
+$dashboard-sidebar-text-active-color: white
+$dashboard-sidebar-text-active-bg-color: #36404b
 
 table
   text-align: center
@@ -54,8 +62,8 @@ table
   background-color: $dashboard-bg-light-color
   min-width: 1200px
   .header
-    background-color: $dashboard-header-bg-dark-color
-    color: $dashboard-header-text-light-color
+    background-color: $dashboard-header-bg-color
+    color: $dashboard-header-text-color
   .navbar-brand
     padding: 5px 15px
     height: 30px
@@ -63,6 +71,14 @@ table
   .navbar-nav  li  a
     padding: 5px 15px
     height: 30px
+    color: $dashboard-header-text-color
+    span
+      color: red
+      font-weight: bold
+
+  .navbar-brand
+    color: $dashboard-header-text-color
+    font-weight: bold
 
   .progress-bar
     margin-top: 5px
@@ -91,7 +107,6 @@ table
       right: 10px
 
   .chart_panel
-    margin-left: -15px
     #current_info
       #rect-notion
         margin-left: 10px
@@ -109,8 +124,17 @@ table
         padding-left: 10px
         display: inline
     .timespan_switcher
-      .btn-sm
-        padding: 1px 10px
+      width: 100%
+      text-align: center
+      padding-top: 10px
+      span
+        background-color: #eaf7fe
+        color: #359dbf
+        font-size: .8em
+        font-weight: bold
+        padding: 5px 7px
+        border: 1px solid #359dbf
+        margin-right: 15px
     #btcchart
       width: 100%
     .btn
@@ -157,45 +181,58 @@ table
     .col-md-2
       padding-right: 0px
     .operation_right_info
-      float: right
+      .list-group-item
+        border-bottom: 1px solid white
+        background-color: $dashboard-info-bg-color
+        color: $dashboard-info-text-color
+        border-right: none
       .notion
         font-weight: bold
       .strong
         font-size: 2.0em
         font-weight: bold
         font-style: italic
-        color: darken(red, 20%)
+        color: white
+      p
+        button
+          width: 100%
+      .current_price_indicator
+        background-color: red
+        color: white
+    .chart_panel_wrapper
+      background-color: white
 
   .operation_panel
     .bid_basic_info
+      .list-group-item
+        background-color: #234177
+        color: white
+        border: none
       .bid_basic_info_header_label
         font-weight: bold
         display: inline
       .bid_basic_info_header_content
         display: inline
-        .dropdown_selector
+        select
+          width: 70%
+          height: 35px
+          line-height: 35px
+          font-size: 30px
+        .input-group
           display: inline
-          position: relative
+          .input_field
+            height: 21px
+            padding-left: 5px
+            line-height: 21px
+            color: black
 
-          .selected_opening
-            border: 1px solid #eee
-            display: inline
-            cursor: pointer
-            span
-              width: 100px
-            &:hover
-              color: light(red, 30%)
 
-          .opening_items
-            display: none
-            position: absolute
-            z-index: 10
-            top: 20px
-            right: 0px
-            float: right
-            .list-group-item:hover
-              background-color: darken(white, 5%)
-              cursor: pointer
+  .operation_panel
+    .table_wrapper
+      margin-top: 20px
+      background-color: white
+      padding: 20px
+
 
   .footer
     background-color: $dashboard-bg-dark-color
@@ -215,17 +252,26 @@ table
     position: absolute
     padding-left: 180px
     .sidebar
+      background-color: $dashboard-sidebar-bg-color
+      color: $dashboard-sidebar-text-color
+      font-weight: bold
       width: 180px
+      height: 100%
       position: absolute
       left: 0px
+      padding-top: 10px
       .list-group-item
+        background-color: $dashboard-sidebar-bg-color
+        border: none
+        padding: 0px
         a
+          color: $dashboard-sidebar-text-color
           text-decoration: none
           height: 100%
           width: 100%
+          padding: 10px 15px
           display: block
         &:hover
-          background-color: darken($body-bg, 10%)
           cursor: pointer
       .list-group-header
         font-size: 16px
@@ -233,7 +279,9 @@ table
         border-bottom: 1px solid black
 
       .sidebar_item_active
-        border-right: 4px solid $highlight-color
+        border-left: 4px solid #5191c4
+        color: $dashboard-sidebar-text-active-color
+        background-color: $dashboard-sidebar-text-active-bg-color
 
   form
     padding: 30px

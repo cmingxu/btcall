@@ -115,7 +115,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
     }
 
     $scope.investmentChange = function () {
-      $scope.roi = Math.floor($scope.investment * (1 + $scope.roi_rate));
+      $scope.roi = ($scope.investment * (1 + $scope.roi_rate)).toFixed(3);
     }
 
     $scope.make_transaction = function () {
