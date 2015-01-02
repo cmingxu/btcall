@@ -31,6 +31,10 @@ class Bid < ActiveRecord::Base
   scope :win, lambda { where(win: true) }
   scope :lose, lambda { where(win: false) }
 
+  [:new_created, :open].each do |s|
+    scope s, -> { where(status: s) }
+  end
+
   def set_defaults
     self.win = false
     self.status = "new_created"

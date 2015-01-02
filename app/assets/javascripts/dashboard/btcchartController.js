@@ -47,6 +47,8 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
           latest_data = data_sample(msg.data)[0];
           if($scope.current_price && latest_data.value){
             $scope.trend = $scope.current_price - latest_data.value < 0 ? "up" : "down";
+            $("#current_price_dom").css("background-color", $scope.trend == "down" ? "red" : "green" )
+            $("#current_price_dom").data('price', $scope.current_price);
           }
           $scope.current_price = latest_data.value;
           $scope.data.push(latest_data);
@@ -80,7 +82,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
       var hour = opening.getHours();
       var min  = opening.getMinutes()
 
-      return (hour.length == 1 ? "0" + hour : hour) + ":" + (min.length == 1 ? "0" + min : min);
+      return (hour.toString().length == 1 ? "0" + hour : hour) + ":" + (min.toString().length == 1 ? "0" + min : min);
     }
 
     $scope.change_timespan = function (timespan) {

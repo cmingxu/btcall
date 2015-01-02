@@ -2,7 +2,21 @@ class Dashboard::BidsController < Dashboard::BaseController
   skip_before_action :verify_authenticity_token
 
   def index
-    @bids = current_user.bids.page(params[:page])
+    respond_to do |format|
+      format.html do
+        @bids = current_user.bids.page(params[:page])
+      end
+
+      format.js do
+        if params[:status] == "new_created"
+          @bids = current_user.bids.new_created.limit(10)
+          render partial: 'created_list', :locals => { :bids => @bids }
+        else
+          @bids = current_user.bids.open.limit(10)
+          render partial: 'open_list', :locals => { :bids => @bids }
+        end
+      end
+    end
   end
 
   def create

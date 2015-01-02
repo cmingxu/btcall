@@ -29,79 +29,62 @@
           %btc_chart_directive{"val" => "data"}
           .progress-bar
             %span.yes-percentage 40%
-            %span.label.label-success.yes-progress.pull-left &nbsp;
-            %span.label.label-danger.no-progress.pull-right &nbsp;
+            %span.label.yes-progress.pull-left &nbsp;
+            %span.label.no-progress.pull-right &nbsp;
             %span.no-percentage 60%
         .chart_info_right_panel_wrapper.col-md-2.text-right.operation_right_info
           %ul.list-group
             %li.list-group-item
+              .pull-left
+                = fa_icon("money 3x")
               %span.notion
                 潜在收益
               .strong {{roi}}
             %li.list-group-item
+              .pull-left
+                = fa_icon("bar-chart 3x")
               %span.notion
                 订单收益比
-              .strong {{(1+roi_rate) * 100}}%
+              .strong
+                {{(1+roi_rate) * 100}}%
             %li.list-group-item
+              .pull-left
+                = fa_icon("clock-o 3x")
               %span.notion
                 剩余时间
-            .strong {{remain_time}}
+              .strong {{remain_time}}
 
           %p
             %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
               看涨
+              &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-up
           %p
-            %button.btn.btn-default
-              {{current_price}}
+            %button.btn.btn-default#current_price_dom
+              = fa_icon(:rbm)
+              {{current_price.toString().split(".")[0]}}
+              \.
+              %span
+                {{current_price.toString().split(".")[1]}}
           %p
             %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
               看跌
+              &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-down
 
         .clearfix
       .table_wrapper
-        %table.table.table-bordered.table-striped.table-hover
-          %thead
-            %th 订单ID
-            %th 资产
-            %th 
-              执行价格
-              (#{fa_icon(:rmb)})
-            %th
-              当前价格
-              (#{fa_icon(:rmb)})
-            %th 看涨/看跌
-            %th 开始时间
-            %th 到期时间
-            %th
-              投资
-              (#{fa_icon(:btc)})
-            %th
-              收益
-              (#{fa_icon(:btc)})
-            %th 状态
+        #bids_tab_bar_header
+          .table_tab#bids_new_created_handle.tab_active
+            本平仓合约
+          .table_tab#bids_open_handle
+            过期合约
+        #bids_tab_content
+          #bids_new_created
+            = render :partial => "dashboard/bids/created_list", :locals => { :bids => current_user.bids.new_created }
+          #bids_open
+            = render :partial => "dashboard/bids/open_list", :locals => { :bids => current_user.bids.open }
 
-          %tbody
-            - current_user.bids.limit(30).order("id DESC").each do |bid|
-              %tr
-                %td= bid.id
-                %td RMB/BTC
-                %td.align_right
-                  = rmb_int_to_float(bid.open_price)
-                  - if (bid.open_price || 0) > (bid.order_price || 0)
-                    %span{:style => "color: red"}
-                      = fa_icon("arrow-down rotate-180")
-                  - else
-                    %span{:style => "color: green"}
-                      = fa_icon("arrow-down")
-                %td.align_right= rmb_int_to_float(bid.order_price)
-                %td= up_or_down(bid.trend)
-                %td= bid.created_at.to_s(:btc_cn_normal)
-                %td= bid.open_at.to_s(:btc_cn_normal)
-                %td.align_right= btc_int_to_float(bid.amount).to_f
-                %td.align_right= btc_int_to_float(bid.win_reward).to_f
-                %td= bid.status_in_word
 
   .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
   .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
@@ -138,3 +121,29 @@
 
 :javascript
   $(document).ready(function(){ $("#investment").focus()});
+  function reload_tab_content(status){
+    $("#bids_new_created").load("/dashboard/bids.js?status=new_created");
+    $("#bids_open").load("/dashboard/bids.js?status=open");
+  }
+
+  $(document).ready(function(){
+    setInterval(reload_tab_content, 5 * 1000);
+
+  });
+
+  $(document).ready(function(){
+    $("#bids_open").hide();
+    $("#bids_new_created_handle").click(function(){
+      $("#bids_open_handle").removeClass("tab_active");
+      $(this).addClass("tab_active");
+      $("#bids_open").fadeOut('slow')
+      $("#bids_new_created").fadeIn('slow')
+    });
+
+    $("#bids_open_handle").click(function(){
+      $("#bids_new_created_handle").removeClass("tab_active");
+      $(this).addClass("tab_active");
+      $("#bids_new_created").fadeOut('slow')
+      $("#bids_open").fadeIn('slow')
+    });
+  });

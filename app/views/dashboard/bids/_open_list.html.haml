@@ -1,0 +1,34 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %th 订单ID
+    %th 资产
+    %th
+      执行价格
+      (#{fa_icon(:rmb)})
+    %th
+      到期价格
+      (#{fa_icon(:rmb)})
+    %th 看涨/看跌
+    %th 开始时间
+    %th 到期时间
+    %th
+      投资
+      (#{fa_icon(:btc)})
+    %th
+      收益
+      (#{fa_icon(:btc)})
+
+  %tbody
+    - bids.limit(20).order("id DESC").each do |bid|
+      %tr
+        %td= bid.id
+        %td RMB/BTC
+        %td.align_right
+          = rmb_int_to_float(bid.order_price)
+        %td.align_right
+          = rmb_int_to_float(bid.open_price)
+        %td= up_or_down(bid.trend)
+        %td= bid.created_at.to_s(:btc_cn_normal)
+        %td= bid.open_at.to_s(:btc_cn_normal)
+        %td.align_right= btc_int_to_float(bid.amount).to_f
+        %td.align_right= btc_int_to_float(bid.win_reward).to_f

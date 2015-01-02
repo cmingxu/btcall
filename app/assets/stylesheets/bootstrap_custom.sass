@@ -90,9 +90,11 @@ table
     .yes-progress
       height: 20px
       width: 40%
+      background-color: #2cba9b
     .no-progress
       height: 20px
       width: 60%
+      background-color: red
 
     .yes-percentage
       position: absolute
@@ -186,6 +188,8 @@ table
         background-color: $dashboard-info-bg-color
         color: $dashboard-info-text-color
         border-right: none
+        i
+          padding-top: 6px
       .notion
         font-weight: bold
       .strong
@@ -196,6 +200,15 @@ table
       p
         button
           width: 100%
+          min-height: 55px
+          font-size: 1.2em
+          color: white
+        #current_price_dom
+          font-style: italic
+          font-size: 1.4em
+          span
+            font-size: 1.8em
+
       .current_price_indicator
         background-color: red
         color: white
@@ -231,7 +244,24 @@ table
     .table_wrapper
       margin-top: 20px
       background-color: white
-      padding: 20px
+      .table_tab
+        float: left
+        margin-right: 20px
+        padding: 0px 10px
+        cursor: pointer
+      .tab_active
+        border-top: 4px solid #3e97d2
+        border-left: 1px solid #3e97d2
+        border-right: 1px solid #3e97d2
+        border-bottom: 1px solid white
+      #bids_tab_bar_header
+        padding-top: 5px
+        padding-left: 15px
+        width: 100%
+        height: 30px
+        border-bottom: 1px solid gray
+      #bids_tab_content
+        padding: 20px
 
 
   .footer
@@ -245,7 +275,6 @@ table
 
 .page-wraper
   padding: 10px
-  
 .dashboard
   .wrapper
     width: 100%
@@ -257,6 +286,7 @@ table
       font-weight: bold
       width: 180px
       height: 100%
+      min-height: 1000px
       position: absolute
       left: 0px
       padding-top: 10px
