@@ -11,8 +11,7 @@
           .col-md-4
             .bid_basic_info_header_label 到期：
             .bid_basic_info_header_content
-              %select{"ng-model" => "selected_opening"}
-                %option{"ng-repeat" => "selected_opening in open_times", "value" => "{{selected_opening}}"} {{format_opening(selected_opening)}}
+              %select{"ng-model" => "selected_opening", "ng-options" => "open as format_opening(open) for open in open_times"}
           .col-md-4
             .bid_basic_info_header_label 金额：
             .bid_basic_info_header_content
@@ -127,13 +126,25 @@
 :javascript
   $(document).ready(function(){ $("#investment").focus()});
   function reload_tab_content(status){
-    $("#bids_new_created").load("/dashboard/bids.js?status=new_created");
-    $("#bids_open").load("/dashboard/bids.js?status=open");
+    $("#bids_new_created").load("/dashboard/bids.js?status=new_created", function(){
+      current_price = $("#current_price_dom").data('price');
+      $("#bids_new_created tr td.current_price_td").each(function(){ $(this).text(current_price) ;});
+      $("#bids_new_created tr td.order_price_td").each(function(){
+      if(current_price){
+      if(parseFloat($(this).text()) > parseFloat(current_price)){
+        $(this).append("<span style='color: red'><i class='fa fa-arrow-down'></i></span>");
+      }else{
+        $(this).append("<span style='color: green'><i class='fa fa-arrow-down fa-rotate-180'></i></span>");
+      } }
+      });
+    });
+
+    $("#bids_open").load("/dashboard/bids.js?status=open", function(){ });
   }
 
   $(document).ready(function(){
-    setInterval(reload_tab_content, 50 * 1000);
-
+    reload_tab_content();
+    setInterval(reload_tab_content, 2 * 1000);
   });
 
   $(document).ready(function(){

@@ -47,10 +47,10 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
           latest_data = data_sample(msg.data)[0];
           if($scope.current_price && latest_data.value){
             $scope.trend = $scope.current_price - latest_data.value < 0 ? "up" : "down";
-            $("#current_price_dom").css("background-color", $scope.trend == "down" ? "#a81915" : "#2cba98" )
-            $("#current_price_dom").data('price', $scope.current_price);
           }
           $scope.current_price = latest_data.value;
+          $("#current_price_dom").css("background-color", $scope.trend == "down" ? "#a81915" : "#2cba98" )
+          $("#current_price_dom").data('price', $scope.current_price);
           $scope.data.push(latest_data);
           $scope.open_at_times_change();
         break;
@@ -126,13 +126,13 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
         amount: Math.abs(parseFloat($scope.investment)),
         open_at: $scope.selected_opening}};
 
-      $http.post("/dashboard/bids.json", bid, {"headers": {"Content-Type": "application/json"}}).success(function(data, status, headers, config){
-        $('#myModal').modal('hide')
-        $("#submit_bid_button").text("提交订单").removeClass("disabled");
+        $http.post("/dashboard/bids.json", bid, {"headers": {"Content-Type": "application/json"}}).success(function(data, status, headers, config){
+          $('#myModal').modal('hide')
+          $("#submit_bid_button").text("提交订单").removeClass("disabled");
 
-      }).error(function(data, status, headers, config){
-        $("#submit_bid_button").text("提交订单").removeClass("disabled");
-      });
+        }).error(function(data, status, headers, config){
+          $("#submit_bid_button").text("提交订单").removeClass("disabled");
+        });
     }
 
 }]);

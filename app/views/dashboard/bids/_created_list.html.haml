@@ -23,16 +23,8 @@
       %tr
         %td= bid.id
         %td RMB/BTC
-        %td.align_right
-          = rmb_int_to_float(bid.order_price)
-          - if rmb_int_to_float(bid.order_price) < current_btc_price
-            %span{:style => "color: green"}
-              = fa_icon("arrow-down rotate-180")
-          - else
-            %span{:style => "color: red"}
-              = fa_icon("arrow-down")
-        %td.align_right
-          = "%.2f" % current_btc_price
+        %td.align_right.order_price_td= rmb_int_to_float(bid.order_price)
+        %td.align_right.current_price_td
         %td= up_or_down(bid.trend)
         %td= bid.created_at.to_s(:btc_cn_normal)
         %td= bid.open_at.to_s(:btc_cn_normal)
