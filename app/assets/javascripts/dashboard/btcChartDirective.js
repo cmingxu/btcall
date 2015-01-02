@@ -197,8 +197,8 @@ dashboard.directive('btcChartDirective', ["$window", function ($window) {
           }
           //4 hours
           else if(visible_time_window >= 3 * 60 * 60 && visible_time_window <= 5 * 60 * 60){
-            big_interval = 30 * 60;   // 30m
-            small_interval = 15 * 60;  // 10m
+            big_interval = 60 * 60;   // 30m
+            small_interval = 30 * 60;  // 10m
           }
           //6 hours
           else if(visible_time_window >= 5 * 60 * 60 && visible_time_window <= 7 * 60 * 60){
