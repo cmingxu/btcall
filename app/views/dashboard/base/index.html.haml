@@ -55,19 +55,19 @@
               .strong {{remain_time}}
 
           %p
-            %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
+            %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');", "style" => "background-color: #cfe798"}
               看涨
               &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-up
           %p
-            %button.btn.btn-default#current_price_dom
+            %button.btn.btn-default#current_price_dom{"style" => "background-color: #a81915"}
               = fa_icon(:rbm)
               {{current_price.toString().split(".")[0]}}
               \.
               %span
                 {{current_price.toString().split(".")[1]}}
           %p
-            %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
+            %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');", "style" => "background-color: #f29697"}
               看跌
               &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-down
@@ -127,7 +127,7 @@
   }
 
   $(document).ready(function(){
-    setInterval(reload_tab_content, 5 * 1000);
+    setInterval(reload_tab_content, 50 * 1000);
 
   });
 
