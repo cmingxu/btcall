@@ -2,22 +2,22 @@
   .row-fluid{"ng-controller" => "btcchartController"}
     .operation_panel.col-md-10
       .chart_panel_wrapper
-        %ul.list-group.bid_basic_info
-          %li.list-group-item.col-md-4
+        .bid_basic_info
+          .col-md-4
             .bid_basic_info_header_label 资产：
             .bid_basic_info_header_content
               %select
                 %option{"value" =>  "BTC/RMB"} BTC/RMB
-          %li.list-group-item.col-md-4
+          .col-md-4
             .bid_basic_info_header_label 到期：
             .bid_basic_info_header_content
               %select{"ng-model" => "selected_opening"}
                 %option{"ng-repeat" => "selected_opening in open_times", "value" => "{{selected_opening}}"} {{format_opening(selected_opening)}}
-          %li.list-group-item.col-md-4
+          .col-md-4
             .bid_basic_info_header_label 金额：
             .bid_basic_info_header_content
-              .input-group
-                %input.input_field.input-inline{"ng-model" => "investment", "ng-change" => "investmentChange()"}
+              %input.input_field{"ng-model" => "investment", "ng-change" => "investmentChange()"}
+          .clearfix
         .chart_panel.col-md-10
           .timespan_switcher
             %span.active{"data-timespan" => 30 * 60, :ng_click => "change_timespan(30*60)"} 30分
@@ -86,38 +86,43 @@
             = render :partial => "dashboard/bids/open_list", :locals => { :bids => current_user.bids.open }
 
 
+    .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{"data-dismiss" =>  "modal"}
+              %span{"aria-hidden" => "true"} &times;
+              %span.sr-only 关
+            %h4.modal-title#myModalLabel
+              = fa_icon("clock-o")
+              {{format_opening(selected_opening)}} 
+              -
+              = fa_icon("btc")
+              {{investment}}
+          .modal-body
+            %ul.list-group
+              .list-group-item
+                到期时间
+                %span
+                  {{format_opening(selected_opening)}}
+              .list-group-item
+                下注金额
+                %span
+                  {{investment}}
+              .list-group-item
+                剩余时间
+                %span
+                  {{remain_time}}
+              .list-group-item
+                当前价格
+                %span
+                  {{current_price}}
+
+
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
+            %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
   .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
-  .modal.fade#myModal{:tabindex => "-1", :role => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true"}
-    .modal-dialog
-      .modal-content
-        .modal-header
-          %button.close{"data-dismiss" =>  "modal"}
-            %span{"aria-hidden" => "true"} &times;
-            %span.sr-only 关
-          %h4.modal-title#myModalLabel {{format_opening(selected_opening)}} / {{investment}}
-        .modal-body
-          %ul.list-group
-            .list-group-item
-              到期时间
-              %span
-                {{format_opening(selected_opening)}}
-            .list-group-item
-              下注金额
-              %span
-                {{investment}}
-            .list-group-item
-              剩余时间
-              %span
-                {{remain_time}}
-            .list-group-item
-              当前价格
-              %span
-                {{current_price}}
-
-
-        .modal-footer
-          %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
-          %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
 
 :javascript
   $(document).ready(function(){ $("#investment").focus()});
