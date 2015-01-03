@@ -1,32 +1,68 @@
 .container-fluid
+  .row-fluid
+    = form_for [:dashboard, current_user.withdraw_addresses.build], :html => { :class => "form form-horizontal btcall_form col-md-10 col-md-offset-1" }, :role => "form" do |f|
+      .form_title
+        %span 提现比特币
+      .form_content
+        .form-group.row
+          %label.control-label.col-md-3 比特币地址:
+          .col-md-9
+            = f.text_field :btcaddress, :class => "form-control"
+        .form-group.row
+          %label.control-label.col-md-3 备注:
+          .col-md-9
+            %p
+              = radio_button_tag "label[]", "私人钱包"
+              私人钱包
+            %p
+              = radio_button_tag "label[]", "火币"
+              火币
+            %p
+              = radio_button_tag "label[]", "比特币中国"
+              比特币中国
+            %p
+              = radio_button_tag "label[]", "OkCoin"
+              OkCoin
+            %p
+              = radio_button_tag "label[]", "BitStamp"
+              BitStamp
+            %p
+              = radio_button_tag "label[]", "Btc-e"
+              Btc-e
+            %p
+              = radio_button_tag "label[]", "其他"
+              其他
+            = f.text_field :label, :class => "form-control form-inline"
+
+        = render :partial => "widgets/sms_code_partial"
+        = hidden_field_tag "sms_send_reason", "withdraw", :id => "sms_send_reason"
+
+        .row
+          .col-md-3
+          .col-md-9
+            = submit_tag "保存", :class => "btn btn-warning pull-left"
+
+    .clearfix
 
   .row-fluid
-    %table.table.table-striped.table-condensed.table-hover.table-bordered
-      %thead
-        %th 标签
-        %th 地址
-        %th 添加时间
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 标签
+          %th 地址
+          %th 添加时间
 
-      %tbody
-        - @withdraw_addresses.each do |withdraw_address|
-          %tr
-            %td= withdraw_address.label
-            %td= withdraw_address.btcaddress
-            %td= withdraw_address.created_at.to_s(:btc_cn_normal)
+        %tbody
+          - @withdraw_addresses.each do |withdraw_address|
+            %tr
+              %td= withdraw_address.label
+              %td= withdraw_address.btcaddress
+              %td= withdraw_address.created_at.to_s#(:btc_cn_normal)
 
 
-
-  .row-fluid
-    = form_for [:dashboard, current_user.withdraw_addresses.build], :class => "form", :role => "form" do |f|
-      .form-group
-        %label 标签
-        = f.text_field :label, :class => "form-control"
-
-      .form-group
-        %label 提现地址
-        = f.text_field :btcaddress, :class => "form-control"
-      = render :partial => "widgets/sms_code_partial"
-      = hidden_field_tag "sms_send_reason", "withdraw", :id => "sms_send_reason"
-
-      .form-actions
-        = submit_tag "添加", :class => "btn btn-primary"
+:javascript
+  $(document).ready( function(){
+    $("#new_withdraw_address input:radio").click(function(){
+      $("#withdraw_address_label").val($(this).val()); 
+    })
+  }); 

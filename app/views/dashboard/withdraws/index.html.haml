@@ -1,35 +1,61 @@
 .container-fluid
   .row-fluid
-    = form_for [:dashboard, current_user.withdraws.build], :class => "form", :role => "form" do |f|
-      .form-group
-        %label 提现地址
-        = f.select :withdraw_address_id, current_user.withdraw_addresses.map {|wa| [wa.address_with_label, wa.id]}, {}, :class => "form-control"
-        = link_to "管理提现地址", dashboard_withdraw_addresses_path, :target => :blank
+    = form_for [:dashboard, current_user.withdraws.build], :html => { :class => "form form-horizontal btcall_form col-md-10 col-md-offset-1" }, :role => "form" do |f|
+      .form_title
+        %span 提现比特币
+      .form_content
+        .form-group.fow
+          %label.control-label.col-md-3 比特币地址
+          .col-md-9
+            .input-group
+              = f.select :withdraw_address_id, current_user.withdraw_addresses.map {|wa| [wa.address_with_label, wa.id]}, {}, :class => "form-control"
+              %span.input-group-btn
+                = link_to "管理提现地址", dashboard_withdraw_addresses_path, :target => :blank, :class => "btn btn-primary"
 
-      .form-group
-        %label 提现金额
-        = f.text_field "amount", :class => "form-control"
-      .form-actions
-        = f.submit "确定提现", :class => "btn btn-success"
+        .form-group.row
+          %label.control-label.col-md-3 提现数量
+          .col-md-9
+            = f.text_field "amount", :class => "form-control"
+
+        .form-group.row
+          %label.control-label.col-md-3 网络转账手续费
+          .col-md-9
+            0.0001(优先再您的账户余额中扣除，余额不足时候扣取提现数量)
+
+        .form-group.row
+          %label.control-label.col-md-3 资金密码
+          .col-md-9
+            .input-group
+              = password_field_tag "password", "", :class => "form-control"
+              %span.input-group-btn
+                = link_to "忘记密码？", forget_password_path, :target => :blank, :class => "btn btn-primary"
+
+        = render :partial => "widgets/sms_code_partial"
+        .row
+          .col-md-3
+          .col-md-9
+            = f.submit "确定提现", :class => "btn btn-warning pull-left"
+
   .row-fluid
-    %table.table.table-striped.table-condensed.table-hover.table-bordered
-      %thead
-        %th 时间
-        %th 数量
-        %th 状态
-        %th TXID
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 时间
+          %th 数量
+          %th 状态
+          %th TXID
 
-      %tbody
-        - @withdraws.each do |withdraw|
-          %tr
-            %td= withdraw.created_at.to_s(:btc_cn_normal)
-            %td= btc_int_to_float(withdraw.amount)
-            %td= withdraw.status_in_word
-            - if withdraw.txid
-              %td=link_to withdraw.txid, "https://blockchain.info/tx/#{withdraw.txid}", :target => "_blank"
-            - else
-              %td 请稍后...
+        %tbody
+          - @withdraws.each do |withdraw|
+            %tr
+              %td= withdraw.created_at.to_s(:btc_cn_normal)
+              %td= btc_int_to_float(withdraw.amount)
+              %td= withdraw.status_in_word
+              - if withdraw.txid
+                %td=link_to withdraw.txid, "https://blockchain.info/tx/#{withdraw.txid}", :target => "_blank"
+              - else
+                %td 请稍后...
 
-    = paginate @withdraws
+      = paginate @withdraws
 
 
