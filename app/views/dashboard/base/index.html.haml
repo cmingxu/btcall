@@ -12,6 +12,7 @@
             .bid_basic_info_header_label 到期：
             .bid_basic_info_header_content
               %select{"ng-model" => "selected_opening", "ng-options" => "open as format_opening(open) for open in open_times", :id => "current_opening_select"}
+              #opening_at_selected_dom
           .col-md-4
             .bid_basic_info_header_label 金额：
             .bid_basic_info_header_content
@@ -28,8 +29,8 @@
           %btc_chart_directive{"val" => "data"}
           .progress-bar
             %span.yes-percentage 40%
-            %span.label.yes-progress.pull-left &nbsp;
-            %span.label.no-progress.pull-right &nbsp;
+            %span.yes-progress.pull-left &nbsp;
+            %span.no-progress.pull-right &nbsp;
             %span.no-percentage 60%
         .chart_info_right_panel_wrapper.col-md-2.text-right.operation_right_info
           %ul.list-group
@@ -138,6 +139,14 @@
   $(document).ready(function(){ $("#investment").focus()});
   function reload_tab_content(status){
     $.getJSON("/dashboard/bids.json?status=new_created", {}, function(response){
+      var ratio = response.buy_win_rate[$("#opening_at_selected_dom").data('open_code')];
+      var ratio = (ratio || 0);
+      $(".yes-percentage").text("" + Math.floor((ratio * 100))+ "%");
+      $(".no-percentage").text("" + Math.floor((1 - ratio) * 100) + "%")
+      $(".yes-progress").animate({"width": "" + Math.floor(100 * ratio) + "%"});
+      $(".no-progress").animate({"width": "" + Math.ceil(100 * (1 - ratio)) + "%"})
+
+
       $("#bids_new_created").html(response.content);
       current_price = $("#current_price_dom").data('price');
       $("#bids_new_created tr td.current_price_td").each(function(){ $(this).text(current_price) ;});
@@ -149,9 +158,8 @@
             $(this).find("span").css("color", "green").html("<i class='fa fa-arrow-down fa-rotate-180'></i>");
           } }
         });
+
     });
-
-
 
   }
 

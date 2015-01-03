@@ -98,14 +98,10 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
       btcSocket.emit("timespan_change", {"timespan": timespan})
     };
 
-    $scope.opening_selector_open = function () {
-      $(".opening_items").toggle();
-    }
 
-    $scope.opening_selected = function (index) {
-      $scope.selected_opening = $scope.open_times[index];
-      $(".opening_items").hide();
-    }
+    $scope.$watch('selected_opening', function (n, o) {
+      $("#opening_at_selected_dom").data('open_code', moment(n).format("YYYYMMDDHHmm"));
+    });
 
     $interval(function () {
       $scope.remain_time =  moment($scope.selected_opening - (new Date())).format("mm:ss");
