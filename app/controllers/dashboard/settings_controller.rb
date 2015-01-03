@@ -1,5 +1,6 @@
 class Dashboard::SettingsController < Dashboard::BaseController
   def index
+    @active_nav_item = "setting"
   end
 
   def create

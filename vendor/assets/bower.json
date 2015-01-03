@@ -4,11 +4,9 @@
     "bootstrap": "latest",
     "d3": "latest",
     "underscore": "latest",
-    "underscore.strings": "latest",
     "angular": "latest",
     "moment": "latest",
+    "bootstrap-datepicker": "latest",
     "angular-socket-io": "git@github.com:btford/angular-socket-io.git#0.6.1"
-  },
-  "resolutions": {
   }
 }

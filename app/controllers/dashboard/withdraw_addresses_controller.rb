@@ -1,6 +1,7 @@
 class Dashboard::WithdrawAddressesController < Dashboard::BaseController
   before_filter :sms_code_verify, :only => :create
   def index
+    @active_nav_item = "withdraws"
     @withdraw_addresses = current_user.withdraw_addresses
   end
 

@@ -1,3 +1,12 @@
 .container-fluid
   .row-fluid
+    = form_tag dashboard_bids_path,  :method => :get  do
+      开始时间
+      = text_field_tag "begin_at", params[:begin_at], :class => "form-control datepicker"
+
+      结束时间
+      = text_field_tag "end_at", params[:end_at], :class => "form-control datepicker"
+
+      = submit_tag 
+  .row-fluid
     = render :partial => "open_list", :locals => { :bids => @bids }

@@ -21,6 +21,8 @@
 //= require bootstrap-sprockets
 //= require moment
 //= require jquery_ujs
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker.zh-CN
 //= require_self
 //= require_tree ./dashboard
 //= require zeroclipboard
@@ -33,6 +35,14 @@ function show_error(content) {
   $("#notice_bar .alert").text(content);
   $("#notice_bar").removeClass("hidden");
 }
+
+$(document).ready(function () {
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    language: 'zh-CN'
+  }
+  );
+});
 
 if (!console) console = {log: function() {}};
 

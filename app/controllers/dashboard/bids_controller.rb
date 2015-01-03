@@ -2,9 +2,12 @@ class Dashboard::BidsController < Dashboard::BaseController
   skip_before_action :verify_authenticity_token
 
   def index
+    begin_at = params[:begin_at].presence || "2001-1-1"
+    end_at = params[:end_at].presence || "2101-1-1"
+
     respond_to do |format|
       format.html do
-        @bids = current_user.bids.page(params[:page])
+        @bids = current_user.bids.where(["created_at > ? AND created_at < ?", begin_at, end_at]).page(params[:page])
       end
 
       format.json do
