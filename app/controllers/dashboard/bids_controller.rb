@@ -7,14 +7,25 @@ class Dashboard::BidsController < Dashboard::BaseController
         @bids = current_user.bids.page(params[:page])
       end
 
-      format.js do
+      format.json do
+        @right_side_notice_open = SiteActivity.gets_from_stream_open
+        @right_side_notice_win = SiteActivity.gets_from_stream_win
+        @buy_win_rate               = WinRate.get_buy_win_rates
+
         if params[:status] == "new_created"
           @bids = current_user.bids.new_created.limit(10)
-          render partial: 'created_list', :locals => { :bids => @bids }
+          partial = "dashboard/bids/created_list"
         else
           @bids = current_user.bids.open.limit(10)
-          render partial: 'open_list', :locals => { :bids => @bids }
+          partial = "dashboard/bids/open_list"
         end
+
+        render :json => {
+          :content => render_to_string(:partial => partial, :locals => {:bids => @bids}, :formats => :html),
+          :buy_win_rate => @buy_win_rate,
+          :right_side_notice_win => @right_side_notice_win,
+          :right_side_notice_open => @right_side_notice_open
+        }
       end
     end
   end

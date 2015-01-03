@@ -52,6 +52,10 @@ class Bid < ActiveRecord::Base
       self.class.transaction do
         self.user.save!
         save
+
+        buy_win_rate = (Bid.where("open_at_code = #{self.open_at_code} AND trend = 'up'").count / Bid.where("open_at_code = #{self.open_at_code}").count.to_f)
+        WinRate.set_win_rates self.open_at_code, buy_win_rate
+        SiteActivity.puts_stream_open(self)
       end
     rescue ActiveRecord::RecordInvalid
       false
@@ -116,6 +120,7 @@ class Bid < ActiveRecord::Base
                                     :platform_deduct => platform_deduct,
                                     :net_income => maker_net_income
                                    )
+          SiteActivity.puts_stream_win(maker.maker_opens.last) if maker_net_income > 0
 
           if total_btc > 0
             BG_LOGGER.debug "oooooooooooooooo create platform open   #{maker.id} #{platform_deduct} oooooooooooooooooooooo"

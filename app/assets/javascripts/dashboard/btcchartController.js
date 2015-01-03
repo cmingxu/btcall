@@ -46,7 +46,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
         case 'message:single':
           latest_data = data_sample(msg.data)[0];
           if($scope.current_price && latest_data.value){
-            $scope.trend = $scope.current_price - latest_data.value < 0 ? "up" : "down";
+            $scope.trend = $scope.current_price - latest_data.value <= 0 ? "up" : "down";
           }
           $scope.current_price = latest_data.value;
           $("#current_price_dom").css("background-color", $scope.trend == "down" ? "#a81915" : "#2cba98" )

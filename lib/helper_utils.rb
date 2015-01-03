@@ -38,6 +38,6 @@ module HelperUtils
   end
 
   def open_at_code(open_at)
-    Time.at(open_at).strftime("%Y%m%H%M")
+    Time.at(open_at).strftime("%Y%m%d%H%M")
   end
 end

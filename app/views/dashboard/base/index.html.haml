@@ -11,7 +11,7 @@
           .col-md-4
             .bid_basic_info_header_label 到期：
             .bid_basic_info_header_content
-              %select{"ng-model" => "selected_opening", "ng-options" => "open as format_opening(open) for open in open_times"}
+              %select{"ng-model" => "selected_opening", "ng-options" => "open as format_opening(open) for open in open_times", :id => "current_opening_select"}
           .col-md-4
             .bid_basic_info_header_label 金额：
             .bid_basic_info_header_content
@@ -45,7 +45,7 @@
               %span.notion
                 订单收益比
               .strong
-                {{(1+roi_rate) * 100}}%
+                {{(roi_rate) * 100}}%
             %li.list-group-item
               .pull-left
                 = fa_icon("clock-o 3x")
@@ -54,7 +54,7 @@
               .strong {{remain_time}}
 
           %p
-            %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');", "style" => "background-color: #cfe798"}
+            %button.btn.btn-success{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('up');"}
               看涨
               &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-up
@@ -66,7 +66,7 @@
               %span
                 {{current_price.toString().split(".")[1]}}
           %p
-            %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');", "style" => "background-color: #f29697"}
+            %button.btn.btn-danger{"data-toggle" => "modal", "data-target" => "#myModal", "ng-click" => "changeDirection('down');"}
               看跌
               &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
               %i.glyphicon.glyphicon-arrow-down
@@ -121,25 +121,28 @@
           .modal-footer
             %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
             %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
-  .col-md-2 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  
+  .col-md-2
+    = render :partial => "dashboard/base/right_side_notice"
 
 :javascript
   $(document).ready(function(){ $("#investment").focus()});
   function reload_tab_content(status){
-    $("#bids_new_created").load("/dashboard/bids.js?status=new_created", function(){
+    $.getJSON("/dashboard/bids.json?status=new_created", {}, function(response){
+      $("#bids_new_created").html(response.content);
       current_price = $("#current_price_dom").data('price');
       $("#bids_new_created tr td.current_price_td").each(function(){ $(this).text(current_price) ;});
       $("#bids_new_created tr td.order_price_td").each(function(){
-      if(current_price){
-      if(parseFloat($(this).text()) > parseFloat(current_price)){
-        $(this).find("span").css("color", "red").html("<i class='fa fa-arrow-down'></i>");
-      }else{
-        $(this).find("span").css("color", "green").html("<i class='fa fa-arrow-down fa-rotate-180'></i>");
-      } }
-      });
+        if(current_price){
+          if(parseFloat($(this).text()) > parseFloat(current_price)){
+            $(this).find("span").css("color", "red").html("<i class='fa fa-arrow-down'></i>");
+          }else{
+            $(this).find("span").css("color", "green").html("<i class='fa fa-arrow-down fa-rotate-180'></i>");
+          } }
+        });
     });
 
-    $("#bids_open").load("/dashboard/bids.js?status=open", function(){ });
+
+
   }
 
   $(document).ready(function(){

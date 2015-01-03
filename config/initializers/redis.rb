@@ -25,4 +25,5 @@ module Kernel
     avg_price =  prices.sum / prices.length
     [timestamp, prices, avg_price]
   end
+
 end
