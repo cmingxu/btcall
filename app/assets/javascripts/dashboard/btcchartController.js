@@ -51,6 +51,10 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
           $scope.current_price = latest_data.value;
           $("#current_price_dom").css("background-color", $scope.trend == "down" ? "#a81915" : "#2cba98" )
           $("#current_price_dom").data('price', $scope.current_price);
+
+          $("#bid_order_price").css("color", $scope.trend == "down" ? "#a81915" : "#2cba98" )
+          $("#bid_order_price i").removeClass("fa-rotate-180").addClass($scope.trend == "down" ? "" : "fa-rotate-180");
+
           $scope.data.push(latest_data);
           $scope.open_at_times_change();
         break;

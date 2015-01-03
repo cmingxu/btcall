@@ -93,34 +93,44 @@
               %span{"aria-hidden" => "true"} &times;
               %span.sr-only 关
             %h4.modal-title#myModalLabel
-              = fa_icon("clock-o")
-              {{format_opening(selected_opening)}} 
-              -
-              = fa_icon("btc")
-              {{investment}}
+              {{direction == "up" ? "看涨" : "看跌"}}
           .modal-body
-            %ul.list-group
-              .list-group-item
-                到期时间
-                %span
+            %table.table.table-bordered
+              %tr
+                %td.label_high
+                  到期时间
+                %td
                   {{format_opening(selected_opening)}}
-              .list-group-item
-                下注金额
-                %span
+                %td.label_high
+                  投资
+                %td
                   {{investment}}
-              .list-group-item
-                剩余时间
-                %span
-                  {{remain_time}}
-              .list-group-item
-                当前价格
-                %span
-                  {{current_price}}
 
+              %tr
+                %td.label_high
+                  资产
+                %td
+                  CNY/BTC
+                %td.label_high
+                  潜在收益
+                %td
+                  {{roi}}
+
+              %tr
+                %td.label_high
+                  价格
+                %td
+                  %span#bid_order_price
+                    {{current_price}}
+                    = fa_icon(:arrow_down)
+                %td.label_high
+                  剩余时间
+                %td
+                  {{remain_time}}
 
           .modal-footer
             %button.btn.btn-default{"data-dismiss" => "modal"} 取消交易
-            %button.btn.btn-success#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
+            %button.btn.btn-primary#submit_bid_button{"ng-click" => "make_transaction()"} 确定交易
   .col-md-2
     = render :partial => "dashboard/base/right_side_notice"
 

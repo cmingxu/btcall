@@ -22,15 +22,15 @@
           .col-md-9
             0.0001(优先再您的账户余额中扣除，余额不足时候扣取提现数量)
 
-        .form-group.row
-          %label.control-label.col-md-3 资金密码
-          .col-md-9
-            .input-group
-              = password_field_tag "password", "", :class => "form-control"
-              %span.input-group-btn
-                = link_to "忘记密码？", forget_password_path, :target => :blank, :class => "btn btn-primary"
+        -#.form-group.row
+          -#%label.control-label.col-md-3 资金密码
+          -#.col-md-9
+            -#.input-group
+              -#= password_field_tag "password", "", :class => "form-control"
+              -#%span.input-group-btn
+                -#= link_to "忘记密码？", forget_password_path, :target => :blank, :class => "btn btn-primary"
 
-        = render :partial => "widgets/sms_code_partial"
+        -#= render :partial => "widgets/sms_code_partial"
         .row
           .col-md-3
           .col-md-9
