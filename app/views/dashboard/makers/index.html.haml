@@ -25,46 +25,48 @@
 
 
   .row-fluid
-    %table.table.table-striped.table-condensed.table-hover.table-bordered
-      %thead
-        %th 入市/出市
-        %th
-          数量
-          (#{fa_icon(:btc)})
-        %th 时间
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 入市/出市
+          %th
+            数量
+            (#{fa_icon(:btc)})
+          %th 时间
 
-      %tbody
-        - @maker_records.each do |maker_record|
-          %tr
-            %td= maker_record.in_or_out_in_word
-            %td.align_right= btc_int_to_float(maker_record.amount)
-            %td= maker_record.created_at.to_s(:btc_cn_normal)
+        %tbody
+          - @maker_records.each do |maker_record|
+            %tr
+              %td= maker_record.in_or_out_in_word
+              %td.align_right= btc_int_to_float(maker_record.amount)
+              %td= maker_record.created_at.to_s(:btc_cn_normal)
 
-    = paginate @maker_records
+      = paginate @maker_records
 
   .row-fluid
-    %table.table.table-striped.table-condensed.table-hover.table-bordered
-      %thead
-        %th 编号
-        %th 开盘时间
-        %th 
-          收益
-          (#{fa_icon(:btc)})
-        %th
-          平台提成
-          (#{fa_icon(:btc)})
-        %th 平台比例
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 编号
+          %th 开盘时间
+          %th
+            收益
+            (#{fa_icon(:btc)})
+          %th
+            平台提成
+            (#{fa_icon(:btc)})
+          %th 平台比例
 
-      %tbody
-        - @maker_opens.each do |maker_open|
-          %tr
-            %td= maker_open.open_at_code
-            %td= maker_open.created_at.to_s(:btc_cn_normal)
-            %td.align_right= btc_int_to_float maker_open.net_income
-            %td.align_right= btc_int_to_float maker_open.platform_deduct
-            %td.align_right= interest_in_percentage
+        %tbody
+          - @maker_opens.each do |maker_open|
+            %tr
+              %td= maker_open.open_at_code
+              %td= maker_open.created_at.to_s(:btc_cn_normal)
+              %td.align_right= btc_int_to_float maker_open.net_income
+              %td.align_right= btc_int_to_float maker_open.platform_deduct
+              %td.align_right= interest_in_percentage
 
-    = paginate @maker_opens, :param_name => :open_page
+      = paginate @maker_opens, :param_name => :open_page
 
 
 

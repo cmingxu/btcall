@@ -10,24 +10,26 @@
       $(document).ready(function() {
         var clip = new ZeroClipboard($("#d_clip_button"))
       });
-  .row-fluid
-    %table.table.table-striped.table-condensed.table-hover.table-bordered
-      %thead
-        %th 时间
-        %th 数量
-        %th TXID
-        %td 交易状态
 
-      %tbody
-        - @recharges.each do |recharge|
-          %tr
-            %td= recharge.created_at.to_s(:btc_short)
-            %td= btc_int_to_float(recharge.amount)
-            - if recharge.txid
-              %td=link_to recharge.txid, "https://blockchain.info/tx/#{recharge.txid}", :target => "_blank"
-            - else
-              %td 请稍后...
-            %td= recharge.status_in_word
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 时间
+          %th 数量
+          %th TXID
+          %td 交易状态
+
+        %tbody
+          - @recharges.each do |recharge|
+            %tr
+              %td= recharge.created_at.to_s(:btc_short)
+              %td= btc_int_to_float(recharge.amount)
+              - if recharge.txid
+                %td=link_to recharge.txid, "https://blockchain.info/tx/#{recharge.txid}", :target => "_blank"
+              - else
+                %td 请稍后...
+              %td= recharge.status_in_word
 
     = paginate @recharges
 
