@@ -1,15 +1,20 @@
 .container-fluid
   .row-fluid
-    %h4
-      充值地址
-      %label.label.label-success #{current_user.recharge_address.btcaddress}
-      %button.btn.btn-success#d_clip_button{"data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => ""}
-        = fa_icon(:clipboard)
-        拷贝
-    :javascript
-      $(document).ready(function() {
-        var clip = new ZeroClipboard($("#d_clip_button"))
-      });
+    .btcall_form.col-md-10.col-md-offset-1.form
+      .form_title
+        %span 充值比特币
+      .form_content
+        .form-group
+          .input-group
+            .input-group-addon{:style => "background-color: #306b95; color: white;"} 充值地址
+            = text_field_tag :placeholder, current_user.recharge_address.btcaddress, :id => "d_clip_button", :class => "form-control", "data-clipboard-target" => "fe_text", "data-clipboard-text" => "#{current_user.recharge_address.btcaddress}", :title => "",  :disabled => true, :style => "max-width: 500px"
+
+        %p 友情提示：您的比特币汇入上述地址之后， 需要整个比特网络节点确认， 为了快速到账， 您可以向比特币网络支付少量手续费， 到账时间一般10分钟 - 60分钟之间， 最小值是: 0.0010
+
+      :javascript
+        $(document).ready(function() {
+          var clip = new ZeroClipboard($("#d_clip_button"))
+        });
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper

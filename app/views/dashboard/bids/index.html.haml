@@ -1,12 +1,15 @@
 .container-fluid
   .row-fluid
-    = form_tag dashboard_bids_path,  :method => :get  do
-      开始时间
-      = text_field_tag "begin_at", params[:begin_at], :class => "form-control datepicker"
-
-      结束时间
-      = text_field_tag "end_at", params[:end_at], :class => "form-control datepicker"
-
-      = submit_tag
+    .btcall_form.col-md-10.col-md-offset-1.form
+      .form_title
+        %span BTC资金流水
+      .form_content
+        = form_tag dashboard_bids_path,  :method => :get, :class => "form form-inline pull-right"  do
+          %label 时间
+          = text_field_tag "begin_at", params[:begin_at], :class => "form-control datepicker", :placeholder => "2014-01-12"
+          -
+          = text_field_tag "end_at", params[:end_at], :class => "form-control datepicker", :placeholder => "2015-12-11"
+          = submit_tag "查找", :class => "btn btn-warning"
   .row-fluid
-    = render :partial => "open_list", :locals => { :bids => @bids }
+    .col-md-10.col-md-offset-1.table_wrapper
+      = render :partial => "open_list", :locals => { :bids => @bids }
