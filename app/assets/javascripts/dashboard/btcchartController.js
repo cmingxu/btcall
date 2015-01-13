@@ -69,7 +69,7 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
 
     $scope.open_at_times_change = function () {
       var  next_10_min_round = Math.round((new Date()).getTime() / 1000 / 600) * 600 * 1000 + 600 * 1000;
-      $scope.open_times = [
+      open_times = [
         new Date(next_10_min_round),
         new Date(next_10_min_round + 10 * 60 * 1000),
         new Date(next_10_min_round + 20 * 60 * 1000),
@@ -77,6 +77,14 @@ dashboard.controller("btcchartController", ["$scope", "btcSocket", "$interval", 
         new Date(next_10_min_round + 40 * 60 * 1000),
         new Date(next_10_min_round + 50 * 60 * 1000)
       ];
+
+      if($scope.open_times === undefined){
+        $scope.open_times = open_times;
+      }
+
+      if($scope.open_times[0].getTime() != open_times[0].getTime()){
+      $scope.open_times = open_times;
+      }
     }
 
     $scope.format_opening = function (opening) {
